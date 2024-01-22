@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Climbable
+  - NPC
+  - PoliceNPC
+  - PedestrianNPC
   layers:
   - Default
   - TransparentFX
