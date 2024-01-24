@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private float climbingSpeed = 3f; // Climbing speed
     private float jumpingPower = 7f; // Jumping speed
     private int jumpsLeft = 2; // Maximum number of jumps
-    private bool isClimbing = false;
+    private bool isClimbing = false; // Flag for climb check
 
     [SerializeField] private Rigidbody2D player;
     [SerializeField] private Transform groundCheck;
@@ -22,7 +22,35 @@ public class PlayerMovement : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetButtonDown("Jump") && CanJump())
+        if (Input.GetButtonDown("Jump"))
+        {
+            // Start a coroutine to handle short press for jumping
+            StartCoroutine(JumpCoroutine());
+        }
+
+        if (Input.GetButton("Jump") && CanClimb())
+        {
+            // Handle climbing while the button is held
+            isClimbing = true;
+            player.gravityScale = 0f;
+            jumpsLeft = 1;
+        }
+
+    }
+
+    private IEnumerator JumpCoroutine()
+    {
+        // Differentiate between pressing and holding spacebar
+        float timePressed = 0f;
+        float maxJumpTime = 0.2f;
+
+        while (timePressed < maxJumpTime && Input.GetButton("Jump"))
+        {
+            timePressed += Time.deltaTime;
+            yield return null;
+        }
+
+        if (timePressed < maxJumpTime && CanJump())
         {
             Jump();
         }
@@ -48,7 +76,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private bool CanJump()
-    {
+    {   
+        // Check if the player can jump (only if on ground or wall)
         return (jumpsLeft > 0 && IsGrounded()) || (isClimbing && jumpsLeft > 0);
     }
 
@@ -56,14 +85,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isClimbing)
         {
-            // If climbing, jump away from the wall
             player.velocity = new Vector2(horizontal * speed, jumpingPower);
             isClimbing = false;
             player.gravityScale = 1f;
         }
         else
         {
-            // If not climbing, regular jump
             player.velocity = new Vector2(player.velocity.x, jumpingPower);
         }
 
@@ -74,29 +101,25 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsGrounded())
         {
-            jumpsLeft = 2; // Reset jumps when landing on the ground
-        }
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Check if the player is in contact with a climbable surface
-        if (collision.gameObject.CompareTag("Climbable"))
-        {
-            isClimbing = true;
-            player.gravityScale = 0f; // Disable gravity while climbing
-            // Reset jumps
-            jumpsLeft = 2;
+            jumpsLeft = 1;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        // Ensure player falls if they go out of climbable area
         if (collision.gameObject.CompareTag("Climbable"))
         {
-            isClimbing = false;
-            player.gravityScale = 1f; // Restore gravity when not climbing
+            {
+                isClimbing = false;
+                player.gravityScale = 1f;
+            }
         }
+    }
+
+    private bool CanClimb()
+    {   
+        // Check if player can climb
+        return !isClimbing && Physics2D.OverlapCircle(groundCheck.position, 0.2f, climbableLayer);
     }
 }
