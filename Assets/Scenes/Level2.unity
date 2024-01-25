@@ -300,6 +300,7 @@ MonoBehaviour:
   timesCaught: 0
   maximumTimesCaught: 1
   pickpocketedValue: 0
+  levelParameters: {fileID: 0}
 --- !u!1001 &238346907
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -704,8 +705,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelNumber: 1
   levelName: '"City"'
-  timerDuration: 5
-  targetValue: 200
+  timerDuration: 10
+  targetValue: 300
 --- !u!1 &1509429996
 GameObject:
   m_ObjectHideFlags: 0
