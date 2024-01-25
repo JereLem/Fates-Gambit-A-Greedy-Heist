@@ -39,20 +39,23 @@ public class PoliceNPC : MonoBehaviour
 
     void Move()
     {
-        // Add some randomneess that its more realistic that some walk faster, some slower
-        float step = moveSpeed * Time.deltaTime;
-        Vector2 targetPoint = movingToEndPoint ? endPoint : startPoint;
-
-        transform.position = Vector2.MoveTowards(transform.position, targetPoint, step);
-
-        if (Vector2.Distance((Vector2)transform.position, targetPoint) < 0.01f)
+        if(!isCatching)
         {
-            movingToEndPoint = !movingToEndPoint;
+            // Add some randomneess that its more realistic that some walk faster, some slower
+            float step = moveSpeed * Time.deltaTime;
+            Vector2 targetPoint = movingToEndPoint ? endPoint : startPoint;
 
-            if (!movingToEndPoint)
+            transform.position = Vector2.MoveTowards(transform.position, targetPoint, step);
+
+            if (Vector2.Distance((Vector2)transform.position, targetPoint) < 0.01f)
             {
-                completedCycles++;
-                CheckCycleCompletion();
+                movingToEndPoint = !movingToEndPoint;
+
+                if (!movingToEndPoint)
+                {
+                    completedCycles++;
+                    CheckCycleCompletion();
+                }
             }
         }
     }
