@@ -29,6 +29,10 @@ public class PoliceNPC : MonoBehaviour
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
         maxCycles = Random.Range(1, 4);
         moveSpeed = Random.Range(1f, 3f);
+        policeRank = Random.Range(1, 3);
+        catchDistance = 0.5f * policeRank;
+        catchDelay = 2.0f - (0.2f * policeRank);
+
     }
 
     void Update()
