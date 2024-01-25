@@ -32,6 +32,7 @@ public class GameEvents : MonoBehaviour
     public void OnLevelChanged(int level)
     { 
         SceneManager.LoadScene(level);
+        Level?.Invoke(level);
     }  
 
     public event Action<GameOverReason> GameOver;
@@ -40,6 +41,7 @@ public class GameEvents : MonoBehaviour
         GameStats.EndStats();
         GameStats.GameOverReason = reason;
         SceneManager.LoadScene("EndScene");
+        GameOver?.Invoke(reason);
     }
 
 }
