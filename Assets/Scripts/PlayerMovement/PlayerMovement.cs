@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private float speed = 5f; // Moving speed left/right 
     private float climbingSpeed = 3f; // Climbing speed
     private float jumpingPower = 7f; // Jumping speed
-    private int jumpsLeft = 2; // Maximum number of jumps
+    public int jumpsLeft = 1; // Maximum number of jumps
     private bool isClimbing = false; // Flag for climb check
 
     [SerializeField] private Rigidbody2D player;
@@ -72,7 +72,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        Collider2D collision = Physics2D.OverlapCircle(groundCheck.position, 1f, groundLayer);
+        return !isClimbing && collision != null;
     }
 
     private bool CanJump()
@@ -113,6 +114,12 @@ public class PlayerMovement : MonoBehaviour
             {
                 isClimbing = false;
                 player.gravityScale = 1f;
+            }
+        }
+
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            {
                 jumpsLeft = 0;
             }
         }
