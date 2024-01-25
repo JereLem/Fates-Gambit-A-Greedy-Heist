@@ -113,6 +113,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 isClimbing = false;
                 player.gravityScale = 1f;
+                jumpsLeft = 0;
             }
         }
     }
