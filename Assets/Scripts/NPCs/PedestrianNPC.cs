@@ -20,6 +20,9 @@ public class PedestrianNPC : MonoBehaviour
     public int completedCycles = 0;
     public int maxCycles = 0;
 
+    public int pickpocketableValue;
+    private int pedestrianChance;
+
     void Start()
     {
         bool startFromLeft = Random.Range(0, 2) == 0;
@@ -27,6 +30,12 @@ public class PedestrianNPC : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         maxCycles = Random.Range(1, 4);
         moveSpeed = Random.Range(1f, 3f);
+        pedestrianChance = Random.Range(1, 11);
+        
+        // Adjust pickpocketableValue
+        // 90% chance the pedestrian is default type 10% rich 
+        pickpocketableValue = (pedestrianChance <= 9) ? Random.Range(10, 15) : Random.Range(20, 25);
+
     }
 
     void Update()
@@ -100,7 +109,7 @@ public class PedestrianNPC : MonoBehaviour
         if (!isTalking)
         {
             isTalking = true;
-            Debug.Log("NPC's talking!");
+            Debug.Log("Pedestrians talking!");
             yield return new WaitForSeconds(talkDuration);
 
             currentTalkingNPCs--;
