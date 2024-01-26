@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1275214021118419750}
   - component: {fileID: 6130415914642365583}
-  - component: {fileID: 5141972846253767569}
   - component: {fileID: 4041071005372459906}
+  - component: {fileID: 47958847468847478}
+  - component: {fileID: 546371349900177530}
   m_Layer: 0
   m_Name: Police
   m_TagString: PoliceNPC
@@ -86,25 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5141972846253767569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7357996120253385111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33092f2ae364f8b4fad9aa4f277c3154, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 2
-  catchDistance: 1
-  catchDelay: 2
-  startPoint: {x: -15, y: 1}
-  endPoint: {x: 15, y: 1}
-  completedCycles: 0
-  maxCycles: 0
 --- !u!61 &4041071005372459906
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -150,3 +132,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &47958847468847478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7357996120253385111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3103d49552b54d849aacbca0404dfe7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPoint: {x: -25, y: 1}
+  endPoint: {x: 25, y: 1}
+  completedCycles: 0
+  maxCycles: 0
+  moveSpeed: 2
+--- !u!114 &546371349900177530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7357996120253385111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33092f2ae364f8b4fad9aa4f277c3154, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectDistance: 10
+  catchDelay: 2
+  isCatching: 0
+  policeRank: 1
+  eyeIcon: {fileID: 1030053158492337385, guid: e65d1a2ffe5e3c140b89ea2400b6bbab, type: 3}

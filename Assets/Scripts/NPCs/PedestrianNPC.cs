@@ -4,78 +4,48 @@ using UnityEngine;
 
 public class PedestrianNPC : MonoBehaviour
 {
-    public float moveSpeed = 2f;
-    public Vector2 startPoint;
-    public Vector2 endPoint;
+    // Pedestrian variables
     public float talkDuration = 5f;
-
-    private bool movingToEndPoint = true;
-    private Transform player;
     private bool isTalking = false;
+    public int pickpocketableValue;
 
-    private int maxTalkingNPCs = 6;
+    // Chances
+    private int pedestrianTypeChance;
+    private int policeAlertChance;
+
+    // NPCs currently talking and max ammount that can talk
     private int currentTalkingNPCs = 0;
+    private int maxTalkingNPCs = 6;
+
+    // Player
+    private Transform player;
+    private PlayerStats playerStats;
+
+    // List to store all pedestrians
     private static List<PedestrianNPC> talkingNPCs = new List<PedestrianNPC>();
 
-    public int completedCycles = 0;
-    public int maxCycles = 0;
-
-    public int pickpocketableValue;
-    private int pedestrianChance;
+    // NPC movement
+    private NPCMovement npcMovement;
+    
 
     void Start()
     {
-        bool startFromLeft = Random.Range(0, 2) == 0;
-        transform.position = startFromLeft ? startPoint : endPoint;
+        // Get player transform and stats
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
-        maxCycles = Random.Range(1, 4);
-        moveSpeed = Random.Range(1f, 3f);
-        pedestrianChance = Random.Range(1, 11);
+        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
         
         // Adjust pickpocketableValue
         // 90% chance the pedestrian is default type 10% rich 
-        pickpocketableValue = (pedestrianChance <= 9) ? Random.Range(10, 15) : Random.Range(20, 25);
+        pedestrianTypeChance = Random.Range(1, 11);
+        pickpocketableValue = (pedestrianTypeChance <= 9) ? Random.Range(10, 15) : Random.Range(20, 25);
+
+        // Get movement script
+        npcMovement = GetComponent<NPCMovement>();
 
     }
 
-    void Update()
-    {
-        if (!isTalking)
-        {
-            Move();
-        }
-    }
 
-    void Move()
-    {
-        // Add some randomneess that its more realistic that some walk faster, some slower
-        float step = moveSpeed * Time.deltaTime;
-        Vector2 targetPoint = movingToEndPoint ? endPoint : startPoint;
-
-        transform.position = Vector2.MoveTowards(transform.position, targetPoint, step);
-
-        if (Vector2.Distance((Vector2)transform.position, targetPoint) < 0.01f)
-        {
-            movingToEndPoint = !movingToEndPoint;
-
-            if (!movingToEndPoint)
-            {
-                completedCycles++;
-                CheckCycleCompletion();
-            }
-        }
-    }
-
-    void CheckCycleCompletion()
-    {
-        if (completedCycles >= maxCycles)
-        {
-            NPCSpawner spawner = FindObjectOfType<NPCSpawner>();
-            spawner?.NPCCompletedCycle(gameObject);
-            completedCycles = 0;
-        }
-    }
-
+    // If two pedestrians collide they might start talking 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("PedestrianNPC") && !isTalking)
@@ -92,7 +62,13 @@ public class PedestrianNPC : MonoBehaviour
                 if (randomChance < conversationChanceThreshold)
                 {
                     StartCoroutine(StartTalking());
+
+                    // Stop NPCMovement when they start to talk
+                    npcMovement.StopMovement();
+
+
                     otherNPC.StartCoroutine(otherNPC.StartTalking());
+                    otherNPC.npcMovement.StopMovement();
 
                     currentTalkingNPCs++;
                     otherNPC.currentTalkingNPCs++;
@@ -104,13 +80,16 @@ public class PedestrianNPC : MonoBehaviour
         }
     }
 
+    // Pedestrians start to talk, and will talk a set duration
     IEnumerator StartTalking()
     {
         if (!isTalking)
         {
             isTalking = true;
-            Debug.Log("Pedestrians talking!");
             yield return new WaitForSeconds(talkDuration);
+
+            // Resume movement after NPCs have stop talking
+            npcMovement.ResumeMovement();
 
             currentTalkingNPCs--;
 
@@ -118,16 +97,7 @@ public class PedestrianNPC : MonoBehaviour
             {
                 talkingNPCs.Remove(this);
             }
-
             isTalking = false;
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.CompareTag("Player") && isTalking)
-        {
-            Debug.Log("Start pickpocketing?");
         }
     }
 }

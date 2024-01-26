@@ -9,11 +9,11 @@ public class NPCSpawner : MonoBehaviour
     [SerializeField] private GameObject pedestrianPrefab;
 
     [Header("Max NPCs")]
-    [SerializeField] private int maxPoliceCount = 0;
-    [SerializeField] private int maxPedestrianCount = 0;
+    [SerializeField] private int maxPoliceCount = 5;
+    [SerializeField] private int maxPedestrianCount= 5;
 
     [Header("Spawn Intervals")]
-    [SerializeField] private float spawnIntervalPolice = 10f;
+    [SerializeField] private float spawnIntervalPolice = 5f;
     [SerializeField] private float spawnIntervalPedestrian = 5f;
 
     private List<GameObject> activePoliceNPCs = new List<GameObject>();
@@ -25,6 +25,7 @@ public class NPCSpawner : MonoBehaviour
         StartCoroutine(SpawnNPCs(spawnIntervalPedestrian, pedestrianPrefab, "PedestrianNPCs", maxPedestrianCount, activePedestrians));
     }
 
+    // Method for spawning the NPCs
     private IEnumerator SpawnNPCs(float interval, GameObject npcPrefab, string folderName, int maxCount, List<GameObject> activeList)
     {
         Transform folderTransform = null;
@@ -48,23 +49,24 @@ public class NPCSpawner : MonoBehaviour
 
     }
 
+    // If the NPC completes the set amount of cycles, then remove it from activelist and destroy
     public void NPCCompletedCycle(GameObject npc)
     {
         if (npc != null)
         {
             if (npc.CompareTag("PoliceNPC"))
             {
-                PoliceNPC policeScript = npc.GetComponent<PoliceNPC>();
-                if (policeScript != null && policeScript.completedCycles >= policeScript.maxCycles)
+                NPCMovement movement = npc.GetComponent<NPCMovement>();
+                if (movement != null && movement.completedCycles >= movement.maxCycles)
                 {
                     activePoliceNPCs.Remove(npc);
-                    Destroy(npc);
+                Destroy(npc);
                 }
             }
             else if (npc.CompareTag("PedestrianNPC"))
             {
-                PedestrianNPC pedestrianScript = npc.GetComponent<PedestrianNPC>();
-                if (pedestrianScript != null && pedestrianScript.completedCycles >= pedestrianScript.maxCycles)
+                NPCMovement movement = npc.GetComponent<NPCMovement>();
+                if (movement != null && movement.completedCycles >= movement.maxCycles)
                 {
                     activePedestrians.Remove(npc);
                     Destroy(npc);

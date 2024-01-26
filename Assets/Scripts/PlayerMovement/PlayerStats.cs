@@ -9,6 +9,8 @@ public class PlayerStats : MonoBehaviour
     public int maximumTimesCaught = 1; // Maximum times player can be caught
     public int pickpocketedValue;  // Inital value of pickpocketed items
 
+    public bool isPickpocketing;
+
     public LevelParameters levelParameters; // Get parameters for current level
 
     // Start is called before the first frame update
@@ -16,6 +18,7 @@ public class PlayerStats : MonoBehaviour
     {
         timesCaught = 0;
         pickpocketedValue = 0;
+        isPickpocketing = false;
         levelParameters = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>();
     }
     public void AddValue(int amount){
@@ -42,6 +45,7 @@ public class PlayerStats : MonoBehaviour
         {
             GameEvents._current.OnLevelChanged(levelParameters.levelNumber + 1);
         }
+
     }
 
     void OnValueChange(int oldValue, int newValue)

@@ -4,93 +4,87 @@ using UnityEngine;
 
 public class PoliceNPC : MonoBehaviour
 {
-    public float moveSpeed = 2f;
-    public float catchDistance = 0.5f;
+
+    // Police officer variables
+    public float detectDistance = 10.0f;
     public float catchDelay = 2.0f;
-    private bool isCatching = false;
-    public Vector2 startPoint;
-    public Vector2 endPoint;
+    public bool isCatching = false;
+    public int policeRank;
+    private bool isAlertActive;
 
-    private bool movingToEndPoint = true;
+
+    // Player
     private Transform player;
-
-    public int completedCycles = 0;
-    public int maxCycles = 0;
-
     private PlayerStats playerStats;
 
-    private int policeRank;
+    // Eye icon
+    [SerializeField] public GameObject eyeIcon;
+    private bool isEyeIconActive = false;
+
+    // NPC movement
+    private NPCMovement npcMovement;
+
 
     void Start()
     {
-        bool startFromLeft = Random.Range(0, 2) == 0;
-        transform.position = startFromLeft ? startPoint : endPoint;
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        // Alert state for the police officer
+        //isAlertActive = false;
+
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
-        maxCycles = Random.Range(1, 4);
-        moveSpeed = Random.Range(1f, 3f);
+
+        // Set the eye icon above the player
+        eyeIcon.transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
+
+        // Randomness for each police officer
         policeRank = Random.Range(1, 3);
-        catchDistance = 0.5f * policeRank;
+        detectDistance = 0.5f * policeRank;
         catchDelay = 2.0f - (0.2f * policeRank);
 
+        // Get movement script
+        npcMovement = GetComponent<NPCMovement>();
+
+        // Register the police officer with GameEvents
+        //GameEvents._current.RegisterPoliceOfficer(this);
     }
 
-    void Update()
-    {
-        Move();
-    }
 
-
-    void Move()
-    {
-        if(!isCatching)
-        {
-            // Add some randomneess that its more realistic that some walk faster, some slower
-            float step = moveSpeed * Time.deltaTime;
-            Vector2 targetPoint = movingToEndPoint ? endPoint : startPoint;
-
-            transform.position = Vector2.MoveTowards(transform.position, targetPoint, step);
-
-            if (Vector2.Distance((Vector2)transform.position, targetPoint) < 0.01f)
-            {
-                movingToEndPoint = !movingToEndPoint;
-
-                if (!movingToEndPoint)
-                {
-                    completedCycles++;
-                    CheckCycleCompletion();
-                }
-            }
-        }
-    }
-
-    void CheckCycleCompletion()
-    {
-        if (completedCycles >= maxCycles)
-        {
-            NPCSpawner spawner = FindObjectOfType<NPCSpawner>();
-            spawner?.NPCCompletedCycle(gameObject);
-            completedCycles = 0;
-        }
-    }
-
+    // If the police officer collides with the player, try to catch the player
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player") && !isCatching)
         {
-            Debug.Log("Player in catching distance! Starting catch...");
+            Debug.Log("Player Pickpocketing and catch");
             StartCoroutine(CatchPlayerWithDelay());
         }
     }
 
+
+    // Police officer goes on to allert mode, --> can catch the player even if not pickpocketing
+    public void OfficerOnAlert()
+    {
+        ToggleEyeIcon();
+    }
+
+
+    // When the player exits the police collide, player basically escapes
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player escaped!");
             // Reset any catching state
             isCatching = false;
             StopAllCoroutines(); // Stop ongoing catch coroutine
+        }
+    }
+
+    // Togglethe eyeIcon above the police officer when they are on alert
+    void ToggleEyeIcon()
+    {
+        if (eyeIcon != null)
+        {
+           isEyeIconActive = !isEyeIconActive;
+            eyeIcon.SetActive(isEyeIconActive);
         }
     }
 
