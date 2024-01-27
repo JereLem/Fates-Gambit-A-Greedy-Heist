@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class PickPocketing : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    private PlayerStats playerStats;
+
     void Start()
     {
-        
+        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StartPickpocketing()
     {
-        
+        playerStats.isPickpocketing = true;
+    }
+
+    public void StopPickpocketing()
+    {
+        playerStats.isPickpocketing = false;
     }
 }

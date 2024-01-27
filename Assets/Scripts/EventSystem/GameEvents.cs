@@ -28,6 +28,12 @@ public class GameEvents : MonoBehaviour
         Tick?.Invoke(currentTick); 
     }
 
+    public event Action<bool> PickPocketing;
+    public void OnPickPocketing(bool isPickpocketing)
+    {
+        PickPocketing?.Invoke(isPickpocketing);
+    }
+
     public event Action<int> Level;
     public void OnLevelChanged(int level)
     { 

@@ -13,7 +13,7 @@ public class NPCMovement : MonoBehaviour
     [SerializeField] public int maxCycles = 0;
 
     // Default moving speed & flag to reset the direction
-    private float originalMoveSpeed;
+    public float originalMoveSpeed;
     public float moveSpeed;
     private bool movingToEndPoint = true;
 

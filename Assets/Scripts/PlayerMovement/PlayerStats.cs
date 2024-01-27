@@ -5,13 +5,18 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
 
-    public int timesCaught; // Current times player has been caught
-    public int maximumTimesCaught = 1; // Maximum times player can be caught
-    public int pickpocketedValue;  // Inital value of pickpocketed items
 
+    // Player variables
+    public int timesCaught;
+    public int maximumTimesCaught = 1;
+    public int pickpocketedValue;
+
+    // Get levelParameters
+    public LevelParameters levelParameters;
+
+    //Flag to see if player is pickpocketing
     public bool isPickpocketing;
-
-    public LevelParameters levelParameters; // Get parameters for current level
+    private PickPocketing currentPickpocketTarget;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +43,7 @@ public class PlayerStats : MonoBehaviour
     {
         if (timesCaught > maximumTimesCaught)
         {
-            HandlePlayerCaught();
+            GameEvents._current.OnGameOver(GameOverReason.PlayerCaught);
         }
 
         if (pickpocketedValue >= levelParameters.targetValue)
@@ -46,15 +51,19 @@ public class PlayerStats : MonoBehaviour
             GameEvents._current.OnLevelChanged(levelParameters.levelNumber + 1);
         }
 
+        if (isPickpocketing && currentPickpocketTarget != null)
+        {
+            GameEvents._current.OnPickPocketing(true);
+            currentPickpocketTarget.StartPickpocketing();
+        }
+        else if (!isPickpocketing && currentPickpocketTarget != null)
+        {
+            currentPickpocketTarget.StopPickpocketing();
+        }
     }
 
-    void OnValueChange(int oldValue, int newValue)
+    public void SetPickpocketTarget(PickPocketing target)
     {
-        GameStats.pickpocketedValue = newValue;
-    }
-
-    protected void HandlePlayerCaught()
-    {
-        GameEvents._current.OnGameOver(GameOverReason.PlayerCaught);
+        currentPickpocketTarget = target;
     }
 }

@@ -26,6 +26,11 @@ public class PedestrianNPC : MonoBehaviour
 
     // NPC movement
     private NPCMovement npcMovement;
+
+    private PickPocketing pickpocketInteraction;
+
+    // Extra flag to check the player can start pickpocketing the pedestrian
+    public bool triggerEntered;
     
 
     void Start()
@@ -42,8 +47,54 @@ public class PedestrianNPC : MonoBehaviour
         // Get movement script
         npcMovement = GetComponent<NPCMovement>();
 
+        // Attach the Pickpocketing script to the pedestrian
+        pickpocketInteraction = gameObject.AddComponent<PickPocketing>();
+
     }
 
+    void Update()
+    {
+        // Pickpocketing is activated by pressing E, and player has to be near 2 talking pedestrians
+        if (Input.GetKeyDown(KeyCode.E) && triggerEntered == true)
+        {
+            ActivatePickpocket();
+        } 
+    }
+
+    // Methods which call the pickpocketing script
+    private void ActivatePickpocket()
+    {
+        pickpocketInteraction.StartPickpocketing();
+    }
+
+    private void DeactivatePickpocket()
+    {
+        pickpocketInteraction.StopPickpocketing();
+    }
+
+    // Pedestrians start to talk, and will talk a set duration
+    IEnumerator StartTalking()
+    {
+        if (!isTalking)
+        {
+            isTalking = true;
+            yield return new WaitForSeconds(talkDuration);
+
+            // Resume movement after NPCs have stop talking
+            npcMovement.ResumeMovement();
+
+            // Deactivate pickpocketing, if pedestrians stop talking
+            DeactivatePickpocket();
+
+            currentTalkingNPCs--;
+
+            if (talkingNPCs.Contains(this))
+            {
+                talkingNPCs.Remove(this);
+            }
+            isTalking = false;
+        }
+    }
 
     // If two pedestrians collide they might start talking 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -78,26 +129,27 @@ public class PedestrianNPC : MonoBehaviour
                 }
             }
         }
+
+        // Check collision with player, to figure out if we can start pickpocketing
+        if (collision.gameObject.CompareTag("Player") && isTalking)
+        {
+            // Check if the player is close enough to start pickpocketing
+            float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+            float pickpocketingDistanceThreshold = 1.5f;
+
+            if (distanceToPlayer < pickpocketingDistanceThreshold)
+            {
+                triggerEntered = true;
+            }
+        }
     }
 
-    // Pedestrians start to talk, and will talk a set duration
-    IEnumerator StartTalking()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (!isTalking)
+        if (collision.gameObject.CompareTag("Player"))
         {
-            isTalking = true;
-            yield return new WaitForSeconds(talkDuration);
-
-            // Resume movement after NPCs have stop talking
-            npcMovement.ResumeMovement();
-
-            currentTalkingNPCs--;
-
-            if (talkingNPCs.Contains(this))
-            {
-                talkingNPCs.Remove(this);
-            }
-            isTalking = false;
+            triggerEntered = false;
         }
     }
 }
+
