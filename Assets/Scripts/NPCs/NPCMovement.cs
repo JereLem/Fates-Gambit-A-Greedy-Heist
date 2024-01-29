@@ -17,16 +17,32 @@ public class NPCMovement : MonoBehaviour
     public float moveSpeed;
     private bool movingToEndPoint = true;
 
+    private const float minMoveSpeed = 1f;
+    private const float maxMoveSpeed = 3f;
+
+    private const int minCyclesAmmount = 1;
+    private const int maxCyclesAmmount = 4;
+
+
     // Start is called before the first frame update
     void Start()
+    {
+        InitializeStartPosition();
+        InitializeMovementParameters();
+    }
+
+    void InitializeStartPosition()
     {
         bool startFromLeft = Random.Range(0, 2) == 0;
         transform.position = startFromLeft ? startPoint : endPoint;
         completedCycles = 0;
-        maxCycles = Random.Range(1, 4);
-        moveSpeed = Random.Range(1f, 3f);
+    }
+
+    void InitializeMovementParameters()
+    {
+        maxCycles = Random.Range(minCyclesAmmount, maxCyclesAmmount);
+        moveSpeed = Random.Range(minMoveSpeed, maxMoveSpeed);
         originalMoveSpeed = moveSpeed;
-        
     }
 
     // Update is called once per frame
@@ -71,9 +87,17 @@ public class NPCMovement : MonoBehaviour
         moveSpeed = originalMoveSpeed;
     }
 
+    // Method to set the cycles to max
+    public void SetMaxCycles()
+    {
+        // Reset moveSpeed to the original value
+        completedCycles = maxCycles;
+    }
+
+
 
     // Method to check if the NPC has gone all cycles, calls the NPCSpawner
-    void CheckCycleCompletion()
+    public void CheckCycleCompletion()
     {
         if (completedCycles >= maxCycles)
         {

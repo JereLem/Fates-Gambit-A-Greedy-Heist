@@ -6,12 +6,13 @@ public class PedestrianNPC : MonoBehaviour
 {
     // Pedestrian variables
     public float talkDuration = 5f;
-    private bool isTalking = false;
+    public bool isTalking = false;
     public int pickpocketableValue;
 
     // Chances
     private int pedestrianTypeChance;
     private int policeAlertChance;
+    private float conversationChanceThreshold = 0.25f;
 
     // NPCs currently talking and max ammount that can talk
     private int currentTalkingNPCs = 0;
@@ -21,23 +22,29 @@ public class PedestrianNPC : MonoBehaviour
     private Transform player;
     private PlayerStats playerStats;
 
-    // List to store all pedestrians
-    private static List<PedestrianNPC> talkingNPCs = new List<PedestrianNPC>();
+    // List to store all talking pedestrians
+    public static List<PedestrianNPC> talkingNPCs = new List<PedestrianNPC>();
 
     // NPC movement
     private NPCMovement npcMovement;
 
+    // Pickpocket script
     private PickPocketing pickpocketInteraction;
+
+    // Pickpocketing variables
+    private const KeyCode pickpocketKey = KeyCode.E;
+    private const float pickpocketingDistanceThreshold = 1.5f;
+    public bool hasBeenPickpocketed = false;
 
     // Extra flag to check the player can start pickpocketing the pedestrian
     public bool triggerEntered;
-    
+
 
     void Start()
     {
         // Get player transform and stats
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
-        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        playerStats = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerStats>();
         
         // Adjust pickpocketableValue
         // 90% chance the pedestrian is default type 10% rich 
@@ -55,19 +62,22 @@ public class PedestrianNPC : MonoBehaviour
     void Update()
     {
         // Pickpocketing is activated by pressing E, and player has to be near 2 talking pedestrians
-        if (Input.GetKeyDown(KeyCode.E) && triggerEntered == true)
+        if (Input.GetKeyDown(pickpocketKey) && triggerEntered == true)
         {
-            ActivatePickpocket();
+            StartPickpocketing();
         } 
     }
 
-    // Methods which call the pickpocketing script
-    private void ActivatePickpocket()
+    private void StartPickpocketing()
     {
-        pickpocketInteraction.StartPickpocketing();
+        if (!hasBeenPickpocketed)
+        {
+            pickpocketInteraction.StartPickpocketing();
+            hasBeenPickpocketed = true;
+        }
     }
 
-    private void DeactivatePickpocket()
+    private void StopPickpocketing()
     {
         pickpocketInteraction.StopPickpocketing();
     }
@@ -84,7 +94,7 @@ public class PedestrianNPC : MonoBehaviour
             npcMovement.ResumeMovement();
 
             // Deactivate pickpocketing, if pedestrians stop talking
-            DeactivatePickpocket();
+            StopPickpocketing();
 
             currentTalkingNPCs--;
 
@@ -108,7 +118,6 @@ public class PedestrianNPC : MonoBehaviour
             {
                 // Introduce a random chance for the conversation to start
                 float randomChance = Random.Range(0.0f, 1.0f);
-                float conversationChanceThreshold = 0.25f;
 
                 if (randomChance < conversationChanceThreshold)
                 {
@@ -135,7 +144,6 @@ public class PedestrianNPC : MonoBehaviour
         {
             // Check if the player is close enough to start pickpocketing
             float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-            float pickpocketingDistanceThreshold = 1.5f;
 
             if (distanceToPlayer < pickpocketingDistanceThreshold)
             {

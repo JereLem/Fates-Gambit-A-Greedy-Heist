@@ -8,10 +8,15 @@ public class PoliceNPC : MonoBehaviour
     // Police officer variables
     public float detectDistance = 3.0f;
     public float timeChasing = 5.0f;
+    public float timeOnAlert = 5.0f;
     public float catchDelay = 2.0f;
     public bool isCatching = false;
+    private bool isChasing = false;
     public int policeRank;
     private bool isAlertActive;
+    [SerializeField] private const float initialCatchDelay = 1.5f;
+    [SerializeField] private const float minCatchDelayMultiplier = 0.2f;
+    [SerializeField] private float runSpeed = 3.0f;
 
 
     // Player
@@ -23,7 +28,6 @@ public class PoliceNPC : MonoBehaviour
 
     // NPC movement
     private NPCMovement npcMovement;
-    private bool isChasing = false;
     private Coroutine catchCoroutine;
 
 
@@ -33,7 +37,7 @@ public class PoliceNPC : MonoBehaviour
         isAlertActive = false;
 
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
-        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        playerStats = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerStats>();
 
         // Set the eye icon above the player
         eyeIcon.transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
@@ -41,7 +45,7 @@ public class PoliceNPC : MonoBehaviour
         // Randomness for each police officer
         policeRank = Random.Range(1, 3);
         detectDistance = detectDistance + policeRank;
-        catchDelay = 1.5f - (0.2f * policeRank);
+        catchDelay = initialCatchDelay - (minCatchDelayMultiplier * policeRank);
 
         // Get movement script
         npcMovement = GetComponent<NPCMovement>();
@@ -52,7 +56,7 @@ public class PoliceNPC : MonoBehaviour
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        // Check if the player is within the detect distance, and player pickpocketing or police are on alert
+        // Check if the player is within the detect distance and player pickpocketing or police are on alert
         if (distanceToPlayer <= detectDistance && !isChasing && (playerStats.isPickpocketing || isAlertActive))
         {
             StartCoroutine(ChasePlayer());
@@ -71,28 +75,31 @@ public class PoliceNPC : MonoBehaviour
         }
     }
 
-    // Police officer goes on to allert mode, --> can catch the player even if not pickpocketing
+    // Police officer goes on to alert mode
     public void OfficerOnAlert()
     {
-        ToggleEyeIcon();
         isAlertActive = true;
+        ToggleEyeIcon();
+        StartCoroutine(onAlert());
     }
 
+    // Stay on alert for set duration, and then stop alert
+    IEnumerator onAlert()
+    {
+        yield return new WaitForSeconds(timeOnAlert);
+        OfficerOffAlert();
+    }
     
     public void OfficerOffAlert()
-    {
-        ToggleEyeIcon();
+    {  
         isAlertActive = false;
+        ToggleEyeIcon();
     }
 
-    // Togglethe eyeIcon above the police officer when they are on alert
+    // Toggle the eyeIcon above the police officer when they are on alert
     void ToggleEyeIcon()
     {
-        if (eyeIcon != null)
-        {
-           isAlertActive = !isAlertActive;
-           eyeIcon.SetActive(isAlertActive);
-        }
+        eyeIcon.SetActive(isAlertActive);
     }
 
     IEnumerator TryToCatchPlayer()
@@ -103,7 +110,6 @@ public class PoliceNPC : MonoBehaviour
         yield return new WaitForSeconds(catchDelay);
 
         // After the delay, perform the catching actions
-        Debug.Log("Player caught!");
         playerStats.timesCaught++;
 
         isCatching = false;
@@ -114,7 +120,7 @@ public class PoliceNPC : MonoBehaviour
         // Set the flag to indicate that the coroutine is running
         isChasing = true;
         
-        // Toggle alert state and eye icon
+        // Toggle alert state and eye icon only if transitioning from alert to chasing
         OfficerOnAlert();
 
         float elapsedTime = 0f;
@@ -126,7 +132,7 @@ public class PoliceNPC : MonoBehaviour
             Vector2 targetPosition = new Vector2(player.position.x, transform.position.y);
 
             // Move towards the target position on the x-axis
-            float step = 3f * Time.deltaTime;
+            float step = runSpeed * Time.deltaTime;
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
             
             // Update the elapsed time
@@ -164,6 +170,7 @@ public class PoliceNPC : MonoBehaviour
             {
                 Debug.Log("Player escaped!");
                 StopCoroutine(catchCoroutine); // Stop ongoing catch coroutine
+                playerStats.isPickpocketing = false;
             }
         }
     }

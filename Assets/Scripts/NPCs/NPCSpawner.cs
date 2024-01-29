@@ -16,6 +16,7 @@ public class NPCSpawner : MonoBehaviour
     [SerializeField] private float spawnIntervalPolice = 5f;
     [SerializeField] private float spawnIntervalPedestrian = 5f;
 
+    // List to keep track of active NPCs
     private List<GameObject> activePoliceNPCs = new List<GameObject>();
     private List<GameObject> activePedestrians = new List<GameObject>();
 

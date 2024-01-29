@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private float horizontal; // Horizontal input for movement control
-    private float vertical; // Vertical input for climbing control
-    private float speed = 5f; // Moving speed left/right 
-    private float climbingSpeed = 3f; // Climbing speed
-    private float jumpingPower = 7f; // Jumping speed
-    public int jumpsLeft = 1; // Maximum number of jumps
-    private bool isClimbing = false; // Flag for climb check
+    // Variables for movement
+    private float horizontal;
+    private float vertical;
 
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float climbingSpeed = 3f;
+    [SerializeField] private float jumpingPower = 7f;
+    [SerializeField] public int jumpsLeft = 1;
+    [SerializeField] private const float noGravity = 0f;
+    [SerializeField] private const float gravity = 1f;
+    private bool isClimbing = false;
+    private const float maxJumpTime = 0.2f;
+    private const float groundCheckDistance = 1f;
+    private const float climbCheckDistance = 0.2f;
+
+    // Gameobjects
     [SerializeField] private Rigidbody2D player;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
@@ -32,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // Handle climbing while the button is held
             isClimbing = true;
-            player.gravityScale = 0f;
+            player.gravityScale = noGravity;
             jumpsLeft = 1;
         }
 
@@ -42,7 +50,6 @@ public class PlayerMovement : MonoBehaviour
     {
         // Differentiate between pressing and holding spacebar
         float timePressed = 0f;
-        float maxJumpTime = 0.2f;
 
         while (timePressed < maxJumpTime && Input.GetButton("Jump"))
         {
@@ -72,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        Collider2D collision = Physics2D.OverlapCircle(groundCheck.position, 1f, groundLayer);
+        Collider2D collision = Physics2D.OverlapCircle(groundCheck.position, groundCheckDistance, groundLayer);
         return !isClimbing && collision != null;
     }
 
@@ -88,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
         {
             player.velocity = new Vector2(horizontal * speed, jumpingPower);
             isClimbing = false;
-            player.gravityScale = 1f;
+            player.gravityScale = gravity;
         }
         else
         {
@@ -113,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
         {
             {
                 isClimbing = false;
-                player.gravityScale = 1f;
+                player.gravityScale = gravity;
             }
         }
 
@@ -128,6 +135,6 @@ public class PlayerMovement : MonoBehaviour
     private bool CanClimb()
     {   
         // Check if player can climb
-        return !isClimbing && Physics2D.OverlapCircle(groundCheck.position, 0.2f, climbableLayer);
+        return !isClimbing && Physics2D.OverlapCircle(groundCheck.position, climbCheckDistance, climbableLayer);
     }
 }

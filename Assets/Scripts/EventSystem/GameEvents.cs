@@ -10,16 +10,13 @@ public class GameEvents : MonoBehaviour
     public static GameEvents _current;
     public static GameEvents Current => _current;
 
+    // Variables for minigames
+    private int randomMinigame;
+    [SerializeField] private GameObject simonSaysPrefab;
+
     private void Awake()
     {
-        if (_current != null && _current != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         _current = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public event Action<int> Tick;
@@ -32,7 +29,28 @@ public class GameEvents : MonoBehaviour
     public void OnPickPocketing(bool isPickpocketing)
     {
         PickPocketing?.Invoke(isPickpocketing);
+        // 10% chance that all police officers are alerted when pickpocketing happens
+        if (isPickpocketing && UnityEngine.Random.Range(0f, 1f) <= 0.1f)
+
+        {
+            AlertAllPoliceOfficers();
+        }
+        randomMinigame = UnityEngine.Random.Range(0, 3);
+        
+        switch (randomMinigame)
+        {
+            case 0:
+                StartSimonSaysGame();
+                break;
+            case 1:
+                StartSimonSaysGame();
+                break;
+            case 2:
+                StartSimonSaysGame();
+                break;
+        }
     }
+
 
     public event Action<int> Level;
     public void OnLevelChanged(int level)
@@ -49,5 +67,41 @@ public class GameEvents : MonoBehaviour
         SceneManager.LoadScene("EndScene");
         GameOver?.Invoke(reason);
     }
+
+    // Function to alert all police officers
+    void AlertAllPoliceOfficers()
+    {
+        PoliceNPC[] policeOfficers = GameObject.FindObjectsOfType<PoliceNPC>();
+
+        foreach (PoliceNPC policeOfficer in policeOfficers)
+        {
+            // Activate the alert state for each police officer
+            policeOfficer.OfficerOnAlert();
+        }
+    }
+
+    // Function to start the simonsaysgame
+    public void StartSimonSaysGame()
+    {
+        if (simonSaysPrefab != null)
+        {
+            GameObject simonSaysObject = Instantiate(simonSaysPrefab);
+            SimonSays simonsays = simonSaysObject.GetComponent<SimonSays>();
+
+            // Check if simonsays component is null
+            if (simonsays == null)
+            {
+                Debug.LogError("SimonSays component not found on the instantiated object.");
+                return;
+            }
+
+            simonsays.StartGame();
+        }
+        else
+        {
+            Debug.LogError("SimonSays prefab is not assigned in the inspector.");
+        }
+    }
+
 
 }

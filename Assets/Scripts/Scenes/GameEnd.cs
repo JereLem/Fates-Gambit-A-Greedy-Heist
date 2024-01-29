@@ -8,13 +8,13 @@ public class GameEnd : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Get UI elements and assign values
         Transform endScreen = GameObject.Find("EndScreen").transform;
         TMP_Text pedestriansPickpocketed = endScreen.Find("pedestriansPickpocketed").GetComponent<TMP_Text>();
         pedestriansPickpocketed.text = GameStats.pedestriansPickpocketed.ToString();
 
         TMP_Text pickpocketedValue = endScreen.Find("pickpocketedValue").GetComponent<TMP_Text>();
         pickpocketedValue.text = GameStats.pickpocketedValue.ToString();
-
 
         TMP_Text gameDuration = endScreen.Find("GameDuration").GetComponent<TMP_Text>();
         gameDuration.text = GameStats.GameDuration.ToString();

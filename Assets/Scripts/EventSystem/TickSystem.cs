@@ -8,15 +8,20 @@ namespace EventSystem
         // Tick variables 
         private float timer;
         private float timerMax;
-        [SerializeField] private int currentTick = 0;
 
+        [SerializeField] private int currentTick = 0;
         [SerializeField] private int tickSpeed;
 
         public int GetCurrentTick() { return currentTick; }
         public int GetTickSpeed() { return tickSpeed; }
 
+        // Reference to LevelParameters script
+        [SerializeField] private LevelParameters levelParameters;
+
+
         private void Start()
         {
+            levelParameters = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>();
             StartCoroutine(Tick());
         }
 
