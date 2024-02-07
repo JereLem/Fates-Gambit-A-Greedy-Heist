@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3101523717776212053}
   - component: {fileID: 1953139817407698610}
   - component: {fileID: 2931164624485853530}
-  - component: {fileID: -691540192008262304}
   - component: {fileID: 6948868329104795668}
   - component: {fileID: 3993916120436470458}
   m_Layer: 0
@@ -100,27 +99,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff499de30538844e81bd1b89c57d5a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  talkDuration: 20
-  pickpocketableValue: 0
-  triggerEntered: 0
---- !u!114 &-691540192008262304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5204744939472173731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3103d49552b54d849aacbca0404dfe7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   startPoint: {x: -20, y: 1}
   endPoint: {x: 20, y: 1}
   completedCycles: 0
   maxCycles: 0
   originalMoveSpeed: 0
   moveSpeed: 2
+  talkDuration: 20
+  isTalking: 0
+  pickpocketableValue: 0
+  hasBeenPickpocketed: 0
+  triggerEntered: 0
 --- !u!61 &6948868329104795668
 BoxCollider2D:
   m_ObjectHideFlags: 0

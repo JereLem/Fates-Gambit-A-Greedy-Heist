@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Diagnostics;
 
 public class SimonSays : MonoBehaviour
 {
@@ -36,17 +37,26 @@ public class SimonSays : MonoBehaviour
 
     void Update()
     {
+        // Check if pedestrians stopped talking
         if (!currentPedestrian.isTalking)
         {
             playerInput.Clear();
-            Debug.Log("Too slow!");
+            UnityEngine.Debug.Log("Too slow!");
+            Destroy(gameObject);
+        }
+
+        // Check if the player has exited the pedestrian collider
+        if (currentPedestrian != null && !currentPedestrian.triggerEntered)
+        {
+            playerInput.Clear();
+            UnityEngine.Debug.Log("Player exited the pedestrian collider!");
             Destroy(gameObject);
         }
     }
 
     public void StartGame()
     {
-        float delayBeforeStart = 2.0f; // Adjust the delay time as needed
+        float delayBeforeStart = 0.5f; // Adjust the delay time as needed
         StartCoroutine(StartGameWithDelay(delayBeforeStart));
         currentPedestrian = GetCurrentPedestrian();
     }
@@ -185,6 +195,8 @@ public class SimonSays : MonoBehaviour
             // Correct input --> get value of current pedestrian and add to player
             playerInput.Clear();
             playerStats.AddValue(currentPedestrian.pickpocketableValue);
+            currentPedestrian.hasBeenPickpocketed = true;
+            currentPedestrian.SetMaxCycles();
             Destroy(gameObject);
         }
     }

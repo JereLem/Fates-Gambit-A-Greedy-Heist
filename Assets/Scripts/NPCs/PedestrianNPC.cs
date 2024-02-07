@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
-public class PedestrianNPC : MonoBehaviour
+public class PedestrianNPC : NPCMovement
 {
-    // Pedestrian variables
+    [Header("Pedestrian variables")]
     public float talkDuration = 5f;
     public bool isTalking = false;
     public int pickpocketableValue;
@@ -25,12 +26,6 @@ public class PedestrianNPC : MonoBehaviour
     // List to store all talking pedestrians
     public static List<PedestrianNPC> talkingNPCs = new List<PedestrianNPC>();
 
-    // NPC movement
-    private NPCMovement npcMovement;
-
-    // Pickpocket script
-    private PickPocketing pickpocketInteraction;
-
     // Pickpocketing variables
     private const KeyCode pickpocketKey = KeyCode.E;
     private const float pickpocketingDistanceThreshold = 1.5f;
@@ -39,33 +34,39 @@ public class PedestrianNPC : MonoBehaviour
     // Extra flag to check the player can start pickpocketing the pedestrian
     public bool triggerEntered;
 
+    private PickPocketing pickpocketInteraction;
 
-    void Start()
+
+    new void Start()
     {
         // Get player transform and stats
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         playerStats = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerStats>();
         
-        // Adjust pickpocketableValue
         // 90% chance the pedestrian is default type 10% rich 
         pedestrianTypeChance = Random.Range(1, 11);
         pickpocketableValue = (pedestrianTypeChance <= 9) ? Random.Range(10, 15) : Random.Range(20, 25);
 
-        // Get movement script
-        npcMovement = GetComponent<NPCMovement>();
-
         // Attach the Pickpocketing script to the pedestrian
         pickpocketInteraction = gameObject.AddComponent<PickPocketing>();
+        base.Start();
 
     }
 
     void Update()
     {
+        Move();
+
         // Pickpocketing is activated by pressing E, and player has to be near 2 talking pedestrians
         if (Input.GetKeyDown(pickpocketKey) && triggerEntered == true)
         {
             StartPickpocketing();
-        } 
+        }
+
+        else if(hasBeenPickpocketed)
+        {
+            SetMaxCycles();
+        }
     }
 
     private void StartPickpocketing()
@@ -73,7 +74,6 @@ public class PedestrianNPC : MonoBehaviour
         if (!hasBeenPickpocketed)
         {
             pickpocketInteraction.StartPickpocketing();
-            hasBeenPickpocketed = true;
         }
     }
 
@@ -91,7 +91,7 @@ public class PedestrianNPC : MonoBehaviour
             yield return new WaitForSeconds(talkDuration);
 
             // Resume movement after NPCs have stop talking
-            npcMovement.ResumeMovement();
+            ResumeMovement();
 
             // Deactivate pickpocketing, if pedestrians stop talking
             StopPickpocketing();
@@ -109,7 +109,7 @@ public class PedestrianNPC : MonoBehaviour
     // If two pedestrians collide they might start talking 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("PedestrianNPC") && !isTalking)
+        if (collision.gameObject.CompareTag("PedestrianNPC") && !isTalking && !hasBeenPickpocketed)
         {
             PedestrianNPC otherNPC = collision.gameObject.GetComponent<PedestrianNPC>();
 
@@ -124,11 +124,11 @@ public class PedestrianNPC : MonoBehaviour
                     StartCoroutine(StartTalking());
 
                     // Stop NPCMovement when they start to talk
-                    npcMovement.StopMovement();
+                    StopMovement();
 
 
                     otherNPC.StartCoroutine(otherNPC.StartTalking());
-                    otherNPC.npcMovement.StopMovement();
+                    otherNPC.StopMovement();
 
                     currentTalkingNPCs++;
                     otherNPC.currentTalkingNPCs++;
@@ -157,6 +157,7 @@ public class PedestrianNPC : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             triggerEntered = false;
+            playerStats.isPickpocketing = false;
         }
     }
 }

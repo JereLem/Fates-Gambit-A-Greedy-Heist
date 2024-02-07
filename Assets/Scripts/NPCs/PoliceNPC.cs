@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoliceNPC : MonoBehaviour
+public class PoliceNPC : NPCMovement
 {
 
     // Police officer variables
@@ -14,7 +14,7 @@ public class PoliceNPC : MonoBehaviour
     private bool isChasing = false;
     public int policeRank;
     private bool isAlertActive;
-    [SerializeField] private const float initialCatchDelay = 1.5f;
+    [SerializeField] private const float initialCatchDelay = 0.5f;
     [SerializeField] private const float minCatchDelayMultiplier = 0.2f;
     [SerializeField] private float runSpeed = 3.0f;
 
@@ -27,11 +27,10 @@ public class PoliceNPC : MonoBehaviour
     [SerializeField] public GameObject eyeIcon;
 
     // NPC movement
-    private NPCMovement npcMovement;
     private Coroutine catchCoroutine;
 
 
-    void Start()
+    new void Start()
     {
         // Alert state for the police officer
         isAlertActive = false;
@@ -43,17 +42,16 @@ public class PoliceNPC : MonoBehaviour
         eyeIcon.transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
 
         // Randomness for each police officer
-        policeRank = Random.Range(1, 3);
+        policeRank = Random.Range(1, 2);
         detectDistance = detectDistance + policeRank;
         catchDelay = initialCatchDelay - (minCatchDelayMultiplier * policeRank);
-
-        // Get movement script
-        npcMovement = GetComponent<NPCMovement>();
+        base.Start();
 
     }
 
     void Update()
     {
+        Move();
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         // Check if the player is within the detect distance and player pickpocketing or police are on alert
@@ -65,13 +63,13 @@ public class PoliceNPC : MonoBehaviour
         // If police officer is trying to catch the player stop movement.
         if (isCatching)
         {
-            npcMovement.StopMovement();
+            StopMovement();
         }
 
         // Else continue moving.
         else
         {
-            npcMovement.ResumeMovement();
+            ResumeMovement();
         }
     }
 
