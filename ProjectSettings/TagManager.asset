@@ -9,6 +9,8 @@ TagManager:
   - PedestrianNPC
   - EventSystem
   - Ground
+  - Window
+  - GameManager
   layers:
   - Default
   - TransparentFX

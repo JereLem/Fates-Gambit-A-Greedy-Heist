@@ -10,13 +10,12 @@ public class GameEvents : MonoBehaviour
     public static GameEvents _current;
     public static GameEvents Current => _current;
 
-    // Variables for minigames
-    private int randomMinigame;
-    [SerializeField] private GameObject simonSaysPrefab;
+    private GameManager gameManager;
 
     private void Awake()
     {
         _current = this;
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
     public event Action<int> Tick;
@@ -35,20 +34,8 @@ public class GameEvents : MonoBehaviour
         {
             AlertAllPoliceOfficers();
         }
-        randomMinigame = UnityEngine.Random.Range(0, 3);
+        gameManager.StartRandomMinigame();
         
-        switch (randomMinigame)
-        {
-            case 0:
-                StartSimonSaysGame();
-                break;
-            case 1:
-                StartSimonSaysGame();
-                break;
-            case 2:
-                StartSimonSaysGame();
-                break;
-        }
     }
 
 
@@ -79,29 +66,5 @@ public class GameEvents : MonoBehaviour
             policeOfficer.OfficerOnAlert();
         }
     }
-
-    // Function to start the simonsaysgame
-    public void StartSimonSaysGame()
-    {
-        if (simonSaysPrefab != null)
-        {
-            GameObject simonSaysObject = Instantiate(simonSaysPrefab);
-            SimonSays simonsays = simonSaysObject.GetComponent<SimonSays>();
-
-            // Check if simonsays component is null
-            if (simonsays == null)
-            {
-                Debug.LogError("SimonSays component not found on the instantiated object.");
-                return;
-            }
-
-            simonsays.StartGame();
-        }
-        else
-        {
-            Debug.LogError("SimonSays prefab is not assigned in the inspector.");
-        }
-    }
-
 
 }
