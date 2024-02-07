@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PedestrianNPC : NPCMovement
 {
-    [Header("Pedestrian variables")]
+    [Header("Pedestrian Variables")]
     public float talkDuration = 5f;
     public bool isTalking = false;
     public int pickpocketableValue;
@@ -26,16 +26,13 @@ public class PedestrianNPC : NPCMovement
     // List to store all talking pedestrians
     public static List<PedestrianNPC> talkingNPCs = new List<PedestrianNPC>();
 
-    // Pickpocketing variables
+    [Header("Pickpocketing Flags")]
     private const KeyCode pickpocketKey = KeyCode.E;
     private const float pickpocketingDistanceThreshold = 1.5f;
     public bool hasBeenPickpocketed = false;
 
     // Extra flag to check the player can start pickpocketing the pedestrian
     public bool triggerEntered;
-
-    private PickPocketing pickpocketInteraction;
-
 
     new void Start()
     {
@@ -47,8 +44,6 @@ public class PedestrianNPC : NPCMovement
         pedestrianTypeChance = Random.Range(1, 11);
         pickpocketableValue = (pedestrianTypeChance <= 9) ? Random.Range(10, 15) : Random.Range(20, 25);
 
-        // Attach the Pickpocketing script to the pedestrian
-        pickpocketInteraction = gameObject.AddComponent<PickPocketing>();
         base.Start();
 
     }
@@ -73,13 +68,13 @@ public class PedestrianNPC : NPCMovement
     {
         if (!hasBeenPickpocketed)
         {
-            pickpocketInteraction.StartPickpocketing();
+            playerStats.isPickpocketing = true;
         }
     }
 
     private void StopPickpocketing()
     {
-        pickpocketInteraction.StopPickpocketing();
+        playerStats.isPickpocketing = false;
     }
 
     // Pedestrians start to talk, and will talk a set duration

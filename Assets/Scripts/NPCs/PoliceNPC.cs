@@ -6,27 +6,34 @@ public class PoliceNPC : NPCMovement
 {
 
     // Police officer variables
-    public float detectDistance = 3.0f;
-    public float timeChasing = 5.0f;
-    public float timeOnAlert = 5.0f;
-    public float catchDelay = 2.0f;
-    public bool isCatching = false;
-    private bool isChasing = false;
-    public int policeRank;
-    private bool isAlertActive;
+    [Header("Police Officer Variables")]
+    [SerializeField] public int policeRank;
+    [SerializeField] public float detectDistance = 3.0f;
+    [SerializeField] private float runSpeed = 3.0f;
+
+
+
+    [Header("Police Officer Times & Delays")]
+    [SerializeField] public float timeChasing = 5.0f;
+    [SerializeField] public float timeOnAlert = 5.0f;
+    [SerializeField] public float catchDelay = 2.0f;
     [SerializeField] private const float initialCatchDelay = 0.5f;
     [SerializeField] private const float minCatchDelayMultiplier = 0.2f;
-    [SerializeField] private float runSpeed = 3.0f;
+
+
+    [Header("Police Officer Flags")]
+    [SerializeField] public bool isCatching = false;
+    [SerializeField] private bool isChasing = false;
+    [SerializeField] private bool isAlertActive;
+
+
+    [Header("Police Officer Eye Icon")]
+    [SerializeField] public GameObject eyeIcon;
 
 
     // Player
     private Transform player;
     private PlayerStats playerStats;
-
-    // Eye icon
-    [SerializeField] public GameObject eyeIcon;
-
-    // NPC movement
     private Coroutine catchCoroutine;
 
 

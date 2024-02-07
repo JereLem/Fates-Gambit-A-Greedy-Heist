@@ -8,12 +8,12 @@ using System.Diagnostics;
 public class SimonSays : MonoBehaviour
 {
 
-    // List to keep the sequence and playerinput
+    [Header("Sequence & Player Input")]
     public List<SimonColor> sequence = new List<SimonColor>();
     public List<SimonColor> playerInput = new List<SimonColor>();
     
 
-    // Color Buttons
+    [Header("Color Buttons")]
     [SerializeField] public Button redButton;
     [SerializeField] public Button greenButton;
     [SerializeField] public Button blueButton;

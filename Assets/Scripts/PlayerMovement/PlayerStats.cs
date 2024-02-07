@@ -5,17 +5,17 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
 
-    // Player variables
+    [Header("Player Variables")]
     public int timesCaught;
     public int maximumTimesCaught = 1;
     public int pickpocketedValue;
 
-    // Get levelParameters
+    [Header("Level Parameters")]
     public LevelParameters levelParameters;
 
     private int finalLevel = 2;
 
-    //Flag to see if player is pickpocketing
+    [Header("Player Flags")]
     public bool isPickpocketing;
     private bool isPickpocketingInProgress = false;
 

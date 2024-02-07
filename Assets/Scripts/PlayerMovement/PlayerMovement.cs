@@ -7,19 +7,24 @@ public class PlayerMovement : MonoBehaviour
     // Variables for movement
     private float horizontal;
     private float vertical;
-
+    
+    [Header("Player speeds")]
     [SerializeField] private float speed = 5f;
     [SerializeField] private float climbingSpeed = 3f;
     [SerializeField] private float jumpingPower = 7f;
     [SerializeField] public int jumpsLeft = 1;
+
+    [Header("Gravity and Jumping")]
     [SerializeField] private const float noGravity = 0f;
     [SerializeField] private const float gravity = 1f;
     private bool isClimbing = false;
     private const float maxJumpTime = 0.2f;
+
+    [Header("Ground and Wall Checks")]
     private const float groundCheckDistance = 1f;
     private const float climbCheckDistance = 0.2f;
 
-    // Gameobjects
+    [Header("Gameobjects")]
     [SerializeField] private Rigidbody2D player;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
