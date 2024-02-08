@@ -4,56 +4,51 @@ using UnityEngine;
 
 public class NPCMovement : MonoBehaviour
 {   
-    // Start & End Points
-    [SerializeField] public Vector2 startPoint;
-    [SerializeField] public Vector2 endPoint;
 
-    // Current & Max Cycles
+    [Header("Start and Endpoint")]
+    [SerializeField] private Vector2 startPoint;
+    [SerializeField] private Vector2 endPoint;
+    bool movingToEndPoint = true;
+
+    [Header("Cycles")]
     [SerializeField] public int completedCycles;
     [SerializeField] public int maxCycles = 0;
 
-    // Default moving speed & flag to reset the direction
-    public float originalMoveSpeed;
-    public float moveSpeed;
-    private bool movingToEndPoint = true;
+    [Header("Speeds")]
+    [SerializeField] public float originalMoveSpeed;
+    [SerializeField] public float moveSpeed;
 
-    private const float minMoveSpeed = 1f;
-    private const float maxMoveSpeed = 3f;
-
-    private const int minCyclesAmmount = 1;
-    private const int maxCyclesAmmount = 4;
+    [Header("Min & Max Values")]
+    const float minMoveSpeed = 1f;
+    const float maxMoveSpeed = 3f;
+    const int minCyclesAmmount = 1;
+    const int maxCyclesAmmount = 4;
 
 
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
         InitializeStartPosition();
         InitializeMovementParameters();
     }
 
-    void InitializeStartPosition()
+    protected void InitializeStartPosition()
     {
         bool startFromLeft = Random.Range(0, 2) == 0;
         transform.position = startFromLeft ? startPoint : endPoint;
         completedCycles = 0;
     }
 
-    void InitializeMovementParameters()
+    protected void InitializeMovementParameters()
     {
         maxCycles = Random.Range(minCyclesAmmount, maxCyclesAmmount);
         moveSpeed = Random.Range(minMoveSpeed, maxMoveSpeed);
         originalMoveSpeed = moveSpeed;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        Move();
-    }
-
 
     // Movement of the NPC
-    void Move()
+    protected void Move()
     {
         // Add some randomness that it is more realistic. Some walk faster, some slower
         float step = moveSpeed * Time.deltaTime;
@@ -74,30 +69,27 @@ public class NPCMovement : MonoBehaviour
     }
 
     // Method to stop movement
-    public void StopMovement()
+    protected void StopMovement()
     {
         // Set moveSpeed to zero to stop movement
         moveSpeed = 0f;
     }
 
     // Method to resume movement
-    public void ResumeMovement()
+    protected void ResumeMovement()
     {
         // Reset moveSpeed to the original value
         moveSpeed = originalMoveSpeed;
     }
 
-    // Method to set the cycles to max
+    // Method to set max movement, used for removing the pedestrian after they have been pickpocketed
     public void SetMaxCycles()
     {
-        // Reset moveSpeed to the original value
         completedCycles = maxCycles;
     }
 
-
-
     // Method to check if the NPC has gone all cycles, calls the NPCSpawner
-    public void CheckCycleCompletion()
+    protected void CheckCycleCompletion()
     {
         if (completedCycles >= maxCycles)
         {

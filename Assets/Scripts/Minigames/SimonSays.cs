@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Diagnostics;
 
 public class SimonSays : MonoBehaviour
 {
 
-    // List to keep the sequence and playerinput
+    [Header("Sequence & Player Input")]
     public List<SimonColor> sequence = new List<SimonColor>();
     public List<SimonColor> playerInput = new List<SimonColor>();
     
 
-    // Color Buttons
+    [Header("Color Buttons")]
     [SerializeField] public Button redButton;
     [SerializeField] public Button greenButton;
     [SerializeField] public Button blueButton;
@@ -26,6 +27,8 @@ public class SimonSays : MonoBehaviour
     private int sequenceIndex = 0;
     private float highlightDuration = 1.0f;
     private float elapsedTime = 0.0f;
+    private float gameTime;
+
 
 
     void Start()
@@ -36,20 +39,38 @@ public class SimonSays : MonoBehaviour
 
     void Update()
     {
+        // Check if pedestrians stopped talking
         if (!currentPedestrian.isTalking)
         {
             playerInput.Clear();
-            Debug.Log("Too slow!");
-            Destroy(gameObject);
+            UnityEngine.Debug.Log("Too slow!");
+            DestroyMiniGame();
         }
+
+        // Check if the player has exited the pedestrian collider
+        if (currentPedestrian != null && !currentPedestrian.triggerEntered)
+        {
+            playerInput.Clear();
+            UnityEngine.Debug.Log("Player exited the pedestrian collider!");
+            DestroyMiniGame();
+        }
+        gameTime += Time.deltaTime;
     }
 
     public void StartGame()
     {
-        float delayBeforeStart = 2.0f; // Adjust the delay time as needed
-        StartCoroutine(StartGameWithDelay(delayBeforeStart));
-        currentPedestrian = GetCurrentPedestrian();
+        // Check with GameManager if a mini-game is already active
+        if (!GameManager.IsMiniGameActive())
+        {
+            GameManager.SetMiniGameActive(true);
+            DisableInput();
+            float delayBeforeStart = 0.25f;
+            StartCoroutine(StartGameWithDelay(delayBeforeStart));
+            currentPedestrian = GetCurrentPedestrian();
+        }
+        
     }
+
 
     IEnumerator StartGameWithDelay(float delayTime)
     {
@@ -58,9 +79,7 @@ public class SimonSays : MonoBehaviour
         // Generate and show the sequence after the delay
         GenerateSequence();
         StartCoroutine(ShowSequence());
-
-        // Enable input after showing the sequence
-        EnableInput();
+        gameTime = 0f;
     }
 
     void GenerateSequence()
@@ -74,20 +93,9 @@ public class SimonSays : MonoBehaviour
         }
     }
 
-    void DisableInput()
-    {
-        // Disable button clicks during the sequence display
-        redButton.onClick.RemoveAllListeners();
-        greenButton.onClick.RemoveAllListeners();
-        blueButton.onClick.RemoveAllListeners();
-        yellowButton.onClick.RemoveAllListeners();
-    }
 
     IEnumerator ShowSequence()
     {
-        // Disable input from player when sequence the sequence is shown
-        DisableInput();
-
         while (sequenceIndex < sequence.Count)
         {
             elapsedTime += Time.deltaTime;
@@ -103,6 +111,7 @@ public class SimonSays : MonoBehaviour
             yield return null;
         }
         yield return new WaitForSeconds(0.5f);
+        EnableInput();
     }
 
     void HighlightButton(SimonColor color)
@@ -151,9 +160,22 @@ public class SimonSays : MonoBehaviour
         }
     }
 
+    void DisableInput()
+    {
+        // Disable button clicks during the sequence display
+        redButton.interactable = false;
+        greenButton.interactable = false;
+        blueButton.interactable = false;
+        yellowButton.interactable = false;
+    }
 
     void EnableInput()
     {
+        redButton.interactable = true;
+        greenButton.interactable = true;
+        blueButton.interactable = true;
+        yellowButton.interactable = true;
+
         // Remove existing listeners before adding new ones
         redButton.onClick.RemoveAllListeners();
         greenButton.onClick.RemoveAllListeners();
@@ -178,15 +200,30 @@ public class SimonSays : MonoBehaviour
         {
             // Wrong input --> stop the game
             playerInput.Clear();
-            Destroy(gameObject);
+            DestroyMiniGame();
         }
         else if (playerInput.Count == sequence.Count)
         {
             // Correct input --> get value of current pedestrian and add to player
             playerInput.Clear();
             playerStats.AddValue(currentPedestrian.pickpocketableValue);
-            Destroy(gameObject);
+            currentPedestrian.hasBeenPickpocketed = true;
+            currentPedestrian.SetMaxCycles();
+        
+            // Call GameManager method to calculate and apply the time bonus
+            GameManager.Instance.CalculateTimeBonus(gameTime);
+
+            DestroyMiniGame();
         }
+    }
+
+    void DestroyMiniGame()
+    {
+        // Inform GameManager that the mini-game is no longer active
+        GameManager.SetMiniGameActive(false);
+
+        // Destroy the mini-game object
+        Destroy(gameObject);
     }
 
     PedestrianNPC GetCurrentPedestrian()
@@ -215,6 +252,7 @@ public class SimonSays : MonoBehaviour
                 return false;
             }
         }
+
         return true;
     }
 }

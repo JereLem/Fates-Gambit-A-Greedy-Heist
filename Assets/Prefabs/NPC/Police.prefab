@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1275214021118419750}
   - component: {fileID: 6130415914642365583}
   - component: {fileID: 4041071005372459906}
-  - component: {fileID: 47958847468847478}
   - component: {fileID: 546371349900177530}
   m_Layer: 0
   m_Name: Police
@@ -133,24 +132,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &47958847468847478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7357996120253385111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3103d49552b54d849aacbca0404dfe7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startPoint: {x: -25, y: 1}
-  endPoint: {x: 25, y: 1}
-  completedCycles: 0
-  maxCycles: 0
-  originalMoveSpeed: 0
-  moveSpeed: 2
 --- !u!114 &546371349900177530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,11 +144,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33092f2ae364f8b4fad9aa4f277c3154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startPoint: {x: -25, y: 1}
+  endPoint: {x: 25, y: 1}
+  completedCycles: 0
+  maxCycles: 0
+  originalMoveSpeed: 2
+  moveSpeed: 2
   detectDistance: 3
   timeChasing: 5
+  timeOnAlert: 5
   catchDelay: 2
   isCatching: 0
   policeRank: 1
+  runSpeed: 3
   eyeIcon: {fileID: 9078600054862423357}
 --- !u!1 &9078600054862423357
 GameObject:
