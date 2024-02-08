@@ -56,7 +56,7 @@ public class PoliceNPC : NPCMovement
 
     }
 
-    new void Update()
+    void Update()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
