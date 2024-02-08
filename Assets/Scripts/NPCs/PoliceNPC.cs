@@ -56,9 +56,8 @@ public class PoliceNPC : NPCMovement
 
     }
 
-    void Update()
+    new void Update()
     {
-        Move();
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         // Check if the player is within the detect distance and player pickpocketing or police are on alert
@@ -71,6 +70,11 @@ public class PoliceNPC : NPCMovement
         if (isCatching)
         {
             StopMovement();
+        }
+
+        if (!isChasing) // Only move if not chasing
+        {
+            base.Move(); // Call the base Move method for regular NPC movement
         }
 
         // Else continue moving.
