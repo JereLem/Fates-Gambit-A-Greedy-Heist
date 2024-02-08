@@ -105,7 +105,7 @@ MonoBehaviour:
   maxCycles: 0
   originalMoveSpeed: 0
   moveSpeed: 2
-  talkDuration: 20
+  talkDuration: 30
   isTalking: 0
   pickpocketableValue: 0
   hasBeenPickpocketed: 0
