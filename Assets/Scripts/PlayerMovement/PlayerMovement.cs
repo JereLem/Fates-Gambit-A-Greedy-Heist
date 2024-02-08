@@ -137,4 +137,5 @@ public class PlayerMovement : MonoBehaviour
         // Check if player can climb
         return !isClimbing && Physics2D.OverlapCircle(groundCheck.position, climbCheckDistance, climbableLayer);
     }
+
 }
