@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 
     private int randomMinigame;
 
-    [Header("Minigame Objects")]
+    [Header("Minigames")]
     [SerializeField] private GameObject simonSaysPrefab;
 
     private void Awake()
@@ -31,46 +31,24 @@ public class GameManager : MonoBehaviour
         switch (randomMinigame)
         {
             case 0:
-                StartSimonSaysGame();
+                StartMiniGame(simonSaysPrefab);
                 break;
             case 1:
-                StartSimonSaysGame();
+                StartMiniGame(simonSaysPrefab);
                 break;
             case 2:
-                StartSimonSaysGame();
+                StartMiniGame(simonSaysPrefab);
                 break;
         }
     }
 
-    // Function to start the SimonSays game
-    private void StartSimonSaysGame()
+    // Function to start the minigames
+    private void StartMiniGame(GameObject minigamePrefab)
     {
-        if (simonSaysPrefab != null)
+        if (minigamePrefab != null)
         {
-            GameObject simonSaysObject = Instantiate(simonSaysPrefab);
-            SimonSays simonSays = simonSaysObject.GetComponent<SimonSays>();
-
-            if (simonSays != null)
-            {
-                simonSays.StartGame();
-            }
+            GameObject gameObject = Instantiate(minigamePrefab);
         }
 
     }
-
-    // Function to start the Arrow game
-    private void StartArrowGame()
-    {
-    }
-
-    // Function to start the Safe game
-    private void StartSafeGame()
-    {
-    }
-
-    // Function to start the ElectricalCircuit game
-    private void StartCircuitGame()
-    {
-    }
-
 }
