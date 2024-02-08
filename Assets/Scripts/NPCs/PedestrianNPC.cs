@@ -6,6 +6,7 @@ using UnityEngine;
 public class PedestrianNPC : NPCMovement
 {
     [Header("Pedestrian Variables")]
+    public Sprite[] sprites;
     public float talkDuration = 5f;
     public bool isTalking = false;
     public int pickpocketableValue;
@@ -36,6 +37,8 @@ public class PedestrianNPC : NPCMovement
 
     new void Start()
     {
+        // Set male or female sprite
+        GetComponent<SpriteRenderer>().sprite = sprites[Random.Range(0,sprites.Length)];
         // Get player transform and stats
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         playerStats = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerStats>();

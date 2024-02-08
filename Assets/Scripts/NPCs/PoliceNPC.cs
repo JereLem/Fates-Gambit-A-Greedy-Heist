@@ -46,7 +46,7 @@ public class PoliceNPC : NPCMovement
         playerStats = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerStats>();
 
         // Set the eye icon above the player
-        eyeIcon.transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
+        eyeIcon.transform.position = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
 
         // Randomness for each police officer
         policeRank = Random.Range(1, 2);
