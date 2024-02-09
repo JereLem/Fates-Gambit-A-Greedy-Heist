@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     private const float maxJumpTime = 0.2f;
 
     [Header("Ground and Wall Checks")]
-    private const float groundCheckDistance = 2f;
+    private const float groundCheckDistance = 1f;
     private const float climbCheckDistance = 0.2f;
 
     [Header("Gameobjects")]
