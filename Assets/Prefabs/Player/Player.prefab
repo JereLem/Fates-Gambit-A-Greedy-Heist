@@ -105,7 +105,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fd1270716454dd94bbddfecaf7ba1bec, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -185,6 +185,7 @@ MonoBehaviour:
   climbableLayer:
     serializedVersion: 2
     m_Bits: 64
+  pushForce: 5
 --- !u!114 &3987393075373304062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,11 +217,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7747573777955915518, guid: 72dfba2ed033a79409db0b59348f271b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0046571456
+      value: -0.0046662334
       objectReference: {fileID: 0}
     - target: {fileID: 7747573777955915518, guid: 72dfba2ed033a79409db0b59348f271b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.320375
+      value: 2.07356
       objectReference: {fileID: 0}
     - target: {fileID: 7747573777955915518, guid: 72dfba2ed033a79409db0b59348f271b, type: 3}
       propertyPath: m_LocalPosition.z
