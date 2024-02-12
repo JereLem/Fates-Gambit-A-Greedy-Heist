@@ -113,15 +113,20 @@ public class PoliceNPC : NPCMovement
 
     IEnumerator TryToCatchPlayer()
     {
-        isCatching = true;
+        // Check if the player has already been caught by another police officer
+        if (!playerStats.hasBeenCaught)
+        {
+            isCatching = true;
 
-        // Wait for the catchDelay duration (Player has basically a final chance to get away)
-        yield return new WaitForSeconds(catchDelay);
+            // Wait for the catchDelay duration (Player has basically a final chance to get away)
+            yield return new WaitForSeconds(catchDelay);
 
-        // After the delay, perform the catching actions
-        playerStats.timesCaught++;
+            // After the delay, perform the catching actions
+            playerStats.timesCaught++;
+            playerStats.hasBeenCaught = true;
 
-        isCatching = false;
+            isCatching = false;
+        }
     }
 
     IEnumerator ChasePlayer()

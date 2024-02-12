@@ -11,6 +11,8 @@ TagManager:
   - Ground
   - Window
   - GameManager
+  - Boundary
+  - Cloud
   layers:
   - Default
   - TransparentFX

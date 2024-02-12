@@ -7,23 +7,30 @@ public class NPCSpawner : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private GameObject policePrefab;
     [SerializeField] private GameObject pedestrianPrefab;
+    [SerializeField] private GameObject cloudPrefab;
 
     [Header("Max NPCs")]
     [SerializeField] private int maxPoliceCount = 5;
     [SerializeField] private int maxPedestrianCount= 5;
+    [SerializeField] private int maxCloudCount = 5;
+
 
     [Header("Spawn Intervals")]
     [SerializeField] private float spawnIntervalPolice = 5f;
     [SerializeField] private float spawnIntervalPedestrian = 5f;
+    [SerializeField] private float spawnIntervalCloud = 10f;
 
     // List to keep track of active NPCs
     private List<GameObject> activePoliceNPCs = new List<GameObject>();
     private List<GameObject> activePedestrians = new List<GameObject>();
+    private List<GameObject> activeClouds = new List<GameObject>();
+
 
     void Start()
     {
         StartCoroutine(SpawnNPCs(spawnIntervalPolice, policePrefab, "PoliceNPCs", maxPoliceCount, activePoliceNPCs));
         StartCoroutine(SpawnNPCs(spawnIntervalPedestrian, pedestrianPrefab, "PedestrianNPCs", maxPedestrianCount, activePedestrians));
+        StartCoroutine(SpawnNPCs(spawnIntervalCloud, cloudPrefab , "Clouds", maxCloudCount, activeClouds));
     }
 
     // Method for spawning the NPCs
@@ -70,6 +77,15 @@ public class NPCSpawner : MonoBehaviour
                 if (movement != null && movement.completedCycles >= movement.maxCycles)
                 {
                     activePedestrians.Remove(npc);
+                    Destroy(npc);
+                }
+            }
+            else if (npc.CompareTag("Cloud"))
+            {
+                NPCMovement movement = npc.GetComponent<NPCMovement>();
+                if (movement != null && movement.completedCycles >= movement.maxCycles)
+                {
+                    activeClouds.Remove(npc);
                     Destroy(npc);
                 }
             }
