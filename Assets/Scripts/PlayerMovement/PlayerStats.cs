@@ -18,7 +18,6 @@ public class PlayerStats : MonoBehaviour
     [Header("Player Flags")]
     public bool isPickpocketing;
     private bool isPickpocketingInProgress = false;
-    public bool hasBeenCaught = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -81,7 +80,6 @@ public class PlayerStats : MonoBehaviour
     public void OnPickPocketing()
     {
         GameEvents._current.OnPickPocketing(true);
-        hasBeenCaught = false;
     }
 
     // Method to reset the flag after pickpocketing is complete.

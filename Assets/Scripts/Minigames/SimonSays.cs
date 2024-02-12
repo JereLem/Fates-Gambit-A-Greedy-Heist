@@ -54,13 +54,6 @@ public class SimonSays : MonoBehaviour
             UnityEngine.Debug.Log("Player exited the pedestrian collider!");
             DestroyMiniGame();
         }
-
-        // If player gets caught stop game
-        if(playerStats.hasBeenCaught)
-        {
-            DestroyMiniGame();
-        }
-
         gameTime += Time.deltaTime;
     }
 

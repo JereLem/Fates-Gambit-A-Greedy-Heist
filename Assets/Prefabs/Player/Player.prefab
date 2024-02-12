@@ -107,7 +107,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: fd1270716454dd94bbddfecaf7ba1bec, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
   climbableLayer:
     serializedVersion: 2
     m_Bits: 64
-
+--- !u!114 &5726901289780587142
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -207,7 +207,8 @@ MonoBehaviour:
 --- !u!114 &6672567241142334301
 MonoBehaviour:
   m_ObjectHideFlags: 0
-
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3492820410593571081}
   m_Enabled: 1
