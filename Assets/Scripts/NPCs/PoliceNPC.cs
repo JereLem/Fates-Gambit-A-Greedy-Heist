@@ -8,8 +8,8 @@ public class PoliceNPC : NPCMovement
     // Police officer variables
     [Header("Police Officer Variables")]
     [SerializeField] public int policeRank;
-    [SerializeField] public float detectDistance = 3.0f;
-    [SerializeField] private float runSpeed = 3.0f;
+    [SerializeField] public float detectDistance = 1.0f;
+    [SerializeField] private float runSpeed = 1.5f;
 
 
 
@@ -17,7 +17,7 @@ public class PoliceNPC : NPCMovement
     [SerializeField] public float timeChasing = 5.0f;
     [SerializeField] public float timeOnAlert = 5.0f;
     [SerializeField] public float catchDelay = 2.0f;
-    [SerializeField] private const float initialCatchDelay = 0.5f;
+    [SerializeField] private const float initialCatchDelay = 2.0f;
     [SerializeField] private const float minCatchDelayMultiplier = 0.2f;
 
 

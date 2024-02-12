@@ -148,11 +148,11 @@ MonoBehaviour:
   endPoint: {x: 25, y: 1}
   completedCycles: 0
   maxCycles: 0
-  originalMoveSpeed: 2
-  moveSpeed: 2
+  originalMoveSpeed: 1
+  moveSpeed: 1
   policeRank: 1
   detectDistance: 3
-  runSpeed: 3
+  runSpeed: 2
   timeChasing: 5
   timeOnAlert: 5
   catchDelay: 2
