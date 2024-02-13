@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     // Variables for movement
     private float horizontal;
     private float vertical;
-    
+
     [Header("Player speeds")]
     [SerializeField] private float speed = 5f;
     [SerializeField] private float climbingSpeed = 3f;
@@ -29,9 +29,26 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask climbableLayer;
+    
+    [Header("Hookshot")]
+    private Camera cam;
+    private RaycastHit2D hit;
+    private LineRenderer lr;
+    private bool OnGrappling = false;
+    private Vector3 spot;
+    [SerializeField] private LayerMask GrapplingObj;
+    [SerializeField] public float hookMoveSpeed = 1f;
+
+    void Start()
+    {
+        cam = Camera.main;
+        lr = GetComponent<LineRenderer>();
+    }
 
     void Update()
     {
+        Debug.Log(OnGrappling);
+        // PlayerMovement Update
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
 
@@ -49,6 +66,36 @@ public class PlayerMovement : MonoBehaviour
             jumpsLeft = 1;
         }
 
+        // RopeAction Update
+        if (Input.GetMouseButton(0))
+        {
+            RopeShoot();
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            EndShoot();
+        }
+
+        if (OnGrappling)
+        {
+            QuickMove();
+        }
+
+        DrawRope();
+    }
+
+    void FixedUpdate()
+    {
+        if (isClimbing)
+        {
+            // Allow vertical movement while climbing
+            player.velocity = new Vector2(horizontal * speed, vertical * climbingSpeed);
+        }
+        else
+        {
+            // Regular horizontal movement when not climbing
+            player.velocity = new Vector2(horizontal * speed, player.velocity.y);
+        }
     }
 
     private IEnumerator JumpCoroutine()
@@ -68,20 +115,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        if (isClimbing)
-        {
-            // Allow vertical movement while climbing
-            player.velocity = new Vector2(horizontal * speed, vertical * climbingSpeed);
-        }
-        else
-        {
-            // Regular horizontal movement when not climbing
-            player.velocity = new Vector2(horizontal * speed, player.velocity.y);
-        }
-    }
-
     private bool IsGrounded()
     {
         Collider2D collision = Physics2D.OverlapCircle(groundCheck.position, groundCheckDistance, groundLayer);
@@ -89,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private bool CanJump()
-    {   
+    {
         // Check if the player can jump (only if on ground or wall)
         return (jumpsLeft > 0 && IsGrounded()) || (isClimbing && jumpsLeft > 0);
     }
@@ -138,8 +171,86 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private bool CanClimb()
-    {   
+    {
         // Check if player can climb
         return !isClimbing && Physics2D.OverlapCircle(groundCheck.position, climbCheckDistance, climbableLayer);
     }
+
+    // Rope Action methods
+    void RopeShoot()
+    {
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition.z = 10f; // Control the distance between camera
+        Vector2 mouseWorldPosition = cam.ScreenToWorldPoint(mousePosition);
+
+        // Detect the collision between player's position and mouse's using Raycast
+        hit = Physics2D.Raycast(player.position, mouseWorldPosition - (Vector2)player.position, 100f, GrapplingObj);
+
+        if (hit.collider != null)
+        {
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Wall"))
+            {
+                Debug.Log("Wall!");
+                OnGrappling = true;
+                lr.positionCount = 2;
+                lr.SetPosition(0, this.transform.position);
+                lr.SetPosition(1, hit.point);
+            }
+        }
+    }
+
+    void EndShoot()
+    {
+        OnGrappling = false;
+        lr.positionCount = 0;
+    }
+
+    void DrawRope()
+    {
+        if (OnGrappling)
+        {
+            lr.SetPosition(0, this.transform.position);
+        }
+    }
+
+    void QuickMove()
+    {
+        if (hit.collider != null)
+        {
+            StartCoroutine(MovePlayerSmoothly(hit.point));
+        }
+    }
+
+    IEnumerator MovePlayerSmoothly(Vector2 targetPosition)
+    {
+        // Introduced threshold to stop player adjusting to the targetPosition for too long
+        float distanceThreshold = 0.1f;
+        float distance = Vector2.Distance(player.position, targetPosition);
+        float duration = distance / hookMoveSpeed;
+
+        float startTime = Time.time;
+
+        while (Time.time - startTime < duration && distance > distanceThreshold)
+        {
+            float step = hookMoveSpeed * Time.deltaTime;
+            player.position = Vector2.Lerp(player.position, targetPosition, step / distance);
+            distance = Vector2.Distance(player.position, targetPosition); // Update the distance
+
+            // Check if within threshold
+            if (distance <= distanceThreshold)
+            {
+                player.position = targetPosition;
+            }
+
+            Debug.Log("Moving smoothly...");
+            yield return null;
+        }
+
+        // Player set to climbing state when hit the wall
+        isClimbing = true;
+        player.gravityScale = noGravity;
+
+        Debug.Log("QuickMove completed");
+    }
+
 }
