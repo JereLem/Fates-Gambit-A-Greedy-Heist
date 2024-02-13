@@ -10,9 +10,6 @@ public class PedestrianNPC : NPCMovement
     public float talkDuration = 5f;
     public bool isTalking = false;
     public int pickpocketableValue;
-    public Sprite[] sprites;
-
-
 
     // Chances
     private int pedestrianTypeChance;
