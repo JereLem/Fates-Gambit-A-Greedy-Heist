@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5597145769690297182}
   - component: {fileID: 3655486771589750721}
-  - component: {fileID: 4631023628401232545}
+  - component: {fileID: 4392489436604534339}
   m_Layer: 7
   m_Name: Ground
   m_TagString: Ground
@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 3456060839941973601}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7903, y: 0, z: 0}
-  m_LocalScale: {x: 49.79216, y: 1, z: 1}
+  m_LocalPosition: {x: -0.0851, y: -0.2084, z: 0}
+  m_LocalScale: {x: 38.718414, y: 0.5833, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.035963263, g: 0.122641504, b: 0.005206477, a: 1}
+  m_Color: {r: 0.035963263, g: 0.122641504, b: 0.005206477, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -85,8 +85,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &4631023628401232545
-BoxCollider2D:
+--- !u!60 &4392489436604534339
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,7 +94,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 3456060839941973601}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: b83d256e96d5d3d4bb43f07e6aa4089f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -127,6 +127,43 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.44081178, y: 0.37772936}
+      - {x: 0.27692193, y: 0.4838798}
+      - {x: 0.23004827, y: 0.3323997}
+      - {x: 0.1738321, y: 0.15682864}
+      - {x: 0.15390301, y: 0.30766845}
+      - {x: 0.13289037, y: 0.37612838}
+      - {x: 0.10757577, y: 0.6657816}
+      - {x: 0.08939564, y: 0.8338996}
+      - {x: 0.07310724, y: 0.947831}
+      - {x: 0.05901628, y: 0.8575005}
+      - {x: 0.03521462, y: 0.9184845}
+      - {x: 0.0065264455, y: 0.9438769}
+      - {x: -0.006826571, y: 0.866433}
+      - {x: -0.021414345, y: 0.8314549}
+      - {x: -0.035265863, y: 0.7306235}
+      - {x: -0.050102197, y: 0.56306595}
+      - {x: -0.071860924, y: 0.32556438}
+      - {x: -0.09064406, y: 0.25654808}
+      - {x: -0.102272816, y: 0.3553486}
+      - {x: -0.11467523, y: 0.52897745}
+      - {x: -0.13355628, y: 0.6674305}
+      - {x: -0.1529574, y: 0.7311739}
+      - {x: -0.1608524, y: 0.7274208}
+      - {x: -0.18694122, y: 0.94671565}
+      - {x: -0.21354891, y: 0.9563314}
+      - {x: -0.23818608, y: 1.0502836}
+      - {x: -0.26005298, y: 1.037339}
+      - {x: -0.28668973, y: 1.1649847}
+      - {x: -0.3263069, y: 0.86884564}
+      - {x: -0.35199457, y: 0.56018084}
+      - {x: -0.39133388, y: 0.6180352}
+      - {x: -0.43968317, y: 0.47385848}
+      - {x: -0.4864489, y: 0.64158416}
+      - {x: -0.50029206, y: 0.51900387}
+      - {x: -0.50087607, y: -0.520419}
+      - {x: 0.5010801, y: -0.5909017}
+      - {x: 0.5022225, y: 0.64595866}
+  m_UseDelaunayMesh: 0

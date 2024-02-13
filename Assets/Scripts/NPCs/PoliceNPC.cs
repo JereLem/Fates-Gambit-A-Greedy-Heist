@@ -8,8 +8,8 @@ public class PoliceNPC : NPCMovement
     // Police officer variables
     [Header("Police Officer Variables")]
     [SerializeField] public int policeRank;
-    [SerializeField] public float detectDistance = 3.0f;
-    [SerializeField] private float runSpeed = 3.0f;
+    [SerializeField] public float detectDistance = 1.0f;
+    [SerializeField] private float runSpeed = 1.5f;
 
 
 
@@ -17,7 +17,7 @@ public class PoliceNPC : NPCMovement
     [SerializeField] public float timeChasing = 5.0f;
     [SerializeField] public float timeOnAlert = 5.0f;
     [SerializeField] public float catchDelay = 2.0f;
-    [SerializeField] private const float initialCatchDelay = 0.5f;
+    [SerializeField] private const float initialCatchDelay = 2.0f;
     [SerializeField] private const float minCatchDelayMultiplier = 0.2f;
 
 
@@ -46,7 +46,7 @@ public class PoliceNPC : NPCMovement
         playerStats = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerStats>();
 
         // Set the eye icon above the player
-        eyeIcon.transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
+        eyeIcon.transform.position = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
 
         // Randomness for each police officer
         policeRank = Random.Range(1, 2);
@@ -113,15 +113,20 @@ public class PoliceNPC : NPCMovement
 
     IEnumerator TryToCatchPlayer()
     {
-        isCatching = true;
+        // Check if the player has already been caught by another police officer
+        if (!playerStats.hasBeenCaught)
+        {
+            isCatching = true;
 
-        // Wait for the catchDelay duration (Player has basically a final chance to get away)
-        yield return new WaitForSeconds(catchDelay);
+            // Wait for the catchDelay duration (Player has basically a final chance to get away)
+            yield return new WaitForSeconds(catchDelay);
 
-        // After the delay, perform the catching actions
-        playerStats.timesCaught++;
+            // After the delay, perform the catching actions
+            playerStats.timesCaught++;
+            playerStats.hasBeenCaught = true;
 
-        isCatching = false;
+            isCatching = false;
+        }
     }
 
     IEnumerator ChasePlayer()
