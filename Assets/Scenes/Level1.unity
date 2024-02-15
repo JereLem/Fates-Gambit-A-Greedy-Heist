@@ -495,6 +495,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
+      propertyPath: arrowGamePrefab
+      value: 
+      objectReference: {fileID: 7880140541430951268, guid: 410f4452bbc24804f8beb151517919e8, type: 3}
+    - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
+      propertyPath: timeBonusMultiplier
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 7301586917381682386, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
       propertyPath: m_Name
       value: MiniGameManager

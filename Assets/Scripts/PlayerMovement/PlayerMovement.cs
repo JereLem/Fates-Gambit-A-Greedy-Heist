@@ -47,7 +47,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(OnGrappling);
         // PlayerMovement Update
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");

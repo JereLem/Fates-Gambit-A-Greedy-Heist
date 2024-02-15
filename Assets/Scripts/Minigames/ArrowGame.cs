@@ -13,68 +13,154 @@ public class ArrowGame : MonoBehaviour
     public Sprite arrowDownWithBox;
     public Sprite x;
 
-    [Header("Duration")]
-    public float roundDuration = 3f;
+    [Header("Duration and rounds")]
+    public float roundDuration = 2f;
+    public int currentRound = 0;
+    public int maxRounds = 10;
 
-    [Header("Sequence")]
-    public List<Sprite> sequence = new List<Sprite>();
+    [Header("Slots")]
     public List<GameObject> slots = new List<GameObject>();
+    public List<Sprite> sequence = new List<Sprite>();
+    public bool isGameRunning = true;
+    public int userInput;
+    // Reference to your UI Text element
+    public TMP_Text roundIndicator;
 
-    private int currentRound = 0;
-    private bool isGameRunning = true;
-    private const int NumberOfRounds = 5;
-
+    // Get playerstats and current pedestrian
+    private PlayerStats playerStats;
+    private PedestrianNPC currentPedestrian;
 
     private void Start()
     {
+        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        currentPedestrian = GetCurrentPedestrian();
         StartCoroutine(RunGame());
+        isGameRunning = true;
     }
+
+    private void Update()
+    {
+        // Check for user input outside the coroutine
+        if (isGameRunning)
+        {
+            CheckUserInput();
+        }
+
+        // Check if pedestrians stopped talking
+        if (!currentPedestrian.isTalking)
+        {
+            UnityEngine.Debug.Log("Too slow!");
+            Destroy(gameObject);
+        }
+
+        // Check if the player has exited the pedestrian collider
+        if (currentPedestrian != null && !currentPedestrian.triggerEntered)
+        {
+            UnityEngine.Debug.Log("Player exited the pedestrian collider!");
+            Destroy(gameObject);
+        }
+
+        // If player gets caught stop game
+        if(playerStats.hasBeenCaught)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
 
     private IEnumerator RunGame()
     {
-        while (currentRound < 5 && isGameRunning)
+        for (currentRound = 0; currentRound < maxRounds && isGameRunning;)
         {
-            Sprite[] generatedSequence = GenerateSequence();
-            DisplaySequence(generatedSequence);
+            sequence = GenerateSequence();
+            DisplaySequence(sequence);
+
+            // Update the round indicator text
+            roundIndicator.text = "Round: " + (currentRound + 1);
 
             float timer = 0f;
-            while (timer < roundDuration)
+            bool roundCompleted = false;
+
+            while (timer < roundDuration && !roundCompleted)
             {
                 timer += Time.deltaTime;
                 yield return null;
 
                 // Check for user input during the round
-                CheckUserInput();
-
-                // If the game state changes (e.g., due to incorrect input), break out of the round loop
-                if (!isGameRunning)
-                    break;
+                if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    // Ensure that the user input is checked
+                    if (HandleArrowInput())
+                    {
+                        // User input was correct, proceed to the next round
+                        currentRound++;
+                        roundCompleted = true;
+                        userInput = 0;
+                    }
+                    else
+                    {
+                        // User input was incorrect, stop the game
+                        Destroy(gameObject);
+                        yield break; // Exit the coroutine immediately
+                    }
+                }
+                else{
+                    //TODO: here destroy the gameobject?
+                    Debug.Log("ok");
+                }
             }
-
-            currentRound++;
         }
 
-        // Game is either completed or stopped, add any necessary logic here
-        Debug.Log("Game Over");
+        // Ensure the game is deleted
+        Destroy(gameObject);
     }
 
-    private Sprite[] GenerateSequence()
-    {
-        sequence.Clear();
 
-        for (int i = 0; i < 5; i++)
+    private List<Sprite> GenerateSequence()
+    {
+        List<Sprite> sequence = new List<Sprite>(5);
+
+        // Generate middle arrow (either up or down)
+        int middleArrowIndex = Random.Range(0, 1);
+
+        // Generate other arrows (with same sprite)
+        int randomSpriteIndex = Random.Range(0, 4);
+        Sprite randomSprite;
+
+        // Set middleArrowIndex to randomSpriteIndex only if randomSpriteIndex is in the range [0, 2]
+        if (randomSpriteIndex >= 0 && randomSpriteIndex <= 1)
         {
-            int randomIndex = Random.Range(0, 5);
-            Sprite randomSprite = GetRandomSprite(randomIndex);
-            sequence.Add(randomSprite);
+            middleArrowIndex = randomSpriteIndex;
+            randomSprite = GetRandomSprite(randomSpriteIndex);
+        }
+        else
+        {
+            randomSprite = GetRandomSprite(randomSpriteIndex);
         }
 
-        return sequence.ToArray();
+        sequence.Add(null); // Index 0
+        sequence.Add(null); // Index 1
+        sequence.Insert(2, GetRandomSprite(middleArrowIndex)); // Index 2 (middle arrow)
+        sequence.Add(null); // Index 3
+        sequence.Add(null); // Index 4
+
+        // Fill other slots with the random sprite
+        for (int i = 0; i < sequence.Count; i++)
+        {
+            if (sequence[i] == null)
+            {
+                sequence[i] = randomSprite;
+            }
+        }
+
+        return sequence;
     }
 
-    private void DisplaySequence(Sprite[] sequence)
+
+    private void DisplaySequence(List<Sprite> sequence)
     {
-        for (int i = 0; i < sequence.Length; i++)
+        for (int i = 0; i < sequence.Count; i++)
         {
             if (i < slots.Count)
             {
@@ -103,33 +189,61 @@ public class ArrowGame : MonoBehaviour
         }
     }
 
-        private void Update()
-    {
-        CheckUserInput();
-    }
 
     private void CheckUserInput()
     {
-        // Check for user input only if the game is running
-        if (IsGameRunning())
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            int middleIndex = sequence.Count / 2; // Get the index of the middle arrow
-
-            // Check if there is a square around the middle arrow
-            if (IsSquareAround(middleIndex))
-            {
-                // Check the direction of the arrows around the middle arrow
-                CheckDirectionAround(middleIndex);
-            }
-            else
-            {
-                // Check the direction of the middle arrow
-                CheckDirection(middleIndex);
-            }
+            userInput = 1;
+            HandleArrowInput();
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            userInput = -1;
+            HandleArrowInput();
+        }
+        else
+        {
+            userInput = 0;
+            HandleArrowInput();
         }
     }
 
-    
+    private bool HandleArrowInput()
+    {
+        int firstArrowIndex = 0;
+        int middleArrowIndex = 2;
+
+        if (userInput == 1 && sequence[middleArrowIndex] == arrowUp && (sequence[middleArrowIndex] == sequence[firstArrowIndex]))
+        {
+            Debug.Log("Arrow up middle");
+            return true;
+        }
+        else if (userInput == -1 && sequence[middleArrowIndex] == arrowDown && (sequence[middleArrowIndex] == sequence[firstArrowIndex]))
+        {
+            Debug.Log("Arrow down middle");
+            return true;
+        }
+        else if (userInput == 1 && sequence[firstArrowIndex] == arrowUpWithBox && sequence[middleArrowIndex] != arrowUpWithBox)
+        {
+            Debug.Log("Arrow up (with box)");
+            return true;
+        }
+        else if (userInput == -1 && sequence[firstArrowIndex] == arrowDownWithBox && sequence[middleArrowIndex] != arrowDownWithBox)
+        {
+            Debug.Log("Arrow down (with box)");
+            return true;
+        }
+        else if (userInput == 0 && sequence[firstArrowIndex] == x)
+        {
+            Debug.Log("X");
+            return true;
+        }
+        
+        // If none of the conditions are met, the input is incorrect
+        return false;
+    }
+
 
     private bool IsGameRunning()
     {
@@ -141,54 +255,18 @@ public class ArrowGame : MonoBehaviour
         isGameRunning = false;
     }
 
-    private bool IsSquareAround(int index)
+    PedestrianNPC GetCurrentPedestrian()
     {
-        // Check if there is a square around the arrow at the specified index
-        if (index > 0 && index < sequence.Count - 1)
+        // Return the pedestrian currently being pickpocketed
+        foreach (PedestrianNPC pedestrian in PedestrianNPC.talkingNPCs)
         {
-            return sequence[index - 1] == arrowUpWithBox || sequence[index - 1] == arrowDownWithBox
-                || sequence[index + 1] == arrowUpWithBox || sequence[index + 1] == arrowDownWithBox;
+            if (pedestrian.triggerEntered)
+            {
+                return pedestrian;
+            }
         }
-        return false;
+
+        return null; // Return null if no pedestrian is being pickpocketed
     }
 
-    private void CheckDirection(int index)
-    {
-        // Check the direction of the middle arrow
-        if (Input.GetKeyDown(KeyCode.UpArrow) && sequence[index] == arrowUp)
-        {
-            // Correct input for arrowUp
-            Debug.Log("Correct input for arrowUp");
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) && sequence[index] == arrowDown)
-        {
-            // Correct input for arrowDown
-            Debug.Log("Correct input for arrowDown");
-        }
-        else
-        {
-            // Incorrect input
-            Debug.Log("Incorrect input");
-        }
-    }
-
-    private void CheckDirectionAround(int index)
-    {
-        // Check the direction of the arrows around the middle arrow
-        if (Input.GetKeyDown(KeyCode.UpArrow) && (sequence[index - 1] == arrowUpWithBox || sequence[index - 1] == arrowDownWithBox))
-        {
-            // Correct input for arrowUpWithBox or arrowDownWithBox on the left
-            Debug.Log("Correct input for arrowUpWithBox");
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) && (sequence[index + 1] == arrowUpWithBox || sequence[index + 1] == arrowDownWithBox))
-        {
-            // Correct input for arrowUpWithBox or arrowDownWithBox on the right
-            Debug.Log("Correct input for arrowDownWithBox");
-        }
-        else
-        {
-            // Incorrect input
-            Debug.Log("Incorrect input");
-        }
-    }
 }
