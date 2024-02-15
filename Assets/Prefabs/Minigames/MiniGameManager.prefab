@@ -45,3 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simonSaysPrefab: {fileID: 1239054283069433933, guid: d668f8ca6206907408b1a5b3ec6ced6a, type: 3}
+  arrowGamePrefab: {fileID: 7880140541430951268, guid: 410f4452bbc24804f8beb151517919e8, type: 3}
+  timeBonusMultiplier: 0
