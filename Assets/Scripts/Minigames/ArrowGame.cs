@@ -29,6 +29,9 @@ public class ArrowGame : MonoBehaviour
     // Get playerstats and current pedestrian
     private PlayerStats playerStats;
     private PedestrianNPC currentPedestrian;
+    private bool roundCompleted;
+    private float gameTime;
+    private float xConditionTimer = 0f;
 
     private void Start()
     {
@@ -65,57 +68,87 @@ public class ArrowGame : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        gameTime += Time.deltaTime;
     }
 
 
 
-    private IEnumerator RunGame()
+private IEnumerator RunGame()
+{
+    gameTime = 0f;
+    for (currentRound = 0; currentRound < maxRounds && isGameRunning;)
     {
-        for (currentRound = 0; currentRound < maxRounds && isGameRunning;)
+        sequence = GenerateSequence();
+        DisplaySequence(sequence);
+
+        // Update the round indicator text
+        roundIndicator.text = "Round: " + (currentRound + 1);
+
+        float timer = 0f;
+        roundCompleted = false; // Initialize to false at the beginning of each round
+        float xConditionTimer = 0f;   // Initialize the 'X' condition timer
+
+        while (timer < roundDuration && !roundCompleted)
         {
-            sequence = GenerateSequence();
-            DisplaySequence(sequence);
+            timer += Time.deltaTime;
+            xConditionTimer += Time.deltaTime;
+            yield return null;
 
-            // Update the round indicator text
-            roundIndicator.text = "Round: " + (currentRound + 1);
-
-            float timer = 0f;
-            bool roundCompleted = false;
-
-            while (timer < roundDuration && !roundCompleted)
+            // Check for user input during the round
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
             {
-                timer += Time.deltaTime;
-                yield return null;
-
-                // Check for user input during the round
-                if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
+                // Ensure that the user input is checked
+                if (HandleArrowInput())
+                {
+                    // User input was correct, proceed to the next round
+                    currentRound++;
+                    roundCompleted = true;
+                    userInput = 0;
+                }
+                else
+                {
+                    // User input was incorrect, stop the game
+                    Destroy(gameObject);
+                }
+            }
+            else{
+                if (HandleArrowInput())
                 {
                     // Ensure that the user input is checked
-                    if (HandleArrowInput())
+                    if ( userInput == 0 && xConditionTimer >= roundDuration)
                     {
                         // User input was correct, proceed to the next round
                         currentRound++;
                         roundCompleted = true;
                         userInput = 0;
                     }
-                    else
-                    {
-                        // User input was incorrect, stop the game
-                        Destroy(gameObject);
-                        yield break; // Exit the coroutine immediately
-                    }
-                }
-                else{
-                    //TODO: here destroy the gameobject?
-                    Debug.Log("ok");
                 }
             }
         }
 
-        // Ensure the game is deleted
-        Destroy(gameObject);
+        // Check if the round was not completed within the time limit
+        if (!roundCompleted)
+        {
+            // The timer exceeded the round duration, stop the game
+            Destroy(gameObject);
+        }
+
+    }
+    // Check if the player has successfully completed all rounds
+    if (currentRound >= maxRounds)
+    {
+            playerStats.AddValue(currentPedestrian.pickpocketableValue);
+            currentPedestrian.hasBeenPickpocketed = true;
+            currentPedestrian.SetMaxCycles();
+        
+            // Call GameManager method to calculate and apply the time bonus
+            GameManager.Instance.CalculateTimeBonus(gameTime);
     }
 
+    // Ensure the game is deleted
+    Destroy(gameObject);
+}
 
     private List<Sprite> GenerateSequence()
     {
@@ -125,7 +158,7 @@ public class ArrowGame : MonoBehaviour
         int middleArrowIndex = Random.Range(0, 1);
 
         // Generate other arrows (with same sprite)
-        int randomSpriteIndex = Random.Range(0, 4);
+        int randomSpriteIndex = Random.Range(0, 5);
         Sprite randomSprite;
 
         // Set middleArrowIndex to randomSpriteIndex only if randomSpriteIndex is in the range [0, 2]
@@ -237,6 +270,7 @@ public class ArrowGame : MonoBehaviour
         else if (userInput == 0 && sequence[firstArrowIndex] == x)
         {
             Debug.Log("X");
+            xConditionTimer = 0f;
             return true;
         }
         

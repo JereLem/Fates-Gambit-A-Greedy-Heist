@@ -539,7 +539,7 @@ PrefabInstance:
       objectReference: {fileID: 3456486715901598751, guid: eee8615775a306248b536cdce5195d8f, type: 3}
     - target: {fileID: 7384540953128129159, guid: 8eee428642cb87b4393dde6eae6a58ac, type: 3}
       propertyPath: maxPoliceCount
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7384540953128129159, guid: 8eee428642cb87b4393dde6eae6a58ac, type: 3}
       propertyPath: maxPedestrianCount

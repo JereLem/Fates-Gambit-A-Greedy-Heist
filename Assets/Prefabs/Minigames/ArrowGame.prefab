@@ -223,15 +223,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Round: 0'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8ba62a8b1301d6944bb52d91089e85de, type: 2}
+  m_sharedMaterial: {fileID: 5158389258999090741, guid: 8ba62a8b1301d6944bb52d91089e85de, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -742,7 +742,7 @@ MonoBehaviour:
   arrowUpWithBox: {fileID: 21300000, guid: 762470be6707dd14a8287f90f05ed870, type: 3}
   arrowDownWithBox: {fileID: 21300000, guid: 30452215a42892349bd2046c22a29265, type: 3}
   x: {fileID: 21300000, guid: 3262e3a0418c6844fad91d834e6014f6, type: 3}
-  roundDuration: 1
+  roundDuration: 1.5
   currentRound: 0
   maxRounds: 10
   slots:
