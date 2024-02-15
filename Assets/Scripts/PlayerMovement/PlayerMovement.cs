@@ -39,10 +39,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask GrapplingObj;
     [SerializeField] public float hookMoveSpeed = 1f;
 
+    // Animations
+    public Animator animator;
+    private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
+
+
     void Start()
     {
         cam = Camera.main;
         lr = GetComponent<LineRenderer>();
+        rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -51,10 +59,15 @@ public class PlayerMovement : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
 
+        animator.SetFloat("Speed", Mathf.Abs(horizontal));
+
+        FlipSprite(horizontal);
+
         if (Input.GetButtonDown("Jump"))
         {
             // Start a coroutine to handle short press for jumping
             StartCoroutine(JumpCoroutine());
+            animator.SetBool("isJumping", true);
         }
 
         if (Input.GetButton("Jump") && CanClimb())
@@ -81,6 +94,19 @@ public class PlayerMovement : MonoBehaviour
         }
 
         DrawRope();
+    }
+    void FlipSprite(float horizontalInput)
+    {
+        // Check if the player is moving to the right
+        if (horizontalInput > 0)
+        {
+            spriteRenderer.flipX = false; // Don't flip the sprite
+        }
+        // Check if the player is moving to the left
+        else if (horizontalInput < 0)
+        {
+            spriteRenderer.flipX = true; // Flip the sprite horizontally
+        }
     }
 
     void FixedUpdate()
@@ -114,9 +140,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         Collider2D collision = Physics2D.OverlapCircle(groundCheck.position, groundCheckDistance, groundLayer);
+        animator.SetBool("isJumping", false);
         return !isClimbing && collision != null;
     }
 
