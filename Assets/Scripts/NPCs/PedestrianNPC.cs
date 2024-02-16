@@ -7,6 +7,8 @@ public class PedestrianNPC : NPCMovement
 {
     [Header("Pedestrian Variables")]
     public Sprite[] sprites;
+    SpriteRenderer spriteRenderer;
+    Color pickpocketedColor;
     public float talkDuration = 5f;
     public bool isTalking = false;
     public int pickpocketableValue;
@@ -40,7 +42,8 @@ public class PedestrianNPC : NPCMovement
     new void Start()
     {
         // Set male or female sprite
-        GetComponent<SpriteRenderer>().sprite = sprites[Random.Range(0,sprites.Length)];
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = sprites[Random.Range(0,sprites.Length)];
         // Get player transform and stats
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         playerStats = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerStats>();
@@ -50,14 +53,32 @@ public class PedestrianNPC : NPCMovement
         pedestrianTypeChance = Random.Range(1, 11);
         pickpocketableValue = (pedestrianTypeChance <= 9) ? Random.Range(10, 15) : Random.Range(20, 25);
 
+        // Randomize layer of sprites, making sure it's different from the player's level
+        SetRandomSortingOrder();
+
         base.Start();
 
+    }
+
+    void SetRandomSortingOrder()
+    {
+        // Set a random sorting order
+        int randomSortingOrder = Random.Range(1, 4);
+
+        // Check if it's the same as the player's level, regenerate if needed
+        while (randomSortingOrder == player.GetComponent<SpriteRenderer>().sortingOrder)
+        {
+            randomSortingOrder = Random.Range(1, 4);
+        }
+
+        // Set the sorting order for the pedestrian sprite
+        spriteRenderer.sortingOrder = randomSortingOrder;
     }
 
     void Update()
     {
         Move();
-
+        FlipSprite(movingToEndPoint);
         // Pickpocketing is activated by pressing E, and player has to be near 2 talking pedestrians
         if (Input.GetKeyDown(pickpocketKey) && triggerEntered == true)
         {
@@ -67,7 +88,21 @@ public class PedestrianNPC : NPCMovement
 
         else if(hasBeenPickpocketed)
         {
+            spriteRenderer.color = Color.gray;
             SetMaxCycles();
+        }
+    }
+
+    void FlipSprite(bool movingToEndPoint)
+    {
+        if (movingToEndPoint)
+        {
+            spriteRenderer.flipX = true;
+        }
+
+        else
+        {
+            spriteRenderer.flipX = false;
         }
     }
 

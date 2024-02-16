@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {x: -20, y: 1}
   endPoint: {x: 20, y: 1}
+  movingToEndPoint: 1
   completedCycles: 0
   maxCycles: 0
   originalMoveSpeed: 0

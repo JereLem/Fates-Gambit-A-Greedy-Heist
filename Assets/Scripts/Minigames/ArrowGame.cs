@@ -87,7 +87,7 @@ private IEnumerator RunGame()
 
         float timer = 0f;
         roundCompleted = false; // Initialize to false at the beginning of each round
-        float xConditionTimer = 0f;   // Initialize the 'X' condition timer
+        xConditionTimer = 0f;   // Initialize the 'X' condition timer
 
         while (timer < roundDuration && !roundCompleted)
         {

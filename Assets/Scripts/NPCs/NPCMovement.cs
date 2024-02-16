@@ -8,7 +8,7 @@ public class NPCMovement : MonoBehaviour
     [Header("Start and Endpoint")]
     [SerializeField] private Vector2 startPoint;
     [SerializeField] private Vector2 endPoint;
-    bool movingToEndPoint = true;
+    public bool movingToEndPoint = true;
 
     [Header("Cycles")]
     [SerializeField] public int completedCycles;
@@ -73,6 +73,12 @@ public class NPCMovement : MonoBehaviour
     {
         // Set moveSpeed to zero to stop movement
         moveSpeed = 0f;
+    }
+
+    public float GetSpeed()
+    {
+        // Set moveSpeed to zero to stop movement
+        return moveSpeed;
     }
 
     // Method to resume movement
