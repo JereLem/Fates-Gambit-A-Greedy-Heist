@@ -136,6 +136,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1523760611647216625, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0000063949437
+      objectReference: {fileID: 0}
     - target: {fileID: 7134525096889070162, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -185,6 +189,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
+--- !u!4 &550862027 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7134525096889070162, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
+  m_PrefabInstance: {fileID: 550862026}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &681406879
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -351,7 +360,7 @@ PrefabInstance:
     - target: {fileID: 240336169093037041, guid: 0d4fa0afc8c4caf46877c46480e8dbfd, type: 3}
       propertyPath: m_Follow
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 550862027}
     - target: {fileID: 2531750132062488043, guid: 0d4fa0afc8c4caf46877c46480e8dbfd, type: 3}
       propertyPath: m_BoundingShape2D
       value: 
