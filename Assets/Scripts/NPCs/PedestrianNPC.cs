@@ -35,6 +35,8 @@ public class PedestrianNPC : NPCMovement
     // Extra flag to check the player can start pickpocketing the pedestrian
     public bool triggerEntered;
 
+    private Animator animator;
+
     new void Start()
     {
         // Set male or female sprite
@@ -42,6 +44,7 @@ public class PedestrianNPC : NPCMovement
         // Get player transform and stats
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         playerStats = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerStats>();
+        animator = player.GetComponent<Animator>();
         
         // 90% chance the pedestrian is default type 10% rich 
         pedestrianTypeChance = Random.Range(1, 11);
@@ -59,6 +62,7 @@ public class PedestrianNPC : NPCMovement
         if (Input.GetKeyDown(pickpocketKey) && triggerEntered == true)
         {
             StartPickpocketing();
+            animator.SetBool("isPickpocketing",true);
         }
 
         else if(hasBeenPickpocketed)
@@ -78,6 +82,7 @@ public class PedestrianNPC : NPCMovement
     private void StopPickpocketing()
     {
         playerStats.isPickpocketing = false;
+        animator.SetBool("isPickpocketing",false);
     }
 
     // Pedestrians start to talk, and will talk a set duration
