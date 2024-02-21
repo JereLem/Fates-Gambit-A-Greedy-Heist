@@ -84,7 +84,6 @@ public class PlayerMovement : MonoBehaviour
         {
             // Start a coroutine to handle short press for jumping
             StartCoroutine(JumpCoroutine());
-            animator.SetBool("isJumping", true);
         }
 
         if (Input.GetButton("Jump") && CanClimb())
@@ -174,6 +173,7 @@ public class PlayerMovement : MonoBehaviour
         if (timePressed < maxJumpTime && CanJump())
         {
             Jump();
+            animator.SetBool("isJumping", true);
         }
     }
 
