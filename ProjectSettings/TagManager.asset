@@ -13,6 +13,8 @@ TagManager:
   - GameManager
   - Boundary
   - Cloud
+  - TalkingIcons
+  - Balcony
   layers:
   - Default
   - TransparentFX

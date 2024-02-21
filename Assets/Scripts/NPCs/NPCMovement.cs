@@ -6,9 +6,10 @@ public class NPCMovement : MonoBehaviour
 {   
 
     [Header("Start and Endpoint")]
-    [SerializeField] private Vector2 startPoint;
-    [SerializeField] private Vector2 endPoint;
+    [SerializeField] protected Vector2 startPoint;
+    [SerializeField] protected Vector2 endPoint;
     public bool movingToEndPoint = true;
+    public SpriteRenderer spriteRenderer;
 
     [Header("Cycles")]
     [SerializeField] public int completedCycles;
@@ -24,12 +25,16 @@ public class NPCMovement : MonoBehaviour
     const int minCyclesAmmount = 1;
     const int maxCyclesAmmount = 4;
 
+    private bool initialFacingRight = true;
+
 
     // Start is called before the first frame update
     protected void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         InitializeStartPosition();
         InitializeMovementParameters();
+        initialFacingRight = spriteRenderer.flipX;
     }
 
     protected void InitializeStartPosition()
@@ -65,6 +70,19 @@ public class NPCMovement : MonoBehaviour
                 completedCycles++;
                 CheckCycleCompletion();
             }
+        }
+    }
+
+    public void FlipSprite()
+    {
+        // Check the spawn point of the NPC
+        if (movingToEndPoint)
+        {
+            spriteRenderer.flipX = !initialFacingRight;
+        }
+        else
+        {
+            spriteRenderer.flipX = initialFacingRight;
         }
     }
 

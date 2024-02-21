@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using TMPro;
+using EventSystem;
+using UnityEngine.UI;
+
 
 public class PedestrianNPC : NPCMovement
 {
     [Header("Pedestrian Variables")]
     public Sprite[] sprites;
-    SpriteRenderer spriteRenderer;
+    SpriteRenderer spriteRendererPed;
     Color pickpocketedColor;
     public float talkDuration = 5f;
     public bool isTalking = false;
@@ -25,25 +29,40 @@ public class PedestrianNPC : NPCMovement
     // Player
     private Transform player;
     private PlayerStats playerStats;
+    
 
     // List to store all talking pedestrians
     public static List<PedestrianNPC> talkingNPCs = new List<PedestrianNPC>();
 
     [Header("Pickpocketing Flags")]
     private const KeyCode pickpocketKey = KeyCode.E;
-    private const float pickpocketingDistanceThreshold = 1.5f;
+    private const float pickpocketingDistanceThreshold = 2f;
     public bool hasBeenPickpocketed = false;
 
     // Extra flag to check the player can start pickpocketing the pedestrian
     public bool triggerEntered;
 
+    [Header("UI & Icons")]
+    private Transform panel;
+    private Color originalColor;
+    private Color grayedOutColor;
+    public Image highlightPickpocket;
+
+    [SerializeField] public GameObject talkingIcon;
+    public GameObject TalkingIcons;
+    private GameObject clone;
+
+    
+    // Animator
     private Animator animator;
+
 
     new void Start()
     {
         // Set male or female sprite
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = sprites[Random.Range(0,sprites.Length)];
+        spriteRendererPed = GetComponent<SpriteRenderer>();
+        spriteRendererPed.sprite = sprites[Random.Range(0,sprites.Length)];
+
         // Get player transform and stats
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         playerStats = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerStats>();
@@ -56,9 +75,19 @@ public class PedestrianNPC : NPCMovement
         // Randomize layer of sprites, making sure it's different from the player's level
         SetRandomSortingOrder();
 
+        // UI stuff
+        panel = GameObject.Find("LowerPanel").transform;
+        highlightPickpocket = panel.Find("HighlightPickpocket").GetComponent<Image>();
+        originalColor = highlightPickpocket.color;
+        grayedOutColor = Color.gray;
+
+        // Folder for talking icons
+        TalkingIcons = GameObject.FindGameObjectWithTag("TalkingIcons");
+
         base.Start();
 
     }
+
 
     void SetRandomSortingOrder()
     {
@@ -72,38 +101,26 @@ public class PedestrianNPC : NPCMovement
         }
 
         // Set the sorting order for the pedestrian sprite
-        spriteRenderer.sortingOrder = randomSortingOrder;
+        spriteRendererPed.sortingOrder = randomSortingOrder;
     }
 
     void Update()
     {
         Move();
-        FlipSprite(movingToEndPoint);
+        FlipSprite();
         // Pickpocketing is activated by pressing E, and player has to be near 2 talking pedestrians
         if (Input.GetKeyDown(pickpocketKey) && triggerEntered == true)
         {
             StartPickpocketing();
             animator.SetBool("isPickpocketing",true);
         }
-
         else if(hasBeenPickpocketed)
         {
-            spriteRenderer.color = Color.gray;
+            spriteRendererPed.color = grayedOutColor;
             SetMaxCycles();
         }
-    }
 
-    void FlipSprite(bool movingToEndPoint)
-    {
-        if (movingToEndPoint)
-        {
-            spriteRenderer.flipX = true;
-        }
-
-        else
-        {
-            spriteRenderer.flipX = false;
-        }
+        highlightPickpocket.color = triggerEntered ? originalColor : grayedOutColor;
     }
 
     private void StartPickpocketing()
@@ -126,12 +143,20 @@ public class PedestrianNPC : NPCMovement
         if (!isTalking)
         {
             isTalking = true;
+
+            animator.SetBool("isTalking", true);
+
             yield return new WaitForSeconds(talkDuration);
+
+            animator.SetBool("isTalking", false);
+
+            // Delete
+            Destroy(clone);
 
             // Resume movement after NPCs have stop talking
             ResumeMovement();
 
-            // Deactivate pickpocketing, if pedestrians stop talking
+            // Deactivate pickpocketing if pedestrians stop talking
             StopPickpocketing();
 
             currentTalkingNPCs--;
@@ -140,6 +165,7 @@ public class PedestrianNPC : NPCMovement
             {
                 talkingNPCs.Remove(this);
             }
+
             isTalking = false;
         }
     }
@@ -152,7 +178,7 @@ public class PedestrianNPC : NPCMovement
             PedestrianNPC otherNPC = collision.gameObject.GetComponent<PedestrianNPC>();
 
             if (!otherNPC.isTalking && !talkingNPCs.Contains(this) && !talkingNPCs.Contains(otherNPC)
-                && currentTalkingNPCs < maxTalkingNPCs - 1 && otherNPC.currentTalkingNPCs < maxTalkingNPCs - 1)
+                && currentTalkingNPCs < maxTalkingNPCs - 1 && otherNPC.currentTalkingNPCs < maxTalkingNPCs - 1 && movingToEndPoint != otherNPC.movingToEndPoint)
             {
                 // Introduce a random chance for the conversation to start
                 float randomChance = Random.Range(0.0f, 1.0f);
@@ -164,9 +190,15 @@ public class PedestrianNPC : NPCMovement
                     // Stop NPCMovement when they start to talk
                     StopMovement();
 
-
                     otherNPC.StartCoroutine(otherNPC.StartTalking());
                     otherNPC.StopMovement();
+
+                    // Set talking icon by finding the midpoint between the two pedestrians
+                    Vector3 midpoint = (transform.position + otherNPC.transform.position) / 2f;
+
+                    // Spawn the talkingIcon at the midpoint
+                    clone = (GameObject) Instantiate(talkingIcon, new Vector3(midpoint.x, midpoint.y + 1.5f, midpoint.z), Quaternion.identity);
+                    clone.transform.parent = TalkingIcons.transform;
 
                     currentTalkingNPCs++;
                     otherNPC.currentTalkingNPCs++;
@@ -181,11 +213,11 @@ public class PedestrianNPC : NPCMovement
         if (collision.gameObject.CompareTag("Player") && isTalking)
         {
             // Check if the player is close enough to start pickpocketing
-            float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+            float distanceToPlayer = Vector2.Distance(transform.position, player.position);  
 
             if (distanceToPlayer < pickpocketingDistanceThreshold)
             {
-                triggerEntered = true;
+                triggerEntered = true;    
             }
         }
     }

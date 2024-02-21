@@ -102,10 +102,11 @@ MonoBehaviour:
   startPoint: {x: -20, y: 1}
   endPoint: {x: 20, y: 1}
   movingToEndPoint: 1
+  spriteRenderer: {fileID: 0}
   completedCycles: 0
   maxCycles: 0
   originalMoveSpeed: 0
-  moveSpeed: 2
+  moveSpeed: 1
   sprites:
   - {fileID: 21300000, guid: 05a32046aa7b4a245901ab5ed796734f, type: 3}
   - {fileID: 21300000, guid: bf06d9bfce12be148bedf65e3b8deffd, type: 3}
@@ -114,6 +115,9 @@ MonoBehaviour:
   pickpocketableValue: 0
   hasBeenPickpocketed: 0
   triggerEntered: 0
+  highlightPickpocket: {fileID: 0}
+  talkingIcon: {fileID: 1018109718106422165, guid: 18dc27b956560ce4197c78671d2de8f2, type: 3}
+  TalkingIcons: {fileID: 0}
 --- !u!61 &6948868329104795668
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -157,7 +161,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 0.52209705, y: 1.0645331}
   m_EdgeRadius: 0
 --- !u!50 &3919096530250117838
 Rigidbody2D:

@@ -44,7 +44,6 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
 
-
     void Start()
     {
         cam = Camera.main;
@@ -175,6 +174,15 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpsLeft = 1;
         }
+
+        // Ensure player layer changes to be inside the balcony/house
+        if (collision.gameObject.CompareTag("Balcony"))
+        {
+            {
+                spriteRenderer.sortingOrder =  2;
+            }
+        }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -192,6 +200,15 @@ public class PlayerMovement : MonoBehaviour
         {
             {
                 jumpsLeft = 0;
+            }
+        }
+        
+        // Ensure player layer changes to be outside the balcony/house
+        if (collision.gameObject.CompareTag("Balcony"))
+        {
+            {
+                spriteRenderer.sortingOrder = 3;
+
             }
         }
     }
