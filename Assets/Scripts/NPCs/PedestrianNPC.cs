@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
-using TMPro;
-using EventSystem;
 using UnityEngine.UI;
 
 
@@ -40,14 +38,14 @@ public class PedestrianNPC : NPCMovement
     public bool hasBeenPickpocketed = false;
 
     // Extra flag to check the player can start pickpocketing the pedestrian
-    public bool triggerEntered;
+    public bool triggerEntered = false;
 
     [Header("UI & Icons")]
     private Transform panel;
     private Color originalColor;
     private Color grayedOutColor;
     public Image highlightPickpocket;
-
+    [SerializeField] public GameObject highlightObject; 
     [SerializeField] public GameObject talkingIcon;
     public GameObject TalkingIcons;
     private GameObject clone;
@@ -56,9 +54,14 @@ public class PedestrianNPC : NPCMovement
     // Animator
     private Animator animator;
 
-
-    new void Start()
+    void Start()
     {
+
+        highlightPickpocket = GameObject.Find("HighlightPickpocket").GetComponent<Image>();
+        grayedOutColor = Color.gray;
+        originalColor = Color.white;
+        highlightPickpocket.color = grayedOutColor;
+        
         // Set male or female sprite
         spriteRendererPed = GetComponent<SpriteRenderer>();
         spriteRendererPed.sprite = sprites[Random.Range(0,sprites.Length)];
@@ -74,12 +77,6 @@ public class PedestrianNPC : NPCMovement
 
         // Randomize layer of sprites, making sure it's different from the player's level
         SetRandomSortingOrder();
-
-        // UI stuff
-        panel = GameObject.Find("LowerPanel").transform;
-        highlightPickpocket = panel.Find("HighlightPickpocket").GetComponent<Image>();
-        originalColor = highlightPickpocket.color;
-        grayedOutColor = Color.gray;
 
         // Folder for talking icons
         TalkingIcons = GameObject.FindGameObjectWithTag("TalkingIcons");
@@ -109,18 +106,18 @@ public class PedestrianNPC : NPCMovement
         Move();
         FlipSprite();
         // Pickpocketing is activated by pressing E, and player has to be near 2 talking pedestrians
-        if (Input.GetKeyDown(pickpocketKey) && triggerEntered == true)
+        if (Input.GetKeyDown(pickpocketKey) && triggerEntered)
         {
             StartPickpocketing();
             animator.SetBool("isPickpocketing",true);
+
         }
+
         else if(hasBeenPickpocketed)
         {
             spriteRendererPed.color = grayedOutColor;
             SetMaxCycles();
         }
-
-        highlightPickpocket.color = triggerEntered ? originalColor : grayedOutColor;
     }
 
     private void StartPickpocketing()
@@ -210,14 +207,15 @@ public class PedestrianNPC : NPCMovement
         }
 
         // Check collision with player, to figure out if we can start pickpocketing
-        if (collision.gameObject.CompareTag("Player") && isTalking)
+        if (collision.gameObject.CompareTag("Player") && isTalking && !hasBeenPickpocketed)
         {
             // Check if the player is close enough to start pickpocketing
             float distanceToPlayer = Vector2.Distance(transform.position, player.position);  
 
             if (distanceToPlayer < pickpocketingDistanceThreshold)
             {
-                triggerEntered = true;    
+                triggerEntered = true;
+                highlightPickpocket.color = originalColor;    
             }
         }
     }
@@ -228,6 +226,7 @@ public class PedestrianNPC : NPCMovement
         {
             triggerEntered = false;
             playerStats.isPickpocketing = false;
+            highlightPickpocket.color = grayedOutColor;
         }
     }
 }

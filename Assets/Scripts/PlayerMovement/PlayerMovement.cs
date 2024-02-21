@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -39,10 +40,21 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask GrapplingObj;
     [SerializeField] public float hookMoveSpeed = 1f;
 
+    // Variables to track whether the player is using the hookshot
+    private bool isUsingHookshot = false;
+    public bool enableHookshot = false;   
+
     // Animations
     public Animator animator;
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
+    
+    [Header("UI & Icons")]
+    private Transform panel;
+    private Color originalColor;
+    private Color grayedOutColor;
+    public Image highlightHook;
+
 
     void Start()
     {
@@ -50,6 +62,12 @@ public class PlayerMovement : MonoBehaviour
         lr = GetComponent<LineRenderer>();
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        panel = GameObject.Find("LowerPanel").transform;
+        highlightHook = panel.Find("HighlightHook").GetComponent<Image>();
+        originalColor = highlightHook.color;
+        grayedOutColor = Color.gray;
+
+        highlightHook.color = grayedOutColor;
     }
 
     void Update()
@@ -77,21 +95,37 @@ public class PlayerMovement : MonoBehaviour
             jumpsLeft = 1;
         }
 
-        // RopeAction Update
-        if (Input.GetMouseButton(0))
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            RopeShoot();
+        // Toggle the enableHookshot variable when the 'F' key is pressed
+        enableHookshot = !enableHookshot;
+
+        // Reset the isUsingHookshot variable when disabling the hookshot
+        if (!enableHookshot)
+        {
+            isUsingHookshot = false;
         }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            EndShoot();
         }
 
-        if (OnGrappling)
+        if (enableHookshot){
+            // RopeAction Update
+            if (Input.GetMouseButton(0))
+            {
+                RopeShoot();
+                isUsingHookshot = true;
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                EndShoot();
+                isUsingHookshot = false;
+            }
+        }
+
+        if (OnGrappling && enableHookshot)
         {
             QuickMove();
         }
-
+        highlightHook.color = enableHookshot ? originalColor : grayedOutColor;
         DrawRope();
     }
     void FlipSprite(float horizontalInput)
@@ -110,15 +144,19 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (isClimbing)
-        {
-            // Allow vertical movement while climbing
-            player.velocity = new Vector2(horizontal * speed, vertical * climbingSpeed);
-        }
-        else
-        {
-            // Regular horizontal movement when not climbing
-            player.velocity = new Vector2(horizontal * speed, player.velocity.y);
+        // Disable base movement if the hookshot is being used
+        if (!isUsingHookshot)
+            {
+            if (isClimbing)
+            {
+                // Allow vertical movement while climbing
+                player.velocity = new Vector2(horizontal * speed, vertical * climbingSpeed);
+            }
+            else
+            {
+                // Regular horizontal movement when not climbing
+                player.velocity = new Vector2(horizontal * speed, player.velocity.y);
+            }
         }
     }
 
@@ -231,9 +269,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (hit.collider != null)
         {
-            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Wall"))
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Balcony"))
             {
-                Debug.Log("Wall!");
+                Debug.Log("Balcony!");
                 OnGrappling = true;
                 lr.positionCount = 2;
                 lr.SetPosition(0, this.transform.position);
@@ -288,10 +326,6 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Moving smoothly...");
             yield return null;
         }
-
-        // Player set to climbing state when hit the wall
-        isClimbing = true;
-        player.gravityScale = noGravity;
 
         Debug.Log("QuickMove completed");
     }
