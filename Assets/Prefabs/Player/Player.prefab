@@ -252,7 +252,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 1242476874, guid: c4acc927f1200bd49beb41f62af28a56, type: 3}
+  m_Sprite: {fileID: 556683033, guid: 21145598ced2bdc42a3f84ca4aafc923, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -363,7 +363,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   hookMoveSpeed: 0.25
+  enableHookshot: 0
   animator: {fileID: 8241109834191556797}
+  highlightHook: {fileID: 0}
 --- !u!114 &3987393075373304062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,9 +381,11 @@ MonoBehaviour:
   timesCaught: 0
   maximumTimesCaught: 1
   pickpocketedValue: 0
+  animator: {fileID: 8241109834191556797}
   levelParameters: {fileID: 0}
   isPickpocketing: 0
   hasBeenCaught: 0
+  highlightCaught: {fileID: 0}
 --- !u!95 &8241109834191556797
 Animator:
   serializedVersion: 5

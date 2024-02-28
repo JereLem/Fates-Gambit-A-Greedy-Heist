@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8570a1cd568850c498159a0107cacdca
+guid: 2201857659d60b8438fab95bb5bbed81
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -123,148 +123,190 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player-spritesheet-pickpocket_0
+      name: caught_screen-animation_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 128
-        width: 64
-        height: 64
+        y: 2160
+        width: 1920
+        height: 1080
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cbdcf33211e5f8846a3e3d543885fce5
-      internalID: -415078576
+      spriteID: 540d2fee8891bb84a9b761fc86bd64f1
+      internalID: 1301903563
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player-spritesheet-pickpocket_1
+      name: caught_screen-animation_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 128
-        width: 64
-        height: 64
+        x: 1920
+        y: 2160
+        width: 1920
+        height: 1080
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cc1f2d4f377574f41b91f070c3e9f338
-      internalID: -920206314
+      spriteID: 5a546071ab5d2e24cba3263c502f305b
+      internalID: 1484874434
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player-spritesheet-pickpocket_2
+      name: caught_screen-animation_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 128
-        width: 64
-        height: 64
+        x: 3840
+        y: 2160
+        width: 1920
+        height: 1080
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b71bdeaea20168047bfbb884a3af645b
-      internalID: 1971350612
+      spriteID: 94d581085c224af47b92ae9fa8beba68
+      internalID: -24925743
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player-spritesheet-pickpocket_3
+      name: caught_screen-animation_3
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
-        width: 64
-        height: 64
+        y: 1080
+        width: 1920
+        height: 1080
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 28ea44eac138fc0439ca491e44abe1f6
-      internalID: -815201923
+      spriteID: 10a4e55b57ed9804bbd886cc4ace37fe
+      internalID: 1334998755
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player-spritesheet-pickpocket_4
+      name: caught_screen-animation_4
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 64
+        x: 1920
+        y: 1080
+        width: 1920
+        height: 1080
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b504d4a9085b33e4ca4234804678c9cd
-      internalID: 282461399
+      spriteID: d13d4bf01f5b5b04d90667a9c27f66af
+      internalID: 1534364381
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player-spritesheet-pickpocket_5
+      name: caught_screen-animation_5
       rect:
         serializedVersion: 2
-        x: 128
-        y: 64
-        width: 64
-        height: 64
+        x: 3840
+        y: 1080
+        width: 1920
+        height: 1080
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aebfb9a78a1b85749a556426c83ddb40
-      internalID: -568734877
+      spriteID: 2d9a88d3ec76d364aaef7ea086e080ea
+      internalID: -1034393906
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player-spritesheet-pickpocket_6
+      name: caught_screen-animation_6
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 1920
+        height: 1080
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 351e4102f38e388488edec23e627080d
-      internalID: -1827074162
+      spriteID: 291d57aff001a84469326472db98e1e4
+      internalID: -1558886154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: caught_screen-animation_7
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 0
+        width: 1920
+        height: 1080
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d6e21e8c67ca204eac0cf0dbd3ed9f4
+      internalID: 833052559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: caught_screen-animation_8
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 0
+        width: 1920
+        height: 1080
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c88d7c6ad76cb274f963ce27d3473dd7
+      internalID: -1595902345
       vertices: []
       indices: 
       edges: []
@@ -280,13 +322,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      player-spritesheet-pickpocket_0: -415078576
-      player-spritesheet-pickpocket_1: -920206314
-      player-spritesheet-pickpocket_2: 1971350612
-      player-spritesheet-pickpocket_3: -815201923
-      player-spritesheet-pickpocket_4: 282461399
-      player-spritesheet-pickpocket_5: -568734877
-      player-spritesheet-pickpocket_6: -1827074162
+      caught_screen-animation_0: 1301903563
+      caught_screen-animation_1: 1484874434
+      caught_screen-animation_2: -24925743
+      caught_screen-animation_3: 1334998755
+      caught_screen-animation_4: 1534364381
+      caught_screen-animation_5: -1034393906
+      caught_screen-animation_6: -1558886154
+      caught_screen-animation_7: 833052559
+      caught_screen-animation_8: -1595902345
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

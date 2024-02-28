@@ -77,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
         vertical = Input.GetAxisRaw("Vertical");
 
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
+        //animator.SetFloat("Velocity", rb.velocity.y);
 
         FlipSprite(horizontal);
 
@@ -173,14 +174,14 @@ public class PlayerMovement : MonoBehaviour
         if (timePressed < maxJumpTime && CanJump())
         {
             Jump();
-            animator.SetBool("isJumping", true);
+            animator.SetTrigger("jumped");
         }
     }
 
     public bool IsGrounded()
     {
         Collider2D collision = Physics2D.OverlapCircle(groundCheck.position, groundCheckDistance, groundLayer);
-        animator.SetBool("isJumping", false);
+        animator.SetTrigger("landed");
         return !isClimbing && collision != null;
     }
 
