@@ -13,6 +13,9 @@ public class PlayerStats : MonoBehaviour
     public int maximumTimesCaught = 1;
     public int pickpocketedValue;
 
+    // Animations
+    public Animator animator;
+
     [Header("Level Parameters")]
     public LevelParameters levelParameters;
 
@@ -81,6 +84,7 @@ public class PlayerStats : MonoBehaviour
        if (isPickpocketing && !isPickpocketingInProgress)
         {
             isPickpocketingInProgress = true;
+            animator.SetBool("isPickpocketing", true);
             OnPickPocketing();
         }
         if(!isPickpocketing)
@@ -104,5 +108,7 @@ public class PlayerStats : MonoBehaviour
     public void PickpocketingComplete()
     {
         isPickpocketingInProgress = false;
+        animator.SetBool("isPickpocketing", false);
+
     }
 }

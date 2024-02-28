@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8570a1cd568850c498159a0107cacdca
+guid: 6ad5210f4d1608a4580a50328da7e2bc
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player-spritesheet-pickpocket_0
+      name: victory-scene_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 128
-        width: 64
-        height: 64
+        y: 2160
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cbdcf33211e5f8846a3e3d543885fce5
-      internalID: -415078576
+      spriteID: 594a2c9525e185843a88dd3900591881
+      internalID: -582796172
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player-spritesheet-pickpocket_1
+      name: victory-scene_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 128
-        width: 64
-        height: 64
+        x: 1920
+        y: 2160
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cc1f2d4f377574f41b91f070c3e9f338
-      internalID: -920206314
+      spriteID: b611ee2927d6b4c499f849b77a20564b
+      internalID: -665279801
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player-spritesheet-pickpocket_2
+      name: victory-scene_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 128
-        width: 64
-        height: 64
+        x: 3840
+        y: 2160
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,20 +179,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b71bdeaea20168047bfbb884a3af645b
-      internalID: 1971350612
+      spriteID: b3754ef9c15b4a74688f89bb62c38ddc
+      internalID: -189868629
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player-spritesheet-pickpocket_3
+      name: victory-scene_3
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
-        width: 64
-        height: 64
+        y: 1080
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,20 +200,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 28ea44eac138fc0439ca491e44abe1f6
-      internalID: -815201923
+      spriteID: d2a3a741f7e230c48b3abcd368a8ec39
+      internalID: -1591701176
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player-spritesheet-pickpocket_4
+      name: victory-scene_4
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 64
+        x: 1920
+        y: 1080
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -221,20 +221,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b504d4a9085b33e4ca4234804678c9cd
-      internalID: 282461399
+      spriteID: 4fa9fecf7264f984fa1e35fa731a64d2
+      internalID: 669152927
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player-spritesheet-pickpocket_5
+      name: victory-scene_5
       rect:
         serializedVersion: 2
-        x: 128
-        y: 64
-        width: 64
-        height: 64
+        x: 3840
+        y: 1080
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -242,20 +242,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aebfb9a78a1b85749a556426c83ddb40
-      internalID: -568734877
+      spriteID: ef45ccd85f2f7884286e71298f566108
+      internalID: -1495442423
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player-spritesheet-pickpocket_6
+      name: victory-scene_6
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -263,8 +263,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 351e4102f38e388488edec23e627080d
-      internalID: -1827074162
+      spriteID: 2e8a561762361cd449f4a5a553ff8a9b
+      internalID: -1655363091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: victory-scene_7
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 0
+        width: 1920
+        height: 1080
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b3212a7e9b085e48946acd05a3dd5e8
+      internalID: -2068362221
       vertices: []
       indices: 
       edges: []
@@ -280,13 +301,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      player-spritesheet-pickpocket_0: -415078576
-      player-spritesheet-pickpocket_1: -920206314
-      player-spritesheet-pickpocket_2: 1971350612
-      player-spritesheet-pickpocket_3: -815201923
-      player-spritesheet-pickpocket_4: 282461399
-      player-spritesheet-pickpocket_5: -568734877
-      player-spritesheet-pickpocket_6: -1827074162
+      victory-scene_0: -582796172
+      victory-scene_1: -665279801
+      victory-scene_2: -189868629
+      victory-scene_3: -1591701176
+      victory-scene_4: 669152927
+      victory-scene_5: -1495442423
+      victory-scene_6: -1655363091
+      victory-scene_7: -2068362221
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
