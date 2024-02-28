@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8570a1cd568850c498159a0107cacdca
+guid: 981d719a53bdc134298689c1272af586
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player-spritesheet-pickpocket_0
+      name: BG_lvl_1_clouds 1_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 128
-        width: 64
-        height: 64
+        x: 86
+        y: 585
+        width: 893
+        height: 317
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cbdcf33211e5f8846a3e3d543885fce5
-      internalID: -415078576
+      spriteID: 416453448ad73f8438a27ba088a99188
+      internalID: -1832989893
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player-spritesheet-pickpocket_1
+      name: BG_lvl_1_clouds 1_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 128
-        width: 64
-        height: 64
+        x: 1367
+        y: 735
+        width: 971
+        height: 261
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cc1f2d4f377574f41b91f070c3e9f338
-      internalID: -920206314
+      spriteID: 67a620b634f415940a099ab0383eecf6
+      internalID: 2061270374
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player-spritesheet-pickpocket_2
+      name: BG_lvl_1_clouds 1_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 128
-        width: 64
-        height: 64
+        x: 2816
+        y: 746
+        width: 647
+        height: 289
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,92 +179,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b71bdeaea20168047bfbb884a3af645b
-      internalID: 1971350612
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player-spritesheet-pickpocket_3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 28ea44eac138fc0439ca491e44abe1f6
-      internalID: -815201923
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player-spritesheet-pickpocket_4
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b504d4a9085b33e4ca4234804678c9cd
-      internalID: 282461399
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player-spritesheet-pickpocket_5
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aebfb9a78a1b85749a556426c83ddb40
-      internalID: -568734877
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player-spritesheet-pickpocket_6
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 351e4102f38e388488edec23e627080d
-      internalID: -1827074162
+      spriteID: f412b7029b405e04b84bb39c41fa32c9
+      internalID: -134311759
       vertices: []
       indices: 
       edges: []
@@ -280,13 +196,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      player-spritesheet-pickpocket_0: -415078576
-      player-spritesheet-pickpocket_1: -920206314
-      player-spritesheet-pickpocket_2: 1971350612
-      player-spritesheet-pickpocket_3: -815201923
-      player-spritesheet-pickpocket_4: 282461399
-      player-spritesheet-pickpocket_5: -568734877
-      player-spritesheet-pickpocket_6: -1827074162
+      BG_lvl_1_clouds 1_0: -1832989893
+      BG_lvl_1_clouds 1_1: 2061270374
+      BG_lvl_1_clouds 1_2: -134311759
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
