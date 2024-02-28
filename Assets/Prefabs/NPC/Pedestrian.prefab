@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8978605983670915007}
   - component: {fileID: 3868591785515539013}
   - component: {fileID: 3487721576130583873}
-  m_Layer: 12
+  m_Layer: 17
   m_Name: PedestrianTrigger
   m_TagString: PedestrianTrigger
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 2931164624485853530}
   - component: {fileID: 6948868329104795668}
   - component: {fileID: 3919096530250117838}
-  m_Layer: 9
+  m_Layer: 14
   m_Name: Pedestrian
   m_TagString: PedestrianNPC
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}

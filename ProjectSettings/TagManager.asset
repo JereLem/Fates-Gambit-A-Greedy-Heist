@@ -17,6 +17,7 @@ TagManager:
   - Balcony
   - HighlightPickpocket
   - PedestrianTrigger
+  - PoliceTrigger
   layers:
   - Default
   - TransparentFX
@@ -27,16 +28,16 @@ TagManager:
   - Wall
   - Ground
   - Balcony
+  - Dot
+  - 
+  - 
+  - 
+  - 
   - Pedestrian
   - Player
   - Police
   - PedestrianTrigger
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - PoliceTrigger
   - 
   - 
   - 

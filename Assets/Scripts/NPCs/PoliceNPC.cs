@@ -23,8 +23,8 @@ public class PoliceNPC : NPCMovement
 
     [Header("Police Officer Flags")]
     [SerializeField] public bool isCatching = false;
-    [SerializeField] private bool isChasing = false;
-    [SerializeField] private bool isAlertActive;
+    [SerializeField] public bool isChasing = false;
+    [SerializeField] public bool isAlertActive;
 
 
     [Header("Other Icons")]
@@ -35,8 +35,8 @@ public class PoliceNPC : NPCMovement
 
     // Player
     private Transform player;
-    private PlayerStats playerStats;
-    private Coroutine catchCoroutine;
+    public PlayerStats playerStats;
+    public Coroutine catchCoroutine;
     private SpriteRenderer circleSprite;
 
 
@@ -55,6 +55,8 @@ public class PoliceNPC : NPCMovement
         // Randomness for each police officer
         policeRank = Random.Range(1, 3);
         detectDistance = detectDistance + policeRank;
+        
+        //Experienced police officer can catch the player faster
         catchDelay = initialCatchDelay - (minCatchDelayMultiplier * policeRank);
         base.Start();
 
@@ -63,7 +65,7 @@ public class PoliceNPC : NPCMovement
     void Update()
     {
         FlipSprite();
-        circleSprite.transform.localScale = new Vector3(detectDistance * 2, 0.5f, 1.0f);
+        circleSprite.transform.localScale = new Vector3(detectDistance, 0.3f, 1.0f);
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         // Check if the player is within the detect distance and player pickpocketing or police are on alert
@@ -115,11 +117,10 @@ public class PoliceNPC : NPCMovement
     void ToggleIcons()
     {
         eyeIcon.SetActive(isAlertActive);
-        circleIcon.SetActive(isAlertActive);
     }
 
 
-    IEnumerator TryToCatchPlayer()
+    public IEnumerator TryToCatchPlayer()
     {
         // Check if the player has already been caught by another police officer
         if (!playerStats.hasBeenCaught)
@@ -168,33 +169,6 @@ public class PoliceNPC : NPCMovement
 
         // Reset the flag when the coroutine completes
         isChasing = false;
-    }
-
-    // If the police officer collides with the player, try to catch the player
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player") && (playerStats.isPickpocketing || isAlertActive))
-        {
-            Debug.Log("Trying to catch the player!");
-            catchCoroutine = StartCoroutine(TryToCatchPlayer());
-        }
-    }
-
-
-    // When the player exits the police collide, player basically escapes
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            isCatching = false;
-            // Check if the coroutine is running before trying to stop it
-            if (catchCoroutine != null)
-            {
-                Debug.Log("Player escaped!");
-                StopCoroutine(catchCoroutine); // Stop ongoing catch coroutine
-                playerStats.isPickpocketing = false;
-            }
-        }
     }
 }
 

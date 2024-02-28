@@ -116,7 +116,6 @@ private IEnumerator RunGame()
                     // Ensure that the user input is checked
                     if ( userInput == 0 && timer >= roundDuration)
                     {
-                        UnityEngine.Debug.Log("Here2");
                         // User input was correct, proceed to the next round
                         currentRound++;
                         roundCompleted = true;
