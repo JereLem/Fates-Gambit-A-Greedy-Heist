@@ -248,7 +248,7 @@ MonoBehaviour:
   moveSpeed: 0.7
   policeRank: 1
   detectDistance: 2
-  runSpeed: 1
+  runSpeed: 2
   timeChasing: 5
   timeOnAlert: 5
   catchDelay: 2
@@ -257,6 +257,7 @@ MonoBehaviour:
   isAlertActive: 0
   eyeIcon: {fileID: 9078600054862423357}
   circleIcon: {fileID: 8974056068375561503}
+  playerStats: {fileID: 0}
 --- !u!50 &-4914974537907817506
 Rigidbody2D:
   serializedVersion: 4

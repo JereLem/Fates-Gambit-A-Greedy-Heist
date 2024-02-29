@@ -38,6 +38,7 @@ public class PoliceNPC : NPCMovement
     public PlayerStats playerStats;
     public Coroutine catchCoroutine;
     private SpriteRenderer circleSprite;
+    private SpriteRenderer pedestrianSp;
 
 
     new void Start()
@@ -51,6 +52,7 @@ public class PoliceNPC : NPCMovement
         // Set the eye icon above the player, and get the detectSprite
         eyeIcon.transform.position = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
         circleSprite = circleIcon.GetComponent<SpriteRenderer>();
+        pedestrianSp = GetComponent<SpriteRenderer>();
 
         // Randomness for each police officer
         policeRank = Random.Range(1, 3);
@@ -64,7 +66,6 @@ public class PoliceNPC : NPCMovement
 
     void Update()
     {
-        FlipSprite();
         circleSprite.transform.localScale = new Vector3(detectDistance, 0.3f, 1.0f);
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
@@ -82,7 +83,10 @@ public class PoliceNPC : NPCMovement
 
         if (!isChasing) // Only move if not chasing
         {
+
             base.Move(); // Call the base Move method for regular NPC movement
+            ResumeMovement();
+            base.FlipSprite();
         }
 
         // Else continue moving.
@@ -137,16 +141,18 @@ public class PoliceNPC : NPCMovement
             isCatching = false;
         }
     }
-
     IEnumerator ChasePlayer()
     {
         // Set the flag to indicate that the coroutine is running
         isChasing = true;
-        
+
         // Toggle alert state and eye icon only if transitioning from alert to chasing
         OfficerOnAlert();
 
         float elapsedTime = 0f;
+
+        // Store the initial position to determine the movement direction
+        float initialXPosition = transform.position.x;
 
         // Chase the player until the player is caught or distance exceeds detectDistance
         while ((Vector3.Distance(transform.position, player.position) <= detectDistance) && elapsedTime < timeChasing)
@@ -157,7 +163,14 @@ public class PoliceNPC : NPCMovement
             // Move towards the target position on the x-axis
             float step = runSpeed * Time.deltaTime;
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
-            
+
+            // Update the movement direction only if it changes
+            float currentXPosition = transform.position.x;
+            bool isMovingRight = currentXPosition > initialXPosition;
+
+            // Invert the sprite based on the movement direction
+            pedestrianSp.flipX = !isMovingRight;
+
             // Update the elapsed time
             elapsedTime += Time.deltaTime;
 
@@ -170,5 +183,6 @@ public class PoliceNPC : NPCMovement
         // Reset the flag when the coroutine completes
         isChasing = false;
     }
+
 }
 
