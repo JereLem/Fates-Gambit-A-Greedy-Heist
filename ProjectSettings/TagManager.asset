@@ -16,6 +16,7 @@ TagManager:
   - TalkingIcons
   - Balcony
   - HighlightPickpocket
+  - PedestrianTrigger
   layers:
   - Default
   - TransparentFX
@@ -26,10 +27,15 @@ TagManager:
   - Wall
   - Ground
   - Balcony
+  - Dot
   - 
   - 
   - 
   - 
+  - Pedestrian
+  - Player
+  - Police
+  - PedestrianTrigger
   - 
   - 
   - 
