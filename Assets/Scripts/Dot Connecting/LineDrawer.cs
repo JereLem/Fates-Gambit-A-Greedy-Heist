@@ -7,9 +7,9 @@ using System.Net;
 public class LineDrawer : MonoBehaviour
 {
     public LineRenderer lineRenderer;
+    public DotManager dotManager;
 
     public List<Dot> dots = new List<Dot>();
-
 
     public RectTransform pointA;
     public RectTransform pointB;
@@ -19,29 +19,47 @@ public class LineDrawer : MonoBehaviour
 
     private void Start()
     {
-        // Start dotType의 좌표값을 가져와서 넣기 
-        foreach (Dot dot in dots)
-        {
-            if (dot.dotType == DotType.Start)
-            {
-                pointA = dot.GetComponent<RectTransform>();
-                Debug.Log("find start point");
-                break; // 시작점을 찾았으므로 루프 종료
-            }
-        }
-        screenPointA = RectTransformUtility.WorldToScreenPoint(null, pointA.position);
-        lineRenderer.SetPosition(0, screenPointA);
+        dotManager = transform.parent.GetComponent<DotManager>();
+        // find the Start type dot's coordinates
+        //foreach (Dot dot in dots)
+        //{
+        //    if (dot.dotType == DotType.Start)
+        //    {
+        //        pointA = dot.GetComponent<RectTransform>();
+        //        Debug.Log("find start point");
+        //        Debug.Log("pointA: "+ pointA.position);
+                
+        //        //break; 
+        //    }
+        //}
+        //screenPointA = RectTransformUtility.WorldToScreenPoint(null, pointA.position);
+
+        //lineRenderer.SetPosition(0, screenPointA);
     }
 
-    public void SetPoint(Vector3 worldPos)
+    public void DrawPoint(Vector3 worldPos, bool isSet)
     {
-        screenPointB = RectTransformUtility.WorldToScreenPoint(null, worldPos);
-        lineRenderer.positionCount++; 
-        lineRenderer.SetPosition(lineRenderer.positionCount - 1, screenPointB); 
-
-
-        Debug.Log("screen A B is " + screenPointA + screenPointB);
+        if (isSet)
+        {
+            screenPointB = RectTransformUtility.WorldToScreenPoint(null, worldPos);
+            lineRenderer.positionCount++;
+            lineRenderer.SetPosition(lineRenderer.positionCount - 1, screenPointB);
+        }
     }
-
+    
+    public bool ErasePoint()
+    {
+        if(lineRenderer.positionCount > 0)
+        {
+            lineRenderer.positionCount--;
+            //Debug.Log("dot delete");
+            return true;
+        }
+        else
+        {
+            //Debug.Log("there is no dot to delete");
+            return false;
+        }
+    }
 
 }

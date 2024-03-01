@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class GameManager : MonoBehaviour
     [Header("Minigames")]
     [SerializeField] private GameObject simonSaysPrefab;
     [SerializeField] private GameObject arrowGamePrefab;
+    [SerializeField] private GameObject dotConnectingPrefab;
+
 
     [Header("Bonus Multiplier")]
     [SerializeField] private float timeBonusMultiplier;
@@ -37,7 +40,7 @@ public class GameManager : MonoBehaviour
     // Function to start a random minigame
     public void StartRandomMinigame()
     {
-        int randomMinigame = UnityEngine.Random.Range(0, 3);
+        int randomMinigame = UnityEngine.Random.Range(0, 4);
         if (!isMiniGameActive)
         {
             switch (randomMinigame)
@@ -50,6 +53,9 @@ public class GameManager : MonoBehaviour
                     break;
                 case 2:
                     StartMiniGame(simonSaysPrefab);
+                    break;
+                case 3:
+                    StartMiniGame(dotConnectingPrefab);
                     break;
             }
         }
@@ -82,4 +88,17 @@ public class GameManager : MonoBehaviour
     {
         isMiniGameActive = isActive;
     }
+
+    public void ExecuteDotGameSuccessEffects()
+    {
+        PoliceNPC[] policeNPCs = GameObject.FindObjectsOfType<PoliceNPC>();
+        foreach (PoliceNPC policeNPC in policeNPCs)
+        {
+            policeNPC.SendMessage("DisableChaseForSeconds");
+        }
+
+        GameObject background = GameObject.Find("Background");
+        background.SendMessage("ChangeBackgroundColor");
+    }
 }
+

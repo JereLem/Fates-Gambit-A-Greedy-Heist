@@ -16,8 +16,6 @@ public class Dot : MonoBehaviour
     private void Awake()
     {
         image = GetComponent<Image>();
-        Debug.Log("dot position is " + GetComponent<RectTransform>().position);
-
     }
 
     private void Start()
@@ -44,7 +42,7 @@ public class Dot : MonoBehaviour
         {
             image.color = isConnected ? Color.red : Color.blue;
         }
-        Debug.Log("set state: " + isConnected);
+        //Debug.Log("set state: " + isConnected);
     }
 
 }

@@ -19,12 +19,13 @@ public class PoliceNPC : NPCMovement
     [SerializeField] public float catchDelay = 2.0f;
     [SerializeField] private const float initialCatchDelay = 2.0f;
     [SerializeField] private const float minCatchDelayMultiplier = 0.2f;
-
+    [SerializeField] public float disableTime = 5.0f;
 
     [Header("Police Officer Flags")]
     [SerializeField] public bool isCatching = false;
     [SerializeField] private bool isChasing = false;
     [SerializeField] private bool isAlertActive;
+    [SerializeField] public bool isLightOff = false;
 
 
     [Header("Other Icons")]
@@ -69,7 +70,8 @@ public class PoliceNPC : NPCMovement
         // Check if the player is within the detect distance and player pickpocketing or police are on alert
         if (distanceToPlayer <= detectDistance && !isChasing && (playerStats.isPickpocketing || isAlertActive))
         {
-            StartCoroutine(ChasePlayer());
+            if(isLightOff)
+                StartCoroutine(ChasePlayer());
         }
 
         // If police officer is trying to catch the player stop movement.
@@ -195,6 +197,20 @@ public class PoliceNPC : NPCMovement
                 playerStats.isPickpocketing = false;
             }
         }
+    }
+
+
+    // If dot connecting mission success, turn off the light and police cannot chase the player for a while 
+    public void DisableChaseForSeconds()
+    {
+        isLightOff = true;
+        StartCoroutine(EnableChaseAfterDelay(disableTime));
+    }
+
+    private IEnumerator EnableChaseAfterDelay(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isLightOff = false;
     }
 }
 
