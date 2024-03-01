@@ -10,11 +10,19 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     private string currentScene;
 
+    [Header("Volume settings")]
+    [SerializeField] public float bgMusicVolume = 0.5f;
+    [SerializeField] public float minigameMusicVolume = 0.7f;
+    [SerializeField] public float sfxVolume = 1.0f; 
+
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            instance.SetBgMusicVolume(bgMusicVolume);
+            instance.SetMinigameMusicVolume(minigameMusicVolume);
+            instance.SetSFXVolume(sfxVolume);
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -119,5 +127,31 @@ public class AudioManager : MonoBehaviour
         }
 
         sfxSource.PlayOneShot(s.clip);
+    }
+
+
+    // Setting methods
+    public void SetBgMusicVolume(float volume)
+    {
+        if (bgMusicSource != null)
+        {
+            bgMusicSource.volume = Mathf.Clamp01(volume);
+        }
+    }
+
+    public void SetMinigameMusicVolume(float volume)
+    {
+        if (minigameMusicSource != null)
+        {
+            minigameMusicSource.volume = Mathf.Clamp01(volume);
+        }
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        if (sfxSource != null)
+        {
+            sfxSource.volume = Mathf.Clamp01(volume);
+        }
     }
 }

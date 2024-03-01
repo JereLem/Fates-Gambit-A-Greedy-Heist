@@ -76,6 +76,7 @@ public class PoliceNPC : NPCMovement
         if (distanceToPlayer <= detectDistance && !isChasing && (playerStats.isPickpocketing || isAlertActive))
         {
             StartCoroutine(ChasePlayer());
+            AudioManager.instance.PlaySFX("police_freeze");
         }
 
         if (isChasing)

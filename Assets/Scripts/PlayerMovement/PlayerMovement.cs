@@ -109,10 +109,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (enableHookshot){
             // RopeAction Update
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 RopeShoot();
                 isUsingHookshot = true;
+                AudioManager.instance.PlaySFX("hookshot");
             }
             else if (Input.GetMouseButtonUp(0))
             {

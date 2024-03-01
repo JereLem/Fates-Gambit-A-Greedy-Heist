@@ -220,6 +220,9 @@ public class SimonSays : MonoBehaviour
             // Call GameManager method to calculate and apply the time bonus
             GameManager.Instance.CalculateTimeBonus(gameTime);
 
+            // Play laugh SFX
+            AudioManager.instance.PlaySFX("pickpocket_success");
+
             DestroyMiniGame();
         }
     }
