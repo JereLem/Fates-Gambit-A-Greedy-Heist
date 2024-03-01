@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
         int randomMinigame = UnityEngine.Random.Range(0, 3);
         if (!isMiniGameActive)
         {
+            AudioManager.instance.PlayMinigameMusic("Lv1Minigame");
             switch (randomMinigame)
             {
                 case 0:
@@ -52,6 +53,10 @@ public class GameManager : MonoBehaviour
                     StartMiniGame(simonSaysPrefab);
                     break;
             }
+        }
+        else
+        {
+            AudioManager.instance.StopMinigameMusic();
         }
     }
 
