@@ -101,8 +101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff499de30538844e81bd1b89c57d5a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPoint: {x: -17.7, y: 1.2}
-  endPoint: {x: 17.7, y: 1.2}
+  startPoint: {x: -22, y: 1.2}
+  endPoint: {x: 22, y: 1.2}
   movingToEndPoint: 0
   spriteRenderer: {fileID: 4948420561880963628}
   completedCycles: 1

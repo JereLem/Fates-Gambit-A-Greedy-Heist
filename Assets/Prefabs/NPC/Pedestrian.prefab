@@ -192,8 +192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff499de30538844e81bd1b89c57d5a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPoint: {x: -17.7, y: 1.2}
-  endPoint: {x: 17.7, y: 1.2}
+  startPoint: {x: -22, y: 1.2}
+  endPoint: {x: 22, y: 1.2}
   movingToEndPoint: 1
   spriteRenderer: {fileID: 0}
   completedCycles: 0
@@ -225,8 +225,6 @@ MonoBehaviour:
   talkingIcon: {fileID: 1018109718106422165, guid: 18dc27b956560ce4197c78671d2de8f2, type: 3}
   TalkingIcons: {fileID: 0}
   clone: {fileID: 0}
-  femaleAnimator: {fileID: 1604205412041987459}
-  maleAnimator: {fileID: 1604205412041987459}
   animator: {fileID: 1604205412041987459}
   playerAnimator: {fileID: 0}
 --- !u!61 &6948868329104795668

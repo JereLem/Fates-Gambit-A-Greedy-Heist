@@ -8,7 +8,7 @@ public class PoliceNPC : NPCMovement
     // Police officer variables
     [Header("Police Officer Variables")]
     [SerializeField] public int policeRank;
-    [SerializeField] public float detectDistance = 1.0f;
+    [SerializeField] public float detectDistance = 0.35f;
     [SerializeField] private float runSpeed = 1.5f;
 
 
@@ -25,6 +25,7 @@ public class PoliceNPC : NPCMovement
     [SerializeField] public bool isCatching = false;
     [SerializeField] public bool isChasing = false;
     [SerializeField] public bool isAlertActive;
+    private bool isMovingRight;
 
 
     [Header("Other Icons")]
@@ -38,7 +39,8 @@ public class PoliceNPC : NPCMovement
     public PlayerStats playerStats;
     public Coroutine catchCoroutine;
     private SpriteRenderer circleSprite;
-    private SpriteRenderer pedestrianSp;
+    private SpriteRenderer officerSp;
+    float distanceToPlayer;
 
 
     new void Start()
@@ -52,7 +54,7 @@ public class PoliceNPC : NPCMovement
         // Set the eye icon above the player, and get the detectSprite
         eyeIcon.transform.position = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
         circleSprite = circleIcon.GetComponent<SpriteRenderer>();
-        pedestrianSp = GetComponent<SpriteRenderer>();
+        officerSp = GetComponent<SpriteRenderer>();
 
         // Randomness for each police officer
         policeRank = Random.Range(1, 3);
@@ -66,13 +68,20 @@ public class PoliceNPC : NPCMovement
 
     void Update()
     {
+        FlipSprite();
         circleSprite.transform.localScale = new Vector3(detectDistance, 0.3f, 1.0f);
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        distanceToPlayer  = Vector3.Distance(transform.position, player.position);
 
         // Check if the player is within the detect distance and player pickpocketing or police are on alert
         if (distanceToPlayer <= detectDistance && !isChasing && (playerStats.isPickpocketing || isAlertActive))
         {
             StartCoroutine(ChasePlayer());
+        }
+
+        if (isChasing)
+        {
+            // Invert the sprite based on the movement direction
+            officerSp.flipX = !isMovingRight;
         }
 
         // If police officer is trying to catch the player stop movement.
@@ -86,7 +95,6 @@ public class PoliceNPC : NPCMovement
 
             base.Move(); // Call the base Move method for regular NPC movement
             ResumeMovement();
-            base.FlipSprite();
         }
 
         // Else continue moving.
@@ -152,10 +160,10 @@ public class PoliceNPC : NPCMovement
         float elapsedTime = 0f;
 
         // Store the initial position to determine the movement direction
-        float initialXPosition = transform.position.x;
+        float initialPlayerXPosition = player.position.x;
 
         // Chase the player until the player is caught or distance exceeds detectDistance
-        while ((Vector3.Distance(transform.position, player.position) <= detectDistance) && elapsedTime < timeChasing)
+        while (elapsedTime < timeChasing)
         {
             // Calculate the target position on the x-axis
             Vector2 targetPosition = new Vector2(player.position.x, transform.position.y);
@@ -164,12 +172,10 @@ public class PoliceNPC : NPCMovement
             float step = runSpeed * Time.deltaTime;
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
 
-            // Update the movement direction only if it changes
-            float currentXPosition = transform.position.x;
-            bool isMovingRight = currentXPosition > initialXPosition;
+            // Update the movement direction
+            isMovingRight = transform.position.x > initialPlayerXPosition;
 
-            // Invert the sprite based on the movement direction
-            pedestrianSp.flipX = !isMovingRight;
+            initialPlayerXPosition = player.position.x;
 
             // Update the elapsed time
             elapsedTime += Time.deltaTime;
