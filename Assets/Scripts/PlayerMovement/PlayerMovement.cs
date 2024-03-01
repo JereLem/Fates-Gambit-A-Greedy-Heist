@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
     // Variables for movement
     private float horizontal;
     private float vertical;
-    
+
     [Header("Player speeds")]
     [SerializeField] private float speed = 5f;
     [SerializeField] private float climbingSpeed = 3f;
@@ -29,11 +30,56 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask climbableLayer;
+    
+    [Header("Hookshot")]
+    private Camera cam;
+    private RaycastHit2D hit;
+    private LineRenderer lr;
+    private bool OnGrappling = false;
+    private Vector3 spot;
+    [SerializeField] private LayerMask GrapplingObj;
+    [SerializeField] public float hookMoveSpeed = 1f;
+
+    // Variables to track whether the player is using the hookshot
+    private bool isUsingHookshot = false;
+    public bool enableHookshot = false;   
+
+    // Animations
+    public Animator animator;
+    private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
+    
+    [Header("UI & Icons")]
+    private Transform panel;
+    private Color originalColor;
+    private Color grayedOutColor;
+    public Image highlightHook;
+
+
+    void Start()
+    {
+        cam = Camera.main;
+        lr = GetComponent<LineRenderer>();
+        rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        panel = GameObject.Find("LowerPanel").transform;
+        highlightHook = panel.Find("HighlightHook").GetComponent<Image>();
+        originalColor = highlightHook.color;
+        grayedOutColor = Color.gray;
+
+        highlightHook.color = grayedOutColor;
+    }
 
     void Update()
     {
+        // PlayerMovement Update
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
+
+        animator.SetFloat("Speed", Mathf.Abs(horizontal));
+        //animator.SetFloat("Velocity", rb.velocity.y);
+
+        FlipSprite(horizontal);
 
         if (Input.GetButtonDown("Jump"))
         {
@@ -49,6 +95,69 @@ public class PlayerMovement : MonoBehaviour
             jumpsLeft = 1;
         }
 
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+        // Toggle the enableHookshot variable when the 'F' key is pressed
+        enableHookshot = !enableHookshot;
+
+        // Reset the isUsingHookshot variable when disabling the hookshot
+        if (!enableHookshot)
+        {
+            isUsingHookshot = false;
+        }
+        }
+
+        if (enableHookshot){
+            // RopeAction Update
+            if (Input.GetMouseButton(0))
+            {
+                RopeShoot();
+                isUsingHookshot = true;
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                EndShoot();
+                isUsingHookshot = false;
+            }
+        }
+
+        if (OnGrappling && enableHookshot)
+        {
+            QuickMove();
+        }
+        highlightHook.color = enableHookshot ? originalColor : grayedOutColor;
+        DrawRope();
+    }
+    void FlipSprite(float horizontalInput)
+    {
+        // Check if the player is moving to the right
+        if (horizontalInput > 0)
+        {
+            spriteRenderer.flipX = false; // Don't flip the sprite
+        }
+        // Check if the player is moving to the left
+        else if (horizontalInput < 0)
+        {
+            spriteRenderer.flipX = true; // Flip the sprite horizontally
+        }
+    }
+
+    void FixedUpdate()
+    {
+        // Disable base movement if the hookshot is being used
+        if (!isUsingHookshot)
+            {
+            if (isClimbing)
+            {
+                // Allow vertical movement while climbing
+                player.velocity = new Vector2(horizontal * speed, vertical * climbingSpeed);
+            }
+            else
+            {
+                // Regular horizontal movement when not climbing
+                player.velocity = new Vector2(horizontal * speed, player.velocity.y);
+            }
+        }
     }
 
     private IEnumerator JumpCoroutine()
@@ -65,31 +174,19 @@ public class PlayerMovement : MonoBehaviour
         if (timePressed < maxJumpTime && CanJump())
         {
             Jump();
+            animator.SetTrigger("jumped");
         }
     }
 
-    private void FixedUpdate()
-    {
-        if (isClimbing)
-        {
-            // Allow vertical movement while climbing
-            player.velocity = new Vector2(horizontal * speed, vertical * climbingSpeed);
-        }
-        else
-        {
-            // Regular horizontal movement when not climbing
-            player.velocity = new Vector2(horizontal * speed, player.velocity.y);
-        }
-    }
-
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         Collider2D collision = Physics2D.OverlapCircle(groundCheck.position, groundCheckDistance, groundLayer);
+        animator.SetTrigger("landed");
         return !isClimbing && collision != null;
     }
 
     private bool CanJump()
-    {   
+    {
         // Check if the player can jump (only if on ground or wall)
         return (jumpsLeft > 0 && IsGrounded()) || (isClimbing && jumpsLeft > 0);
     }
@@ -116,6 +213,15 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpsLeft = 1;
         }
+
+        // Ensure player layer changes to be inside the balcony/house
+        if (collision.gameObject.CompareTag("Balcony"))
+        {
+            {
+                spriteRenderer.sortingOrder =  2;
+            }
+        }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -135,12 +241,94 @@ public class PlayerMovement : MonoBehaviour
                 jumpsLeft = 0;
             }
         }
+        
+        // Ensure player layer changes to be outside the balcony/house
+        if (collision.gameObject.CompareTag("Balcony"))
+        {
+            {
+                spriteRenderer.sortingOrder = 3;
+
+            }
+        }
     }
 
     private bool CanClimb()
-    {   
+    {
         // Check if player can climb
         return !isClimbing && Physics2D.OverlapCircle(groundCheck.position, climbCheckDistance, climbableLayer);
+    }
+
+    // Rope Action methods
+    void RopeShoot()
+    {
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition.z = 10f; // Control the distance between camera
+        Vector2 mouseWorldPosition = cam.ScreenToWorldPoint(mousePosition);
+
+        // Detect the collision between player's position and mouse's using Raycast
+        hit = Physics2D.Raycast(player.position, mouseWorldPosition - (Vector2)player.position, 100f, GrapplingObj);
+
+        if (hit.collider != null)
+        {
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Balcony"))
+            {
+                Debug.Log("Balcony!");
+                OnGrappling = true;
+                lr.positionCount = 2;
+                lr.SetPosition(0, this.transform.position);
+                lr.SetPosition(1, hit.point);
+            }
+        }
+    }
+
+    void EndShoot()
+    {
+        OnGrappling = false;
+        lr.positionCount = 0;
+    }
+
+    void DrawRope()
+    {
+        if (OnGrappling)
+        {
+            lr.SetPosition(0, this.transform.position);
+        }
+    }
+
+    void QuickMove()
+    {
+        if (hit.collider != null)
+        {
+            StartCoroutine(MovePlayerSmoothly(hit.point));
+        }
+    }
+
+    IEnumerator MovePlayerSmoothly(Vector2 targetPosition)
+    {
+        // Introduced threshold to stop player adjusting to the targetPosition for too long
+        float distanceThreshold = 0.1f;
+        float distance = Vector2.Distance(player.position, targetPosition);
+        float duration = distance / hookMoveSpeed;
+
+        float startTime = Time.time;
+
+        while (Time.time - startTime < duration && distance > distanceThreshold)
+        {
+            float step = hookMoveSpeed * Time.deltaTime;
+            player.position = Vector2.Lerp(player.position, targetPosition, step / distance);
+            distance = Vector2.Distance(player.position, targetPosition); // Update the distance
+
+            // Check if within threshold
+            if (distance <= distanceThreshold)
+            {
+                player.position = targetPosition;
+            }
+
+            Debug.Log("Moving smoothly...");
+            yield return null;
+        }
+
+        Debug.Log("QuickMove completed");
     }
 
 }

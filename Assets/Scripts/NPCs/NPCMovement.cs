@@ -6,9 +6,10 @@ public class NPCMovement : MonoBehaviour
 {   
 
     [Header("Start and Endpoint")]
-    [SerializeField] private Vector2 startPoint;
-    [SerializeField] private Vector2 endPoint;
-    bool movingToEndPoint = true;
+    [SerializeField] protected Vector2 startPoint;
+    [SerializeField] protected Vector2 endPoint;
+    public bool movingToEndPoint = true;
+    public SpriteRenderer spriteRenderer;
 
     [Header("Cycles")]
     [SerializeField] public int completedCycles;
@@ -19,17 +20,21 @@ public class NPCMovement : MonoBehaviour
     [SerializeField] public float moveSpeed;
 
     [Header("Min & Max Values")]
-    const float minMoveSpeed = 1f;
-    const float maxMoveSpeed = 3f;
+    const float minMoveSpeed = 0.5f;
+    const float maxMoveSpeed = 1.0f;
     const int minCyclesAmmount = 1;
     const int maxCyclesAmmount = 4;
+
+    private bool initialFacingRight = true;
 
 
     // Start is called before the first frame update
     protected void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         InitializeStartPosition();
         InitializeMovementParameters();
+        initialFacingRight = spriteRenderer.flipX;
     }
 
     protected void InitializeStartPosition()
@@ -68,15 +73,34 @@ public class NPCMovement : MonoBehaviour
         }
     }
 
+    public void FlipSprite()
+    {
+        // Check the spawn point of the NPC
+        if (movingToEndPoint)
+        {
+            spriteRenderer.flipX = !initialFacingRight;
+        }
+        else
+        {
+            spriteRenderer.flipX = initialFacingRight;
+        }
+    }
+
     // Method to stop movement
-    protected void StopMovement()
+    public void StopMovement()
     {
         // Set moveSpeed to zero to stop movement
         moveSpeed = 0f;
     }
 
+    public float GetSpeed()
+    {
+        // Set moveSpeed to zero to stop movement
+        return moveSpeed;
+    }
+
     // Method to resume movement
-    protected void ResumeMovement()
+    public void ResumeMovement()
     {
         // Reset moveSpeed to the original value
         moveSpeed = originalMoveSpeed;

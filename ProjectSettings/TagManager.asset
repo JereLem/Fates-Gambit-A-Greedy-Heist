@@ -11,6 +11,13 @@ TagManager:
   - Ground
   - Window
   - GameManager
+
+  - Boundary
+  - Cloud
+  - TalkingIcons
+  - Balcony
+  - HighlightPickpocket
+  - PedestrianTrigger
   layers:
   - Default
   - TransparentFX
@@ -20,11 +27,16 @@ TagManager:
   - UI
   - Wall
   - Ground
+  - Balcony
+  - Dot
   - 
   - 
   - 
   - 
-  - 
+  - Pedestrian
+  - Player
+  - Police
+  - PedestrianTrigger
   - 
   - 
   - 
