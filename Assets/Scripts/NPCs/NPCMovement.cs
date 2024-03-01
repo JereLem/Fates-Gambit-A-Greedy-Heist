@@ -73,7 +73,7 @@ public class NPCMovement : MonoBehaviour
         }
     }
 
-    public void FlipSprite()
+    public virtual void FlipSprite()
     {
         // Check the spawn point of the NPC
         if (movingToEndPoint)

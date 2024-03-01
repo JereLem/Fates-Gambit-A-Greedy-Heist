@@ -7,6 +7,7 @@ public class NPCSpawner : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private GameObject policePrefab;
     [SerializeField] private GameObject pedestrianPrefab;
+    [SerializeField] private GameObject pedestrianPrefab_female;
     [SerializeField] private GameObject cloudPrefab;
 
     [Header("Max NPCs")]
@@ -17,7 +18,8 @@ public class NPCSpawner : MonoBehaviour
 
     [Header("Spawn Intervals")]
     [SerializeField] private float spawnIntervalPolice = 5f;
-    [SerializeField] private float spawnIntervalPedestrian = 5f;
+    [SerializeField] private float spawnIntervalPedestrian_male = 5f;
+    [SerializeField] private float spawnIntervalPedestrian_female = 5f;
     [SerializeField] private float spawnIntervalCloud = 10f;
 
     // List to keep track of active NPCs
@@ -29,7 +31,8 @@ public class NPCSpawner : MonoBehaviour
     void Start()
     {
         StartCoroutine(SpawnNPCs(spawnIntervalPolice, policePrefab, "PoliceNPCs", maxPoliceCount, activePoliceNPCs));
-        StartCoroutine(SpawnNPCs(spawnIntervalPedestrian, pedestrianPrefab, "PedestrianNPCs", maxPedestrianCount, activePedestrians));
+        StartCoroutine(SpawnNPCs(spawnIntervalPedestrian_male, pedestrianPrefab, "PedestrianNPCs", maxPedestrianCount, activePedestrians));
+        StartCoroutine(SpawnNPCs(spawnIntervalPedestrian_female, pedestrianPrefab_female, "PedestrianNPCs", maxPedestrianCount, activePedestrians));
         StartCoroutine(SpawnNPCs(spawnIntervalCloud, cloudPrefab , "Clouds", maxCloudCount, activeClouds));
     }
 

@@ -19,4 +19,9 @@ public class Cloud : NPCMovement
     {
         base.Move();
     }
+
+    public override void FlipSprite()
+    {
+        // Do nothing
+    }
 }

@@ -59,3 +59,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentTick: 0
   tickSpeed: 60
+  levelParameters: {fileID: 0}
