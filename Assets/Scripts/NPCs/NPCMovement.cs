@@ -20,8 +20,8 @@ public class NPCMovement : MonoBehaviour
     [SerializeField] public float moveSpeed;
 
     [Header("Min & Max Values")]
-    const float minMoveSpeed = 1f;
-    const float maxMoveSpeed = 3f;
+    const float minMoveSpeed = 0.5f;
+    const float maxMoveSpeed = 1.0f;
     const int minCyclesAmmount = 1;
     const int maxCyclesAmmount = 4;
 
@@ -87,7 +87,7 @@ public class NPCMovement : MonoBehaviour
     }
 
     // Method to stop movement
-    protected void StopMovement()
+    public void StopMovement()
     {
         // Set moveSpeed to zero to stop movement
         moveSpeed = 0f;
@@ -100,7 +100,7 @@ public class NPCMovement : MonoBehaviour
     }
 
     // Method to resume movement
-    protected void ResumeMovement()
+    public void ResumeMovement()
     {
         // Reset moveSpeed to the original value
         moveSpeed = originalMoveSpeed;

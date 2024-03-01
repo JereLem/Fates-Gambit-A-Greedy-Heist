@@ -14,7 +14,7 @@ public class ArrowGame : MonoBehaviour
     public Sprite x;
 
     [Header("Duration and rounds")]
-    public float roundDuration = 2f;
+    public float roundDuration = 1.5f;
     public int currentRound = 0;
     public int maxRounds = 10;
 
@@ -31,7 +31,6 @@ public class ArrowGame : MonoBehaviour
     private PedestrianNPC currentPedestrian;
     private bool roundCompleted;
     private float gameTime;
-    private float xConditionTimer = 0f;
 
     private void Start()
     {
@@ -85,14 +84,13 @@ private IEnumerator RunGame()
         // Update the round indicator text
         roundIndicator.text = "Round: " + (currentRound + 1);
 
+
+        roundCompleted = false;
         float timer = 0f;
-        roundCompleted = false; // Initialize to false at the beginning of each round
-        xConditionTimer = 0f;   // Initialize the 'X' condition timer
 
         while (timer < roundDuration && !roundCompleted)
         {
             timer += Time.deltaTime;
-            xConditionTimer += Time.deltaTime;
             yield return null;
 
             // Check for user input during the round
@@ -116,8 +114,9 @@ private IEnumerator RunGame()
                 if (HandleArrowInput())
                 {
                     // Ensure that the user input is checked
-                    if ( userInput == 0 && xConditionTimer >= roundDuration)
+                    if ( userInput == 0 && timer >= roundDuration)
                     {
+                        UnityEngine.Debug.Log("Here2");
                         // User input was correct, proceed to the next round
                         currentRound++;
                         roundCompleted = true;
@@ -148,7 +147,7 @@ private IEnumerator RunGame()
 
     // Ensure the game is deleted
     Destroy(gameObject);
-}
+    }      
 
     private List<Sprite> GenerateSequence()
     {
@@ -270,7 +269,6 @@ private IEnumerator RunGame()
         else if (userInput == 0 && sequence[firstArrowIndex] == x)
         {
             Debug.Log("X");
-            xConditionTimer = 0f;
             return true;
         }
         
