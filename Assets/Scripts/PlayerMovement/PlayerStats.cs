@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using EventSystem;
-using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -12,9 +9,6 @@ public class PlayerStats : MonoBehaviour
     public int timesCaught;
     public int maximumTimesCaught = 1;
     public int pickpocketedValue;
-
-    // Animations
-    public Animator animator;
 
     [Header("Level Parameters")]
     public LevelParameters levelParameters;
@@ -25,12 +19,6 @@ public class PlayerStats : MonoBehaviour
     public bool isPickpocketing;
     private bool isPickpocketingInProgress = false;
 
-    [Header("UI")]
-    private Color originalColor;
-    private Color grayedOutColor;
-    public Image highlightCaught;
-    private Transform panel;
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -38,9 +26,6 @@ public class PlayerStats : MonoBehaviour
         pickpocketedValue = 0;
         isPickpocketing = false;
         levelParameters = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>();
-        panel = GameObject.Find("LowerPanel").transform;
-        highlightCaught = panel.Find("HighlightCaught").GetComponent<Image>();
-
     }
 
     // Methods to add/remove value
@@ -83,16 +68,11 @@ public class PlayerStats : MonoBehaviour
        if (isPickpocketing && !isPickpocketingInProgress)
         {
             isPickpocketingInProgress = true;
-            animator.SetBool("isPickpocketing", true);
             OnPickPocketing();
         }
         if(!isPickpocketing)
         {
             PickpocketingComplete();
-        }
-        if(timesCaught > 0)
-        {
-            highlightCaught.color = Color.red;
         }
     }
 
@@ -106,7 +86,5 @@ public class PlayerStats : MonoBehaviour
     public void PickpocketingComplete()
     {
         isPickpocketingInProgress = false;
-        animator.SetBool("isPickpocketing", false);
-
     }
 }

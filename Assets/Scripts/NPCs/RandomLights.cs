@@ -28,7 +28,6 @@ public class RandomLights : MonoBehaviour
         lastToggleTime = Time.time;
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         playerStats = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerStats>();
-        lightObject.GetComponent<SpriteRenderer>().sprite = lightOffSprite;
         StartCoroutine(ToggleLights());
     }
 

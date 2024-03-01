@@ -8,8 +8,8 @@ public class PoliceNPC : NPCMovement
     // Police officer variables
     [Header("Police Officer Variables")]
     [SerializeField] public int policeRank;
-    [SerializeField] public float detectDistance = 1.0f;
-    [SerializeField] private float runSpeed = 1.5f;
+    [SerializeField] public float detectDistance = 3.0f;
+    [SerializeField] private float runSpeed = 3.0f;
 
 
 
@@ -17,7 +17,7 @@ public class PoliceNPC : NPCMovement
     [SerializeField] public float timeChasing = 5.0f;
     [SerializeField] public float timeOnAlert = 5.0f;
     [SerializeField] public float catchDelay = 2.0f;
-    [SerializeField] private const float initialCatchDelay = 2.0f;
+    [SerializeField] private const float initialCatchDelay = 0.5f;
     [SerializeField] private const float minCatchDelayMultiplier = 0.2f;
 
 
@@ -27,17 +27,14 @@ public class PoliceNPC : NPCMovement
     [SerializeField] private bool isAlertActive;
 
 
-    [Header("Other Icons")]
+    [Header("Police Officer Eye Icon")]
     [SerializeField] public GameObject eyeIcon;
-    [SerializeField] public GameObject circleIcon;
-
 
 
     // Player
     private Transform player;
     private PlayerStats playerStats;
     private Coroutine catchCoroutine;
-    private SpriteRenderer circleSprite;
 
 
     new void Start()
@@ -48,13 +45,11 @@ public class PoliceNPC : NPCMovement
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         playerStats = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerStats>();
 
-
-        // Set the eye icon above the player, and get the detectSprite
-        eyeIcon.transform.position = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
-        circleSprite = circleIcon.GetComponent<SpriteRenderer>();
+        // Set the eye icon above the player
+        eyeIcon.transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
 
         // Randomness for each police officer
-        policeRank = Random.Range(1, 3);
+        policeRank = Random.Range(1, 2);
         detectDistance = detectDistance + policeRank;
         catchDelay = initialCatchDelay - (minCatchDelayMultiplier * policeRank);
         base.Start();
@@ -63,8 +58,6 @@ public class PoliceNPC : NPCMovement
 
     void Update()
     {
-        FlipSprite();
-        circleSprite.transform.localScale = new Vector3(detectDistance * 2, 0.5f, 1.0f);
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         // Check if the player is within the detect distance and player pickpocketing or police are on alert
@@ -95,7 +88,7 @@ public class PoliceNPC : NPCMovement
     public void OfficerOnAlert()
     {
         isAlertActive = true;
-        ToggleIcons();
+        ToggleEyeIcon();
         StartCoroutine(onAlert());
     }
 
@@ -109,16 +102,14 @@ public class PoliceNPC : NPCMovement
     public void OfficerOffAlert()
     {  
         isAlertActive = false;
-        ToggleIcons();
+        ToggleEyeIcon();
     }
 
     // Toggle the eyeIcon above the police officer when they are on alert
-    void ToggleIcons()
+    void ToggleEyeIcon()
     {
         eyeIcon.SetActive(isAlertActive);
-        circleIcon.SetActive(isAlertActive);
     }
-
 
     IEnumerator TryToCatchPlayer()
     {
@@ -158,7 +149,7 @@ public class PoliceNPC : NPCMovement
 
             yield return null;
         }
-
+ 
         // After catching or losing the player, toggle off the alert state and eye icon
         OfficerOffAlert();
 

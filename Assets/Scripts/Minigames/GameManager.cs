@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Minigames")]
     [SerializeField] private GameObject simonSaysPrefab;
-    [SerializeField] private GameObject arrowGamePrefab;
 
     [Header("Bonus Multiplier")]
     [SerializeField] private float timeBonusMultiplier;
@@ -46,7 +45,7 @@ public class GameManager : MonoBehaviour
                     StartMiniGame(simonSaysPrefab);
                     break;
                 case 1:
-                    StartMiniGame(arrowGamePrefab);
+                    StartMiniGame(simonSaysPrefab);
                     break;
                 case 2:
                     StartMiniGame(simonSaysPrefab);
