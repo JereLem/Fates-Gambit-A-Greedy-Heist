@@ -28,12 +28,14 @@ public class SimonSays : MonoBehaviour
     private float highlightDuration = 1.0f;
     private float elapsedTime = 0.0f;
     private float gameTime;
+    public int level;
 
 
 
     void Start()
     {
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        level = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>().levelNumber;
         StartGame();
     }
 
@@ -208,6 +210,7 @@ public class SimonSays : MonoBehaviour
             // Wrong input --> stop the game
             playerInput.Clear();
             DestroyMiniGame();
+            AudioManager.instance.PlaySFX(level == 1 ? "Lv1MinigameLoss" : "Lv2MinigameLoss");
         }
         else if (playerInput.Count == sequence.Count)
         {
@@ -220,6 +223,7 @@ public class SimonSays : MonoBehaviour
             // Call GameManager method to calculate and apply the time bonus
             GameManager.Instance.CalculateTimeBonus(gameTime);
 
+            AudioManager.instance.PlaySFX(level == 1 ? "Lv1MinigameWin" : "Lv2MinigameWin");
             // Play laugh SFX
             AudioManager.instance.PlaySFX("pickpocket_success");
 

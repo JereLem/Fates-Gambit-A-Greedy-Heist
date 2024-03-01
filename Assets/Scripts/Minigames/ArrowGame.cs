@@ -31,10 +31,12 @@ public class ArrowGame : MonoBehaviour
     private PedestrianNPC currentPedestrian;
     private bool roundCompleted;
     private float gameTime;
+    public int level;
 
     private void Start()
     {
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        level = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>().levelNumber;
         currentPedestrian = GetCurrentPedestrian();
         StartCoroutine(RunGame());
         isGameRunning = true;
@@ -108,6 +110,7 @@ private IEnumerator RunGame()
                 {
                     // User input was incorrect, stop the game
                     Destroy(gameObject);
+                    AudioManager.instance.PlaySFX(level == 1 ? "Lv1MinigameLoss" : "Lv2MinigameLoss");
                 }
             }
             else{
@@ -130,6 +133,7 @@ private IEnumerator RunGame()
         {
             // The timer exceeded the round duration, stop the game
             Destroy(gameObject);
+            AudioManager.instance.PlaySFX(level == 1 ? "Lv1MinigameLoss" : "Lv2MinigameLoss");
         }
 
     }
@@ -142,6 +146,8 @@ private IEnumerator RunGame()
         
             // Call GameManager method to calculate and apply the time bonus
             GameManager.Instance.CalculateTimeBonus(gameTime);
+
+            AudioManager.instance.PlaySFX(level == 1 ? "Lv1MinigameWin" : "Lv2MinigameWin");
 
             // Play laugh SFX
             AudioManager.instance.PlaySFX("pickpocket_success");

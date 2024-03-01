@@ -239,8 +239,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33092f2ae364f8b4fad9aa4f277c3154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPoint: {x: -22, y: 1.2}
-  endPoint: {x: 22, y: 1.2}
+  startPoint: {x: -19, y: 1.2}
+  endPoint: {x: -19, y: 1.2}
   movingToEndPoint: 1
   spriteRenderer: {fileID: 0}
   completedCycles: 0

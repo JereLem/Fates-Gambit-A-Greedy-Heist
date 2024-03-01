@@ -102,8 +102,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        minigameMusicSource.clip = s.clip;
-        minigameMusicSource.Play();
+        minigameMusicSource.PlayOneShot(s.clip);;
     }
 
 

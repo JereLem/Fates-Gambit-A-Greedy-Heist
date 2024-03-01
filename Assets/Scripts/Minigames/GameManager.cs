@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     private PlayerStats playerStats;
     public static bool isMiniGameActive = false;
+    public int level;
 
     private void Awake()
     {
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        level = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>().levelNumber;
 
         // All minigames 30 seconds
         timeBonusMultiplier = 30f;
@@ -40,7 +42,7 @@ public class GameManager : MonoBehaviour
         int randomMinigame = UnityEngine.Random.Range(0, 3);
         if (!isMiniGameActive)
         {
-            AudioManager.instance.PlayMinigameMusic("Lv1Minigame");
+            AudioManager.instance.PlayMinigameMusic(level == 1 ? "Lv1Minigame" : "Lv2Minigame");
             switch (randomMinigame)
             {
                 case 0:
