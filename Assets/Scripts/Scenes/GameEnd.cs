@@ -16,7 +16,13 @@ public class GameEnd : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Get the Parent gameobject
+        // Ensure that GameStats has been instantiated
+        if (GameStats.Instance == null)
+        {
+            Debug.LogError("GameStats instance is not available.");
+            return;
+        }
+
         // Determine the active panel based on the GameOverReason
         activePanel = null;
         string gameOverText = "";
@@ -24,7 +30,7 @@ public class GameEnd : MonoBehaviour
         // Set delay
         float delay = 1.0f;
 
-        switch (GameStats.GameOverReason)
+        switch (GameStats.Instance.GameOverReason)
         {
             case GameOverReason.PlayerCaught:
                 animator.SetBool("lost", true);
@@ -37,7 +43,7 @@ public class GameEnd : MonoBehaviour
                 gameOverText = "You ran out of time!";
                 break;
             case GameOverReason.WonTheGame:
-                animator.SetBool("win", true);
+                animator.SetBool("won", true);
                 activePanel = winPanel;
                 gameOverText = "Awesome! You won the game!";
                 break;
@@ -53,13 +59,13 @@ public class GameEnd : MonoBehaviour
 
             // Get UI elements and assign values within the active panel
             TMP_Text pedestriansPickpocketed = activePanel.transform.Find("pedestriansPickpocketed").GetComponent<TMP_Text>();
-            pedestriansPickpocketed.text = GameStats.pedestriansPickpocketed.ToString();
+            pedestriansPickpocketed.text = GameStats.Instance.pedestriansPickpocketed.ToString();
 
             TMP_Text pickpocketedValue = activePanel.transform.Find("pickpocketedValue").GetComponent<TMP_Text>();
-            pickpocketedValue.text = GameStats.pickpocketedValue.ToString();
+            pickpocketedValue.text = GameStats.Instance.pickpocketedValue.ToString();
 
             TMP_Text gameDuration = activePanel.transform.Find("GameDuration").GetComponent<TMP_Text>();
-            gameDuration.text = GameStats.GameDuration.ToString();
+            gameDuration.text = GameStats.Instance.cumulativeGameDuration.ToString();
 
             TMP_Text gameOverReason = activePanel.transform.Find("GameOverReason").GetComponent<TMP_Text>();
             gameOverReason.text = gameOverText;

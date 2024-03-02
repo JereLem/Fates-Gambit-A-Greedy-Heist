@@ -16,6 +16,7 @@ public class GameEvents : MonoBehaviour
     {
         _current = this;
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        GameStats.Instance = FindObjectOfType<GameStats>();
     }
 
     public event Action<int> Tick;
@@ -43,15 +44,18 @@ public class GameEvents : MonoBehaviour
     public void OnLevelChanged(int level)
     { 
         SceneManager.LoadScene(level);
+        GameStats.Instance.EndStats(); // Here the timer value is stored
+        GameStats.Instance.SetNextLevel(level);
         Level?.Invoke(level);
     }  
 
     public event Action<GameOverReason> GameOver;
     public void OnGameOver(GameOverReason reason)
     {
-        GameStats.EndStats();
-        GameStats.GameOverReason = reason;
+        GameStats.Instance.GameOverReason = reason;
+        GameStats.Instance.EndStats(); // Here we get the final time
         SceneManager.LoadScene("EndScene");
+        GameStats.Instance.GetCumulativeGameDuration();
         GameOver?.Invoke(reason);
     }
 

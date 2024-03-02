@@ -56,6 +56,8 @@ public class PlayerStats : MonoBehaviour
     public void SetValue(int amount)
     {
         pickpocketedValue = amount;
+        GameStats.Instance.pickpocketedValue = pickpocketedValue;
+        GameStats.Instance.pedestriansPickpocketed += 1;
     }
 
     void Update()

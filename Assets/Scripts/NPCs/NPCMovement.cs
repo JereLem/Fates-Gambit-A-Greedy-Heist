@@ -59,9 +59,9 @@ public class NPCMovement : MonoBehaviour
         float step = moveSpeed * Time.deltaTime;
         Vector2 targetPoint = movingToEndPoint ? endPoint : startPoint;
 
-        transform.position = Vector2.MoveTowards(transform.position, targetPoint, step);
+        float distanceX = Mathf.Abs(transform.position.x - targetPoint.x);
 
-        if (Vector2.Distance((Vector2)transform.position, targetPoint) < 0.01f)
+        if (Mathf.Approximately(distanceX, 0f))
         {
             movingToEndPoint = !movingToEndPoint;
 
@@ -71,6 +71,8 @@ public class NPCMovement : MonoBehaviour
                 CheckCycleCompletion();
             }
         }
+
+        transform.position = Vector2.MoveTowards(transform.position, targetPoint, step);
     }
 
     public virtual void FlipSprite()

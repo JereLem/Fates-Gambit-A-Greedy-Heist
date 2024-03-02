@@ -10,6 +10,7 @@ public class StartEndMenu : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        GameStats.Instance.SetNextLevel(1);
     }
 
     // Exit game
