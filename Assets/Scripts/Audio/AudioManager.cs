@@ -108,10 +108,11 @@ public class AudioManager : MonoBehaviour
 
     public void StopMinigameMusic()
     {
+        
         if (minigameMusicSource.isPlaying)
         {
             minigameMusicSource.Stop();
-            PlayMusic(currentScene);
+            PlayMusic(currentScene == "Level1" ? "Lv1MainMusic" : "Lv2MainMusic");
         }
     }
 

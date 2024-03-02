@@ -56,10 +56,6 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
-        else
-        {
-            AudioManager.instance.StopMinigameMusic();
-        }
     }
 
     // Function to start the minigames
