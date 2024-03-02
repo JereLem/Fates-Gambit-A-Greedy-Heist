@@ -32,7 +32,6 @@ public class PlayerUI : MonoBehaviour
     {
         // Update the remaining ticks
         remainingTicks = levelParameters.timerDuration - tickSystem.GetCurrentTick();
-        UnityEngine.Debug.Log(remainingTicks);
         UpdateUI();
     }
 

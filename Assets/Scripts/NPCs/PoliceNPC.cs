@@ -69,7 +69,7 @@ public class PoliceNPC : NPCMovement
     void Update()
     {
         FlipSprite();
-        circleSprite.transform.localScale = new Vector3(detectDistance, 0.3f, 1.0f);
+        circleSprite.transform.localScale = new Vector3(detectDistance * 4, 0.3f, 1.0f);
         distanceToPlayer  = Vector3.Distance(transform.position, player.position);
 
         // Check if the player is within the detect distance and player pickpocketing or police are on alert
