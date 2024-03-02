@@ -11,8 +11,8 @@ public class AudioManager : MonoBehaviour
     private string currentScene;
 
     [Header("Volume settings")]
-    [SerializeField] public float bgMusicVolume = 0.5f;
-    [SerializeField] public float minigameMusicVolume = 0.7f;
+    [SerializeField] public float bgMusicVolume = 0.1f;
+    [SerializeField] public float minigameMusicVolume = 0.1f;
     [SerializeField] public float sfxVolume = 1.0f; 
 
     private void Awake()
