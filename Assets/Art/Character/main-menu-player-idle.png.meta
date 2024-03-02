@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 981d719a53bdc134298689c1272af586
+guid: ee62dcdf711343540bc538d5b2573270
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -119,30 +119,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BG_lvl_1_clouds 1_0
+      name: main-menu-player-idle_0
       rect:
         serializedVersion: 2
-        x: 86
-        y: 585
-        width: 893
-        height: 317
+        x: 18
+        y: 143
+        width: 27
+        height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 416453448ad73f8438a27ba088a99188
-      internalID: -1832989893
+      spriteID: a040871d15b594a4fadd41864402133e
+      internalID: -1282669060
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BG_lvl_1_clouds 1_1
+      name: main-menu-player-idle_1
       rect:
         serializedVersion: 2
-        x: 1367
-        y: 735
-        width: 971
-        height: 261
+        x: 82
+        y: 143
+        width: 27
+        height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67a620b634f415940a099ab0383eecf6
-      internalID: 2061270374
+      spriteID: cc002365cbae854439c519e34859dc85
+      internalID: 719490131
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BG_lvl_1_clouds 1_2
+      name: main-menu-player-idle_2
       rect:
         serializedVersion: 2
-        x: 2816
-        y: 746
-        width: 647
-        height: 289
+        x: 146
+        y: 143
+        width: 27
+        height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,8 +179,134 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f412b7029b405e04b84bb39c41fa32c9
-      internalID: -134311759
+      spriteID: b252e0dc011a7ff4c889b76fff02495a
+      internalID: 385489612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: main-menu-player-idle_3
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 143
+        width: 27
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fa10c4ab2f086f4f97dc52368e97c18
+      internalID: 327272134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: main-menu-player-idle_4
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 79
+        width: 27
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bafc83f02a8e6994d809df0ac3019920
+      internalID: -1574433304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: main-menu-player-idle_5
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 79
+        width: 27
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40b623c42812acd49baf5747ca2a660e
+      internalID: -13826057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: main-menu-player-idle_6
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 79
+        width: 27
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8e946a90fdd53d4fa5ce60e5151ebaf
+      internalID: -2020040521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: main-menu-player-idle_7
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 79
+        width: 27
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce44959503f75f24ea91d19b87a13238
+      internalID: 888966194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: main-menu-player-idle_8
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 15
+        width: 27
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae472c1dbf0e1014c822221676e7cb36
+      internalID: 595183954
       vertices: []
       indices: 
       edges: []
@@ -209,9 +322,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      BG_lvl_1_clouds 1_0: -1832989893
-      BG_lvl_1_clouds 1_1: 2061270374
-      BG_lvl_1_clouds 1_2: -134311759
+      main-menu-player-idle_0: -1282669060
+      main-menu-player-idle_1: 719490131
+      main-menu-player-idle_2: 385489612
+      main-menu-player-idle_3: 327272134
+      main-menu-player-idle_4: -1574433304
+      main-menu-player-idle_5: -13826057
+      main-menu-player-idle_6: -2020040521
+      main-menu-player-idle_7: 888966194
+      main-menu-player-idle_8: 595183954
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

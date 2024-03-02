@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 981d719a53bdc134298689c1272af586
+guid: 799c5ee9ecab1eb4fb876c374a6cca31
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -119,30 +119,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BG_lvl_1_clouds 1_0
+      name: main-menu-birds-spritesheet_0
       rect:
         serializedVersion: 2
-        x: 86
-        y: 585
-        width: 893
-        height: 317
+        x: 0
+        y: 77
+        width: 64
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 416453448ad73f8438a27ba088a99188
-      internalID: -1832989893
+      spriteID: a6224883b9429db42bece0824dc868fa
+      internalID: -271019777
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BG_lvl_1_clouds 1_1
+      name: main-menu-birds-spritesheet_1
       rect:
         serializedVersion: 2
-        x: 1367
-        y: 735
-        width: 971
-        height: 261
+        x: 64
+        y: 77
+        width: 62
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67a620b634f415940a099ab0383eecf6
-      internalID: 2061270374
+      spriteID: 5666a66f025fca043b3cd81e3ed063f4
+      internalID: 1931703109
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BG_lvl_1_clouds 1_2
+      name: main-menu-birds-spritesheet_2
       rect:
         serializedVersion: 2
-        x: 2816
-        y: 746
-        width: 647
-        height: 289
+        x: 128
+        y: 77
+        width: 62
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,8 +179,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f412b7029b405e04b84bb39c41fa32c9
-      internalID: -134311759
+      spriteID: 8e71927ea89f84d4297faac9ca77f887
+      internalID: 103712644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: main-menu-birds-spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 13
+        width: 62
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7a96d4e6dd9792419c5737e37b200b3
+      internalID: -1597522169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: main-menu-birds-spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 8
+        width: 62
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28f1db4f591e5ef45a131e346fec9913
+      internalID: 697417560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: main-menu-birds-spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 62
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9ff26dc87185274fb896d61999bc58c
+      internalID: -1777149722
       vertices: []
       indices: 
       edges: []
@@ -209,9 +259,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      BG_lvl_1_clouds 1_0: -1832989893
-      BG_lvl_1_clouds 1_1: 2061270374
-      BG_lvl_1_clouds 1_2: -134311759
+      main-menu-birds-spritesheet_0: -271019777
+      main-menu-birds-spritesheet_1: 1931703109
+      main-menu-birds-spritesheet_2: 103712644
+      main-menu-birds-spritesheet_3: -1597522169
+      main-menu-birds-spritesheet_4: 697417560
+      main-menu-birds-spritesheet_5: -1777149722
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
