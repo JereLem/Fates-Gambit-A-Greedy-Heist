@@ -1879,6 +1879,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1306546291}
     m_Modifications:
+    - target: {fileID: 2492023678627054055, guid: 1f05514f60ed4134698ed00aa9649ad5, type: 3}
+      propertyPath: birdDistance
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 6990395168705071269, guid: 1f05514f60ed4134698ed00aa9649ad5, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1984,10 +1988,6 @@ PrefabInstance:
     - target: {fileID: 267477522514037995, guid: 96b5f8e1e0957cc4b99171c12a177a61, type: 3}
       propertyPath: m_Name
       value: GreyBird (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6724014213181734156, guid: 96b5f8e1e0957cc4b99171c12a177a61, type: 3}
-      propertyPath: birdDistance
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 9019728231087075966, guid: 96b5f8e1e0957cc4b99171c12a177a61, type: 3}
       propertyPath: m_Pivot.x
@@ -2098,10 +2098,6 @@ PrefabInstance:
     - target: {fileID: 267477522514037995, guid: 96b5f8e1e0957cc4b99171c12a177a61, type: 3}
       propertyPath: m_Name
       value: GreyBird (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6724014213181734156, guid: 96b5f8e1e0957cc4b99171c12a177a61, type: 3}
-      propertyPath: birdDistance
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 9019728231087075966, guid: 96b5f8e1e0957cc4b99171c12a177a61, type: 3}
       propertyPath: m_Pivot.x
@@ -3352,10 +3348,6 @@ PrefabInstance:
     - target: {fileID: 267477522514037995, guid: 96b5f8e1e0957cc4b99171c12a177a61, type: 3}
       propertyPath: m_Name
       value: GreyBird
-      objectReference: {fileID: 0}
-    - target: {fileID: 6724014213181734156, guid: 96b5f8e1e0957cc4b99171c12a177a61, type: 3}
-      propertyPath: birdDistance
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 9019728231087075966, guid: 96b5f8e1e0957cc4b99171c12a177a61, type: 3}
       propertyPath: m_Pivot.x
