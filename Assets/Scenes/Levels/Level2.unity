@@ -578,7 +578,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelNumber: 2
   levelName: City
-  timerDuration: 18000
+  timerDuration: 11250
   targetValue: 300
 --- !u!1 &1509429996
 GameObject:
@@ -791,7 +791,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1523760611647216625, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.000007860631
+      value: 0.0000027728856
       objectReference: {fileID: 0}
     - target: {fileID: 1523760611647216625, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: m_LocalPosition.y

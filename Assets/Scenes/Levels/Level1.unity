@@ -756,7 +756,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1523760611647216625, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.000007860631
+      value: 0.0000027728856
       objectReference: {fileID: 0}
     - target: {fileID: 1523760611647216625, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1162,7 +1162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelNumber: 1
   levelName: Village
-  timerDuration: 18000
+  timerDuration: 11250
   targetValue: 100
 --- !u!114 &5862865964444216161 stripped
 MonoBehaviour:

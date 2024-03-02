@@ -10,7 +10,7 @@ namespace EventSystem
         private float timerMax;
 
         [SerializeField] private int currentTick = 0;
-        [SerializeField] private int tickSpeed;
+        [SerializeField] private int tickSpeed = 60;
 
         public int GetCurrentTick() { return currentTick; }
         public int GetTickSpeed() { return tickSpeed; }

@@ -31,7 +31,8 @@ public class PlayerUI : MonoBehaviour
     void Update()
     {
         // Update the remaining ticks
-        remainingTicks = Mathf.Max(levelParameters.timerDuration - tickSystem.GetCurrentTick(), 0);
+        remainingTicks = levelParameters.timerDuration - tickSystem.GetCurrentTick();
+        UnityEngine.Debug.Log(remainingTicks);
         UpdateUI();
     }
 
@@ -52,13 +53,17 @@ public class PlayerUI : MonoBehaviour
 
 
         // Time calculations
-        int ticksPerMinute = 3600;
-        int remainingMinutes = remainingTicks / ticksPerMinute;
-        int remainingSeconds = (remainingTicks % ticksPerMinute) / 100;
-        int remainingMilliseconds = (remainingTicks % ticksPerMinute) % 100;
+        int ticksPerSecond = 60; // Assuming tick speed is 60 ticks per second
+        int totalMilliseconds = remainingTicks * (1000 / ticksPerSecond); // Convert ticks to milliseconds
 
-        // Format the as mm:ss:ms
-        string formattedTicks = string.Format("{0:D2}:{1:D2}:{2:D2}", remainingMinutes, remainingSeconds, remainingMilliseconds);
+        int remainingSeconds = totalMilliseconds / 1000;
+        int remainingMinutes = remainingSeconds / 60;
+
+        remainingSeconds %= 60;
+        int remainingMilliseconds = totalMilliseconds % 1000;
+
+        // Format as mm:ss:fff (minutes:seconds:milliseconds)
+        string formattedTicks = string.Format("{0:00}:{1:00}:{2:000}", remainingMinutes, remainingSeconds, remainingMilliseconds);
         timeLimit.text = formattedTicks;
 
         // Check if the player has been caught

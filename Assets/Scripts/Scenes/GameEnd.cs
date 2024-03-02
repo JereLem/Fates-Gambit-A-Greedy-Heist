@@ -65,7 +65,23 @@ public class GameEnd : MonoBehaviour
             pickpocketedValue.text = GameStats.Instance.pickpocketedValue.ToString();
 
             TMP_Text gameDuration = activePanel.transform.Find("GameDuration").GetComponent<TMP_Text>();
-            gameDuration.text = GameStats.Instance.cumulativeGameDuration.ToString();
+            
+            float gameDurationInSeconds = GameStats.Instance.cumulativeGameDuration;
+            
+            // Convert seconds to total milliseconds
+            int totalMilliseconds = Mathf.RoundToInt(gameDurationInSeconds * 1000);
+
+            // Time calculations
+            int remainingSeconds = totalMilliseconds / 1000;
+            int remainingMinutes = remainingSeconds / 60;
+
+            remainingSeconds %= 60;
+            int remainingMilliseconds = totalMilliseconds % 1000;
+
+            // Format as mm:ss:fff (minutes:seconds:milliseconds)
+            string formattedGameDuration = string.Format("{0:00}:{1:00}:{2:000}", remainingMinutes, remainingSeconds, remainingMilliseconds);
+
+            gameDuration.text = formattedGameDuration;
 
             TMP_Text gameOverReason = activePanel.transform.Find("GameOverReason").GetComponent<TMP_Text>();
             gameOverReason.text = gameOverText;
