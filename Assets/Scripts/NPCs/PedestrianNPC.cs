@@ -81,7 +81,16 @@ public class PedestrianNPC : NPCMovement
         
         // 90% chance the pedestrian is default type 10% rich 
         pedestrianTypeChance = Random.Range(1, 11);
-        pickpocketableValue = (pedestrianTypeChance <= 9) ? Random.Range(10, 15) : Random.Range(20, 25);
+
+        if (pedestrianTypeChance <= 1)
+        {
+            animator.SetBool("isRich",true);
+            pickpocketableValue = Random.Range(20, 25);
+        }
+        else
+        {
+            pickpocketableValue = Random.Range(10, 15);
+        }
 
         // Randomize layer of sprites, making sure it's different from the player's level
         SetRandomSortingOrder();

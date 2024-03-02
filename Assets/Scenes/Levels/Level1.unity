@@ -470,6 +470,22 @@ PrefabInstance:
       propertyPath: spawnIntervalPedestrian
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7384540953128129159, guid: 8eee428642cb87b4393dde6eae6a58ac, type: 3}
+      propertyPath: pedestrianPrefab_rich_male
+      value: 
+      objectReference: {fileID: 5075169228289581282, guid: 18a18525b080d05488e67d26659d0438, type: 3}
+    - target: {fileID: 7384540953128129159, guid: 8eee428642cb87b4393dde6eae6a58ac, type: 3}
+      propertyPath: pedestrianPrefab_rich_female
+      value: 
+      objectReference: {fileID: 7922167096249549691, guid: 63070babaad16a9429c777d66ae8275e, type: 3}
+    - target: {fileID: 7384540953128129159, guid: 8eee428642cb87b4393dde6eae6a58ac, type: 3}
+      propertyPath: spawnIntervalPedestrian_male
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7384540953128129159, guid: 8eee428642cb87b4393dde6eae6a58ac, type: 3}
+      propertyPath: spawnIntervalPedestrian_female
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7654506721509629697, guid: 8eee428642cb87b4393dde6eae6a58ac, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.848362
@@ -756,7 +772,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1523760611647216625, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0000027728856
+      value: 0.0000053546464
       objectReference: {fileID: 0}
     - target: {fileID: 1523760611647216625, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: m_LocalPosition.y
