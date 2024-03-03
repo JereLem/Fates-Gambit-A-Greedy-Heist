@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
         playerStats.AddValue(bonus);
 
         if (bonus > 0){
-            playerInfoText.text = $"You are fast! You found some extra change {bonus} from those pockets";
+            playerInfoText.text = $"You are fast! You found some extra change {bonus}$ from those pockets";
             playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
         }
     }

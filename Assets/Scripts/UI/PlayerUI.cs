@@ -48,7 +48,7 @@ public class PlayerUI : MonoBehaviour
         // Set every text to the UI
         number.text = levelParameters.levelNumber.ToString();
         name.text = levelParameters.levelName;
-        targetValue.text = playerStats.pickpocketedValue.ToString() + "/" + levelParameters.targetValue.ToString();
+        targetValue.text = playerStats.pickpocketedValue.ToString() + "/" + levelParameters.targetValue.ToString() + "$";
 
 
         // Time calculations
