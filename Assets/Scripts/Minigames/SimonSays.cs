@@ -220,7 +220,7 @@ public class SimonSays : MonoBehaviour
             playerInput.Clear();
             DestroyMiniGame();
             AudioManager.instance.PlaySFX(level == 1 ? "Lv1MinigameLoss" : "Lv2MinigameLoss");
-            playerInfoText.text = "Hah, nice try... Your not pickpocketing me!";
+            playerInfoText.text = "Hah, nice try... You're not pickpocketing me!";
             playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
         }
         else if (playerInput.Count == sequence.Count)
