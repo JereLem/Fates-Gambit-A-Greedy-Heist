@@ -143,6 +143,10 @@ private IEnumerator RunGame()
             playerStats.AddValue(currentPedestrian.pickpocketableValue);
             currentPedestrian.hasBeenPickpocketed = true;
             currentPedestrian.SetMaxCycles();
+
+            // Add Values to gamestats also
+            GameStats.Instance.pickpocketedValue = currentPedestrian.pickpocketableValue;
+            GameStats.Instance.pedestriansPickpocketed += 1;
         
             // Call GameManager method to calculate and apply the time bonus
             GameManager.Instance.CalculateTimeBonus(gameTime);
@@ -294,7 +298,7 @@ private IEnumerator RunGame()
     {
         isGameRunning = false;
     }
-
+    
     PedestrianNPC GetCurrentPedestrian()
     {
         // Return the pedestrian currently being pickpocketed

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,10 +15,13 @@ public class GameManager : MonoBehaviour
 
     [Header("Bonus Multiplier")]
     [SerializeField] private float timeBonusMultiplier;
+    [SerializeField] public PlayerUI playerUI;
+    [SerializeField] public GameObject playerInfo;
 
     private PlayerStats playerStats;
     public static bool isMiniGameActive = false;
     public int level;
+    private TMP_Text playerInfoText;
 
     private void Awake()
     {
@@ -29,11 +33,13 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        playerUI = GameObject.Find("UI")?.GetComponent<PlayerUI>();
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
         level = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>().levelNumber;
+        playerInfoText = playerInfo.GetComponent<TMP_Text>();
 
-        // All minigames 30 seconds
-        timeBonusMultiplier = 30f;
+        // If solved faster than 10s
+        timeBonusMultiplier = 10f;
     }
 
     // Function to start a random minigame
@@ -74,6 +80,11 @@ public class GameManager : MonoBehaviour
         // Calculate bonus based on the time taken and round to the nearest integer
         int bonus = Mathf.RoundToInt(Mathf.Max(0, timeBonusMultiplier - timeTaken));
         playerStats.AddValue(bonus);
+
+        if (bonus > 0){
+            playerInfoText.text = $"You are fast! You found some extra change {bonus} from those pockets";
+            playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
+        }
     }
 
     public static bool IsMiniGameActive()

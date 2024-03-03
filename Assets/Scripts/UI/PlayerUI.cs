@@ -68,7 +68,7 @@ public class PlayerUI : MonoBehaviour
         // Check if the player has been caught
         if (playerStats.timesCaught > 0 && !hasDisplayedMessage)
         {
-            // Display playerInfo text for 2 seconds
+            // Display playerInfo text for 3 seconds
             if (displayCoroutine == null)
             {
                 playerInfoText.text = "You have been caught! Next time you're going to Jail!";
@@ -78,12 +78,12 @@ public class PlayerUI : MonoBehaviour
         }
     }
 
-    IEnumerator DisplayPlayerInfoText()
+    public IEnumerator DisplayPlayerInfoText()
     {
         playerInfo.gameObject.SetActive(true);
 
-        // Display for 2 seconds
-        yield return new WaitForSeconds(2f);
+        // Display for 3 seconds
+        yield return new WaitForSeconds(3f);
 
         // Deactivate the playerInfo text
         playerInfo.gameObject.SetActive(false);

@@ -41,7 +41,6 @@ public class GameStats : MonoBehaviour
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         if (currentSceneIndex == currentLevel)
         {
-            UnityEngine.Debug.Log(currentLevel);
             tickSystem = GameObject.FindGameObjectWithTag("EventSystem")?.GetComponent<TickSystem>();
             if (tickSystem == null)
             {
@@ -70,7 +69,6 @@ public class GameStats : MonoBehaviour
         }
         else if (currentSceneIndex == currentLevel)
         {
-            UnityEngine.Debug.Log(currentLevel);
             tickSystem = GameObject.FindGameObjectWithTag("EventSystem")?.GetComponent<TickSystem>();
             if (tickSystem == null)
             {

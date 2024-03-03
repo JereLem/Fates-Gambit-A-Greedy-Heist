@@ -251,6 +251,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e74f7d858de7cdf42984d9da91fee3d6, type: 3}
+--- !u!1 &469360026 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 599208689241617902, guid: e74f7d858de7cdf42984d9da91fee3d6, type: 3}
+  m_PrefabInstance: {fileID: 469360025}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &469360027 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5700984033852731619, guid: e74f7d858de7cdf42984d9da91fee3d6, type: 3}
+  m_PrefabInstance: {fileID: 469360025}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166afe22a0c95804899f045416151f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &645856839
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -908,12 +924,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
+      propertyPath: playerUI
+      value: 
+      objectReference: {fileID: 469360027}
+    - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
+      propertyPath: playerInfo
+      value: 
+      objectReference: {fileID: 469360026}
+    - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
       propertyPath: arrowGamePrefab
       value: 
       objectReference: {fileID: 7880140541430951268, guid: 410f4452bbc24804f8beb151517919e8, type: 3}
     - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
       propertyPath: timeBonusMultiplier
-      value: 30
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7301586917381682386, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
       propertyPath: m_Name

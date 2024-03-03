@@ -361,6 +361,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &762113270 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 599208689241617902, guid: e74f7d858de7cdf42984d9da91fee3d6, type: 3}
+  m_PrefabInstance: {fileID: 8556740135964323748}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &843956357
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -410,6 +415,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
+      propertyPath: playerUI
+      value: 
+      objectReference: {fileID: 1396578661}
+    - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
+      propertyPath: playerInfo
+      value: 
+      objectReference: {fileID: 762113270}
+    - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
       propertyPath: audioManager
       value: 
       objectReference: {fileID: 0}
@@ -419,7 +432,7 @@ PrefabInstance:
       objectReference: {fileID: 7880140541430951268, guid: 410f4452bbc24804f8beb151517919e8, type: 3}
     - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
       propertyPath: timeBonusMultiplier
-      value: 30
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7301586917381682386, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
       propertyPath: m_Name
@@ -637,6 +650,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0e772001c9f20f4cb34c0a112f433aa, type: 3}
+--- !u!114 &1396578661 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5700984033852731619, guid: e74f7d858de7cdf42984d9da91fee3d6, type: 3}
+  m_PrefabInstance: {fileID: 8556740135964323748}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166afe22a0c95804899f045416151f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!60 &1707135279 stripped
 PolygonCollider2D:
   m_CorrespondingSourceObject: {fileID: 8015660203096656564, guid: fc50772e3b0875b438feda28c88ed578, type: 3}
