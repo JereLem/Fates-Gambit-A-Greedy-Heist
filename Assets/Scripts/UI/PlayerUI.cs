@@ -13,12 +13,13 @@ public class PlayerUI : MonoBehaviour
 
     [SerializeField] public GameObject playerInfo;
     private TMP_Text playerInfoText;
+
     void Start()
     {
         // Get data from EventSystem, PlayerStats and TickSystem
-        levelParameters = GameObject.FindGameObjectWithTag("EventSystem")?.GetComponent<LevelParameters>();
-        tickSystem = GameObject.FindGameObjectWithTag("EventSystem")?.GetComponent<TickSystem>();
-        playerStats = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerStats>();
+        levelParameters = FindObjectOfType<LevelParameters>();
+        tickSystem = FindObjectOfType<TickSystem>();
+        playerStats = FindObjectOfType<PlayerStats>();
         playerInfoText = playerInfo.GetComponent<TMP_Text>();
         remainingTicks = levelParameters.timerDuration;
 

@@ -6,11 +6,13 @@ using UnityEngine.UI;
 
 public class StartEndMenu : MonoBehaviour
 {
+
     // Start new game
     public void StartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         GameStats.Instance.SetNextLevel(1);
+        Time.timeScale = 1f;
     }
 
     // Exit game
@@ -24,4 +26,5 @@ public class StartEndMenu : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
 }

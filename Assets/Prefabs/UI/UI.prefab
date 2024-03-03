@@ -826,6 +826,7 @@ MonoBehaviour:
   playerStats: {fileID: 0}
   tickSystem: {fileID: 0}
   playerInfo: {fileID: 38752870329101621}
+  escMenu: {fileID: 0}
 --- !u!1 &7817516191632965559
 GameObject:
   m_ObjectHideFlags: 0

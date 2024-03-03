@@ -57,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform balconies;
 
+    public bool enableMovementAll;
+
 
     void Start()
     {
@@ -73,66 +75,69 @@ public class PlayerMovement : MonoBehaviour
         balconies = GameObject.Find("BalconyFloors").transform;
 
         highlightHook.color = grayedOutColor;
+        enableMovementAll = true;
     }
 
     void Update()
     {
-        // PlayerMovement Update
-        horizontal = Input.GetAxisRaw("Horizontal");
-        vertical = Input.GetAxisRaw("Vertical");
+        if (enableMovementAll){
+            // PlayerMovement Update
+            horizontal = Input.GetAxisRaw("Horizontal");
+            vertical = Input.GetAxisRaw("Vertical");
 
-        animator.SetFloat("Speed", Mathf.Abs(horizontal));
-        //animator.SetFloat("Velocity", rb.velocity.y);
+            animator.SetFloat("Speed", Mathf.Abs(horizontal));
+            //animator.SetFloat("Velocity", rb.velocity.y);
 
-        FlipSprite(horizontal);
+            FlipSprite(horizontal);
 
-        if (Input.GetButtonDown("Jump"))
-        {
-            // Start a coroutine to handle short press for jumping
-            StartCoroutine(JumpCoroutine());
-        }
-
-        if (Input.GetButton("Jump") && CanClimb())
-        {
-            // Handle climbing while the button is held
-            isClimbing = true;
-            player.gravityScale = noGravity;
-            jumpsLeft = 1;
-        }
-
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-        // Toggle the enableHookshot variable when the 'F' key is pressed
-        enableHookshot = !enableHookshot;
-
-        // Reset the isUsingHookshot variable when disabling the hookshot
-        if (!enableHookshot)
-        {
-            isUsingHookshot = false;
-        }
-        }
-
-        if (enableHookshot){
-            // RopeAction Update
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetButtonDown("Jump"))
             {
-                RopeShoot();
-                isUsingHookshot = true;
-                AudioManager.instance.PlaySFX("hookshot");
+                // Start a coroutine to handle short press for jumping
+                StartCoroutine(JumpCoroutine());
             }
-            else if (Input.GetMouseButtonUp(0))
+
+            if (Input.GetButton("Jump") && CanClimb())
             {
-                EndShoot();
+                // Handle climbing while the button is held
+                isClimbing = true;
+                player.gravityScale = noGravity;
+                jumpsLeft = 1;
+            }
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+            // Toggle the enableHookshot variable when the 'F' key is pressed
+            enableHookshot = !enableHookshot;
+
+            // Reset the isUsingHookshot variable when disabling the hookshot
+            if (!enableHookshot)
+            {
                 isUsingHookshot = false;
             }
-        }
+            }
 
-        if (OnGrappling && enableHookshot)
-        {
-            QuickMove();
+            if (enableHookshot){
+                // RopeAction Update
+                if (Input.GetMouseButtonDown(0))
+                {
+                    RopeShoot();
+                    isUsingHookshot = true;
+                    AudioManager.instance.PlaySFX("hookshot");
+                }
+                else if (Input.GetMouseButtonUp(0))
+                {
+                    EndShoot();
+                    isUsingHookshot = false;
+                }
+            }
+
+            if (OnGrappling && enableHookshot)
+            {
+                QuickMove();
+            }
+            highlightHook.color = enableHookshot ? originalColor : grayedOutColor;
+            DrawRope();
         }
-        highlightHook.color = enableHookshot ? originalColor : grayedOutColor;
-        DrawRope();
     }
     void FlipSprite(float horizontalInput)
     {
