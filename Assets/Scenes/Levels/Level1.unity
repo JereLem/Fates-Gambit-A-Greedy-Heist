@@ -361,11 +361,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &762113270 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 599208689241617902, guid: e74f7d858de7cdf42984d9da91fee3d6, type: 3}
-  m_PrefabInstance: {fileID: 8556740135964323748}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &843956357
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -421,7 +416,7 @@ PrefabInstance:
     - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
       propertyPath: playerInfo
       value: 
-      objectReference: {fileID: 762113270}
+      objectReference: {fileID: 8556740135964323749}
     - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
       propertyPath: audioManager
       value: 
@@ -1328,6 +1323,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e74f7d858de7cdf42984d9da91fee3d6, type: 3}
+--- !u!1 &8556740135964323749 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 38752870329101621, guid: e74f7d858de7cdf42984d9da91fee3d6, type: 3}
+  m_PrefabInstance: {fileID: 8556740135964323748}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

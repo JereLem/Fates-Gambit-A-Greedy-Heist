@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Diagnostics;
+using TMPro;
 
 public class SimonSays : MonoBehaviour
 {
@@ -29,13 +30,20 @@ public class SimonSays : MonoBehaviour
     private float elapsedTime = 0.0f;
     private float gameTime;
     public int level;
+    [SerializeField] public PlayerUI playerUI;
+    [SerializeField] public GameObject playerInfo;
+    public TMP_Text playerInfoText;
 
 
 
     void Start()
     {
+        playerUI = GameObject.FindGameObjectWithTag("UI")?.GetComponent<PlayerUI>();
+        playerInfo = playerUI.transform.Find("InfoPlayer")?.gameObject;
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
         level = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>().levelNumber;
+        playerInfoText = playerInfo.GetComponent<TMP_Text>();
+        playerInfoText.text = "Dammit, the pedestrians got away! You were too slow!";
         StartGame();
     }
 
@@ -45,7 +53,8 @@ public class SimonSays : MonoBehaviour
         if (!currentPedestrian.isTalking)
         {
             playerInput.Clear();
-            UnityEngine.Debug.Log("Too slow!");
+            playerInfoText.text = "Dammit, the pedestrians got away! You were too slow!";
+            playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
             DestroyMiniGame();
         }
 
@@ -211,6 +220,8 @@ public class SimonSays : MonoBehaviour
             playerInput.Clear();
             DestroyMiniGame();
             AudioManager.instance.PlaySFX(level == 1 ? "Lv1MinigameLoss" : "Lv2MinigameLoss");
+            playerInfoText.text = "Hah, nice try... Your not pickpocketing me!";
+            playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
         }
         else if (playerInput.Count == sequence.Count)
         {

@@ -33,10 +33,19 @@ public class ArrowGame : MonoBehaviour
     private float gameTime;
     public int level;
 
+    [SerializeField] public PlayerUI playerUI;
+    [SerializeField] public GameObject playerInfo;
+    public TMP_Text playerInfoText;
+
+
     private void Start()
     {
+        playerUI = GameObject.FindGameObjectWithTag("UI")?.GetComponent<PlayerUI>();
+        playerInfo = playerUI.transform.Find("InfoPlayer")?.gameObject;
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
         level = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>().levelNumber;
+        playerInfoText = playerInfo.GetComponent<TMP_Text>();
+        playerInfoText.text = "Dammit, the pedestrians got away! You were too slow!";
         currentPedestrian = GetCurrentPedestrian();
         StartCoroutine(RunGame());
         isGameRunning = true;
@@ -53,7 +62,8 @@ public class ArrowGame : MonoBehaviour
         // Check if pedestrians stopped talking
         if (!currentPedestrian.isTalking)
         {
-            UnityEngine.Debug.Log("Too slow!");
+            playerInfoText.text = "Dammit, the pedestrians got away! You were too slow!";
+            playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
             Destroy(gameObject);
         }
 
@@ -111,6 +121,8 @@ private IEnumerator RunGame()
                     // User input was incorrect, stop the game
                     Destroy(gameObject);
                     AudioManager.instance.PlaySFX(level == 1 ? "Lv1MinigameLoss" : "Lv2MinigameLoss");
+                    playerInfoText.text = "Hah, nice try... Your not pickpocketing me!";
+                    playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
                 }
             }
             else{
@@ -134,6 +146,8 @@ private IEnumerator RunGame()
             // The timer exceeded the round duration, stop the game
             Destroy(gameObject);
             AudioManager.instance.PlaySFX(level == 1 ? "Lv1MinigameLoss" : "Lv2MinigameLoss");
+            playerInfoText.text = "Hah, nice try... Your not pickpocketing me!";
+            playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
         }
 
     }
@@ -298,7 +312,7 @@ private IEnumerator RunGame()
     {
         isGameRunning = false;
     }
-    
+
     PedestrianNPC GetCurrentPedestrian()
     {
         // Return the pedestrian currently being pickpocketed

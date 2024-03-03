@@ -18,6 +18,8 @@ TagManager:
   - HighlightPickpocket
   - PedestrianTrigger
   - PoliceTrigger
+  - InfoPlayer
+  - UI
   layers:
   - Default
   - TransparentFX

@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         playerUI = GameObject.Find("UI")?.GetComponent<PlayerUI>();
+        playerInfo = playerUI.transform.Find("InfoPlayer")?.gameObject;
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
         level = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>().levelNumber;
         playerInfoText = playerInfo.GetComponent<TMP_Text>();
