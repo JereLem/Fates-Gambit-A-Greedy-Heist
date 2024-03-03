@@ -55,6 +55,8 @@ public class PlayerMovement : MonoBehaviour
     private Color grayedOutColor;
     public Image highlightHook;
 
+    public Transform balconies;
+
 
     void Start()
     {
@@ -66,6 +68,9 @@ public class PlayerMovement : MonoBehaviour
         highlightHook = panel.Find("HighlightHook").GetComponent<Image>();
         originalColor = highlightHook.color;
         grayedOutColor = Color.gray;
+
+        // Get all of the balcony floors
+        balconies = GameObject.Find("BalconyFloors").transform;
 
         highlightHook.color = grayedOutColor;
     }
@@ -215,16 +220,19 @@ public class PlayerMovement : MonoBehaviour
             jumpsLeft = 1;
         }
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         // Ensure player layer changes to be inside the balcony/house
         if (collision.gameObject.CompareTag("Balcony"))
         {
             {
-                spriteRenderer.sortingOrder =  2;
+                spriteRenderer.sortingOrder =  3;
+                ActivateAllBalconyGameObjects(balconies);
             }
         }
-
     }
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         // Ensure player falls if they go out of climbable area
@@ -247,8 +255,8 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Balcony"))
         {
             {
-                spriteRenderer.sortingOrder = 3;
-
+                spriteRenderer.sortingOrder = 5;
+                DeactivateAllBalconyGameObjects(balconies);
             }
         }
     }
@@ -331,5 +339,38 @@ public class PlayerMovement : MonoBehaviour
 
         Debug.Log("QuickMove completed");
     }
+
+    private void ActivateAllBalconyGameObjects(Transform parentTransform)
+    {
+        // Iterate through each child of the parentTransform.
+        for (int i = 0; i < parentTransform.childCount; i++)
+        {
+            // Get the current child transform.
+            Transform childTransform = parentTransform.GetChild(i);
+
+            // Access the GameObject associated with the child transform.
+            GameObject balconyGameObject = childTransform.gameObject;
+
+            // Activate the balcony GameObject.
+            balconyGameObject.SetActive(true);
+        }
+    }
+
+    private void DeactivateAllBalconyGameObjects(Transform parentTransform)
+    {
+        // Iterate through each child of the parentTransform.
+        for (int i = 0; i < parentTransform.childCount; i++)
+        {
+            // Get the current child transform.
+            Transform childTransform = parentTransform.GetChild(i);
+
+            // Access the GameObject associated with the child transform.
+            GameObject balconyGameObject = childTransform.gameObject;
+
+            // Deactivate the balcony GameObject.
+            balconyGameObject.SetActive(false);
+        }
+    }
+
 
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PoliceNPC : NPCMovement
 {
@@ -42,6 +43,11 @@ public class PoliceNPC : NPCMovement
     private SpriteRenderer officerSp;
     float distanceToPlayer;
 
+    //UI
+    [SerializeField] public PlayerUI playerUI;
+    [SerializeField] public GameObject playerInfo;
+    public TMP_Text playerInfoText;
+
 
     new void Start()
     {
@@ -62,6 +68,11 @@ public class PoliceNPC : NPCMovement
         
         //Experienced police officer can catch the player faster
         catchDelay = initialCatchDelay - (minCatchDelayMultiplier * policeRank);
+
+        //UI
+        playerUI = GameObject.FindGameObjectWithTag("UI")?.GetComponent<PlayerUI>();
+        playerInfo = playerUI.transform.Find("InfoPlayer")?.gameObject;
+        playerInfoText = playerInfo.GetComponent<TMP_Text>();
         base.Start();
 
     }
@@ -145,6 +156,8 @@ public class PoliceNPC : NPCMovement
 
             // After the delay, perform the catching actions
             playerStats.timesCaught++;
+            playerInfoText.text = "You have been caught! Next time you're going to jail Adrian!";
+            playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
             playerStats.hasBeenCaught = true;
 
             isCatching = false;

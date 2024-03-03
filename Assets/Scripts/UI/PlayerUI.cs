@@ -13,9 +13,6 @@ public class PlayerUI : MonoBehaviour
 
     [SerializeField] public GameObject playerInfo;
     private TMP_Text playerInfoText;
-    private Coroutine displayCoroutine;
-    private bool hasDisplayedMessage = false;
-
     void Start()
     {
         // Get data from EventSystem, PlayerStats and TickSystem
@@ -65,17 +62,6 @@ public class PlayerUI : MonoBehaviour
         string formattedTicks = string.Format("{0:00}:{1:00}:{2:000}", remainingMinutes, remainingSeconds, remainingMilliseconds);
         timeLimit.text = formattedTicks;
 
-        // Check if the player has been caught
-        if (playerStats.timesCaught > 0 && !hasDisplayedMessage)
-        {
-            // Display playerInfo text for 3 seconds
-            if (displayCoroutine == null)
-            {
-                playerInfoText.text = "You have been caught! Next time you're going to Jail!";
-                displayCoroutine = StartCoroutine(DisplayPlayerInfoText());
-                hasDisplayedMessage = true;
-            }
-        }
     }
 
     public IEnumerator DisplayPlayerInfoText()
@@ -87,7 +73,6 @@ public class PlayerUI : MonoBehaviour
 
         // Deactivate the playerInfo text
         playerInfo.gameObject.SetActive(false);
-        displayCoroutine = null;
     }
 }
 

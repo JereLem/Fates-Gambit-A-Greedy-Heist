@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class RandomLights : MonoBehaviour
 {
@@ -21,14 +22,22 @@ public class RandomLights : MonoBehaviour
     [Header("Catch Delay")]
     public float catchDelay = 0.5f;
     public bool isCatching = false;
+
+    //UI
+    [SerializeField] public PlayerUI playerUI;
+    [SerializeField] public GameObject playerInfo;
+    public TMP_Text playerInfoText;
     
     // Start is called before the first frame update
     void Start()
     {
+        playerUI = GameObject.FindGameObjectWithTag("UI")?.GetComponent<PlayerUI>();
+        playerInfo = playerUI.transform.Find("InfoPlayer")?.gameObject;
         lastToggleTime = Time.time;
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         playerStats = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerStats>();
         lightObject.GetComponent<SpriteRenderer>().sprite = lightOffSprite;
+        playerInfoText = playerInfo.GetComponent<TMP_Text>();
         StartCoroutine(ToggleLights());
     }
 
@@ -54,10 +63,11 @@ public class RandomLights : MonoBehaviour
 
         // Wait for the catchDelay duration (Player has basically a final chance to get away)
         yield return new WaitForSeconds(catchDelay);
+        playerInfoText.text = "Hey I caught you! Get off of my balcony!";
+        playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
 
         // After the delay, perform the catching actions
         playerStats.timesCaught++;
-        Debug.Log("Player caught by the homeowner!");
 
         isCatching = false;
     }
