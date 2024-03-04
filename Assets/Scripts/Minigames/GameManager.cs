@@ -80,9 +80,10 @@ public class GameManager : MonoBehaviour
     {
         // Calculate bonus based on the time taken and round to the nearest integer
         int bonus = Mathf.RoundToInt(Mathf.Max(0, timeBonusMultiplier - timeTaken));
-        playerStats.AddValue(bonus);
 
         if (bonus > 0){
+            playerStats.AddValue(bonus);
+            GameStats.Instance.pickpocketedValue += bonus;
             playerInfoText.text = $"You are fast! You found some extra change {bonus}$ from those pockets";
             playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
         }

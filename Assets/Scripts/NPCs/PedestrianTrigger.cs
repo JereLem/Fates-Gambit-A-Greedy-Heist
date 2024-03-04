@@ -6,11 +6,13 @@ public class PedestrianTrigger : MonoBehaviour
 {
     // Reference to the parent PedestrianNPC
     public PedestrianNPC parentNPC;
+    private PlayerStats playerStats;
 
     private void Start()
     {
         // Get the parent NPC script
         parentNPC = transform.parent.GetComponent<PedestrianNPC>();
+        playerStats = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerStats>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -67,10 +69,10 @@ public class PedestrianTrigger : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && parentNPC.isTalking && !parentNPC.hasBeenPickpocketed)
         {
             parentNPC.triggerEntered = false;
-            parentNPC.playerStats.isPickpocketing = false;
+            playerStats.isPickpocketing = false;
             parentNPC.highlightPickpocket.color = parentNPC.grayedOutColor;
             AudioManager.instance.StopMinigameMusic();
         }

@@ -56,31 +56,36 @@ public class ArrowGame : MonoBehaviour
         // Check for user input outside the coroutine
         if (isGameRunning)
         {
-            CheckUserInput();
-        }
+        
+        CheckUserInput();
+        
 
         // Check if pedestrians stopped talking
-        if (!currentPedestrian.isTalking)
+        if (currentPedestrian == null || !currentPedestrian.isTalking)
         {
             playerInfoText.text = "Dammit, the pedestrians got away! You were too slow!";
             playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
             Destroy(gameObject);
+            playerStats.isPickpocketing = false;
         }
 
         // Check if the player has exited the pedestrian collider
-        if (currentPedestrian != null && !currentPedestrian.triggerEntered)
+        if (currentPedestrian == null || !currentPedestrian.triggerEntered)
         {
             UnityEngine.Debug.Log("Player exited the pedestrian collider!");
             Destroy(gameObject);
+            playerStats.isPickpocketing = false;
         }
 
         // If player gets caught stop game
         if(playerStats.hasBeenCaught)
         {
             Destroy(gameObject);
+            playerStats.isPickpocketing = false;
         }
 
         gameTime += Time.deltaTime;
+        }
     }
 
 
@@ -159,7 +164,7 @@ private IEnumerator RunGame()
             currentPedestrian.SetMaxCycles();
 
             // Add Values to gamestats also
-            GameStats.Instance.pickpocketedValue = currentPedestrian.pickpocketableValue;
+            GameStats.Instance.pickpocketedValue += currentPedestrian.pickpocketableValue;
             GameStats.Instance.pedestriansPickpocketed += 1;
         
             // Call GameManager method to calculate and apply the time bonus
