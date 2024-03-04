@@ -835,6 +835,10 @@ PrefabInstance:
       propertyPath: levelParameters
       value: 
       objectReference: {fileID: 5862865964444216160}
+    - target: {fileID: 5012463649420173280, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7134525096889070162, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -1021,6 +1025,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 3883405397954975170, guid: fc50772e3b0875b438feda28c88ed578, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: fd1270716454dd94bbddfecaf7ba1bec, type: 2}
     - target: {fileID: 4692457610961883307, guid: fc50772e3b0875b438feda28c88ed578, type: 3}
       propertyPath: m_Name
       value: Boundaries
