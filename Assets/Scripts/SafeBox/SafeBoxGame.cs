@@ -6,7 +6,7 @@ public class SafeBoxGame : MonoBehaviour
 {
     public HUD hud;
     public bool isClear;
-
+    public CircleSlider[] knobs;
 
     private void Awake()
     {
@@ -19,6 +19,7 @@ public class SafeBoxGame : MonoBehaviour
         {
             if(isClear)
             {
+                Debug.Log("SafeBox clear!");
                 float gameTime = hud.totalTime - hud.leftTime;
                 GameManager.Instance.CalculateTimeBonus(gameTime);
 
@@ -28,6 +29,11 @@ public class SafeBoxGame : MonoBehaviour
                 // Destroy the mini-game object
                 Destroy(gameObject);
             }
+        }
+
+        if(knobs[0].IsMissionCompleted() && knobs[1].IsMissionCompleted())
+        {
+            isClear = true;
         }
     }
 }

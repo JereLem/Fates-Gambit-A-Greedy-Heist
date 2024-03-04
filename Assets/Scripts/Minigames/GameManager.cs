@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject simonSaysPrefab;
     [SerializeField] private GameObject arrowGamePrefab;
     [SerializeField] private GameObject dotConnectingPrefab;
-
+    [SerializeField] private GameObject safeBoxPrefab;
 
     [Header("Bonus Multiplier")]
     [SerializeField] private float timeBonusMultiplier;
@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     private PlayerStats playerStats;
     public static bool isMiniGameActive = false;
+    //public static bool 
     public int level;
     private TMP_Text playerInfoText;
 
@@ -50,7 +51,15 @@ public class GameManager : MonoBehaviour
     public void StartRandomMinigame()
     {
         int randomMinigame = UnityEngine.Random.Range(0, 4);
-        if (!isMiniGameActive)
+
+        // Play the SafeBox game if you fulfill the condition of the game.
+        if(playerStats.isNearBalcony && playerStats.enableSafeBox && !isMiniGameActive)
+        {
+            //AudioManager.instance.PlayMusic; 
+            StartMiniGame(safeBoxPrefab);
+        }
+        //else if other minigame occurs. 
+        else if (!isMiniGameActive)
         {
             AudioManager.instance.PlayMinigameMusic(level == 1 ? "Lv1Minigame" : "Lv2Minigame");
             switch (randomMinigame)

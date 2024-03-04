@@ -25,9 +25,8 @@ public class PoliceNPC : NPCMovement
     [Header("Police Officer Flags")]
     [SerializeField] public bool isCatching = false;
     [SerializeField] private bool isChasing = false;
-    [SerializeField] private bool isAlertActive;
-    [SerializeField] public bool isLightOff = false;
     [SerializeField] public bool isAlertActive;
+    [SerializeField] public bool isLightOff = false;
     private bool isMovingRight;
 
 

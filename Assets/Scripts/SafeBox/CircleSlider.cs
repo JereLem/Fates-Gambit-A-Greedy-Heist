@@ -10,9 +10,8 @@ public class CircleSlider : MonoBehaviour
     [SerializeField] Text valTxt;
 
     [Header("Components for Game Success")]
-    [SerializeField] float targetAngle; 
-    [SerializeField] AudioClip successSound; 
-    [SerializeField] AudioSource audioSource;
+    [SerializeField] float targetAngle;
+    [SerializeField] float toleranceAngle;
     [SerializeField] bool isMissionCompleted = false; 
 
     Vector3 mousePos;
@@ -37,25 +36,28 @@ public class CircleSlider : MonoBehaviour
         fill.fillAmount = angle / 360f;
         valTxt.text = Mathf.RoundToInt(fill.fillAmount * 100).ToString();
 
-        if (Mathf.Abs(angle - targetAngle) < 5f)
+        if (Mathf.Abs(angle - targetAngle) < toleranceAngle)
         {
             if (!isMissionCompleted)
             {
-                MissionCompleted();
+                SetMissionCompleted();
             }
         }
         else
         {
             isMissionCompleted = false; 
         }
-
-        //Debug.Log("drag");
     }
 
-    void MissionCompleted()
+    public void SetMissionCompleted()
     {
         isMissionCompleted = true;
         Debug.Log("Mission Completed!");
-        audioSource.PlayOneShot(successSound); // ÂûÄ¬ ¼Ò¸® Àç»ý
+        AudioManager.instance.PlaySFX("knob_unlock");
+    }
+
+    public bool IsMissionCompleted()
+    {
+        return isMissionCompleted;
     }
 }

@@ -338,11 +338,11 @@ public class PlayerMovement : MonoBehaviour
                 player.position = targetPosition;
             }
 
-            Debug.Log("Distance: " + distance + " duration: " + duration + " left time: " + (Time.time - startTime));
+            //Debug.Log("Distance: " + distance + " duration: " + duration + " left time: " + (Time.time - startTime));
             yield return null;
         }
-
-        Debug.Log("QuickMove completed");
+        //enableHookshot = false;
+        //Debug.Log("QuickMove completed");
     }
 
     private void ActivateAllBalconyGameObjects(Transform parentTransform)
