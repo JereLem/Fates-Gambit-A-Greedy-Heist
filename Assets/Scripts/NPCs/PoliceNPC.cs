@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PoliceNPC : NPCMovement
 {
@@ -8,7 +9,7 @@ public class PoliceNPC : NPCMovement
     // Police officer variables
     [Header("Police Officer Variables")]
     [SerializeField] public int policeRank;
-    [SerializeField] public float detectDistance = 1.0f;
+    [SerializeField] public float detectDistance = 0.35f;
     [SerializeField] private float runSpeed = 1.5f;
 
 
@@ -26,6 +27,8 @@ public class PoliceNPC : NPCMovement
     [SerializeField] private bool isChasing = false;
     [SerializeField] private bool isAlertActive;
     [SerializeField] public bool isLightOff = false;
+    [SerializeField] public bool isAlertActive;
+    private bool isMovingRight;
 
 
     [Header("Other Icons")]
@@ -36,9 +39,16 @@ public class PoliceNPC : NPCMovement
 
     // Player
     private Transform player;
-    private PlayerStats playerStats;
-    private Coroutine catchCoroutine;
+    public PlayerStats playerStats;
+    public Coroutine catchCoroutine;
     private SpriteRenderer circleSprite;
+    private SpriteRenderer officerSp;
+    float distanceToPlayer;
+
+    //UI
+    [SerializeField] public PlayerUI playerUI;
+    [SerializeField] public GameObject playerInfo;
+    public TMP_Text playerInfoText;
 
 
     new void Start()
@@ -52,11 +62,19 @@ public class PoliceNPC : NPCMovement
         // Set the eye icon above the player, and get the detectSprite
         eyeIcon.transform.position = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
         circleSprite = circleIcon.GetComponent<SpriteRenderer>();
+        officerSp = GetComponent<SpriteRenderer>();
 
         // Randomness for each police officer
         policeRank = Random.Range(1, 3);
         detectDistance = detectDistance + policeRank;
+        
+        //Experienced police officer can catch the player faster
         catchDelay = initialCatchDelay - (minCatchDelayMultiplier * policeRank);
+
+        //UI
+        playerUI = GameObject.FindGameObjectWithTag("UI")?.GetComponent<PlayerUI>();
+        playerInfo = playerUI.transform.Find("InfoPlayer")?.gameObject;
+        playerInfoText = playerInfo.GetComponent<TMP_Text>();
         base.Start();
 
     }
@@ -64,14 +82,22 @@ public class PoliceNPC : NPCMovement
     void Update()
     {
         FlipSprite();
-        circleSprite.transform.localScale = new Vector3(detectDistance * 2, 0.5f, 1.0f);
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        circleSprite.transform.localScale = new Vector3(detectDistance * 4, 0.3f, 1.0f);
+        distanceToPlayer  = Vector3.Distance(transform.position, player.position);
 
         // Check if the player is within the detect distance and player pickpocketing or police are on alert
         if (distanceToPlayer <= detectDistance && !isChasing && (playerStats.isPickpocketing || isAlertActive))
         {
-            if(isLightOff)
+            if(isLightOff){
                 StartCoroutine(ChasePlayer());
+                AudioManager.instance.PlaySFX("police_freeze");
+            }
+        }
+
+        if (isChasing)
+        {
+            // Invert the sprite based on the movement direction
+            officerSp.flipX = !isMovingRight;
         }
 
         // If police officer is trying to catch the player stop movement.
@@ -82,7 +108,9 @@ public class PoliceNPC : NPCMovement
 
         if (!isChasing) // Only move if not chasing
         {
+
             base.Move(); // Call the base Move method for regular NPC movement
+            ResumeMovement();
         }
 
         // Else continue moving.
@@ -117,11 +145,10 @@ public class PoliceNPC : NPCMovement
     void ToggleIcons()
     {
         eyeIcon.SetActive(isAlertActive);
-        circleIcon.SetActive(isAlertActive);
     }
 
 
-    IEnumerator TryToCatchPlayer()
+    public IEnumerator TryToCatchPlayer()
     {
         // Check if the player has already been caught by another police officer
         if (!playerStats.hasBeenCaught)
@@ -133,24 +160,28 @@ public class PoliceNPC : NPCMovement
 
             // After the delay, perform the catching actions
             playerStats.timesCaught++;
+            playerInfoText.text = "You have been caught! Next time you're going to jail Adrian!";
+            playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
             playerStats.hasBeenCaught = true;
 
             isCatching = false;
         }
     }
-
     IEnumerator ChasePlayer()
     {
         // Set the flag to indicate that the coroutine is running
         isChasing = true;
-        
+
         // Toggle alert state and eye icon only if transitioning from alert to chasing
         OfficerOnAlert();
 
         float elapsedTime = 0f;
 
+        // Store the initial position to determine the movement direction
+        float initialPlayerXPosition = player.position.x;
+
         // Chase the player until the player is caught or distance exceeds detectDistance
-        while ((Vector3.Distance(transform.position, player.position) <= detectDistance) && elapsedTime < timeChasing)
+        while (elapsedTime < timeChasing)
         {
             // Calculate the target position on the x-axis
             Vector2 targetPosition = new Vector2(player.position.x, transform.position.y);
@@ -158,7 +189,12 @@ public class PoliceNPC : NPCMovement
             // Move towards the target position on the x-axis
             float step = runSpeed * Time.deltaTime;
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
-            
+
+            // Update the movement direction
+            isMovingRight = transform.position.x > initialPlayerXPosition;
+
+            initialPlayerXPosition = player.position.x;
+
             // Update the elapsed time
             elapsedTime += Time.deltaTime;
 

@@ -46,10 +46,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   policePrefab: {fileID: 7357996120253385111, guid: 09e8a3f4a3fb32148aceeb3670874515, type: 3}
   pedestrianPrefab: {fileID: 5204744939472173731, guid: 9b30edcb141a3214faeb598147a039e5, type: 3}
+  pedestrianPrefab_female: {fileID: 3832453242730553808, guid: 915b0d09741329c48bb732177512136e, type: 3}
+  pedestrianPrefab_rich_male: {fileID: 5075169228289581282, guid: 18a18525b080d05488e67d26659d0438, type: 3}
+  pedestrianPrefab_rich_female: {fileID: 7922167096249549691, guid: 63070babaad16a9429c777d66ae8275e, type: 3}
   cloudPrefab: {fileID: 3456486715901598751, guid: eee8615775a306248b536cdce5195d8f, type: 3}
   maxPoliceCount: 6
   maxPedestrianCount: 6
   maxCloudCount: 5
   spawnIntervalPolice: 5
-  spawnIntervalPedestrian: 5
+  spawnIntervalPedestrian_male: 5
+  spawnIntervalPedestrian_female: 5
+  spawnIntervalPedestrian_rich_male: 5
+  spawnIntervalPedestrian_rich_female: 5
   spawnIntervalCloud: 5

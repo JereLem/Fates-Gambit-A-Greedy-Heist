@@ -22,7 +22,7 @@ public class PedestrianTrigger : MonoBehaviour
             if (!otherTrigger.parentNPC.isTalking && !parentNPC.isTalking &&
                 !PedestrianNPC.talkingNPCs.Contains(parentNPC) && !PedestrianNPC.talkingNPCs.Contains(otherTrigger.parentNPC)
                 && parentNPC.currentTalkingNPCs < parentNPC.maxTalkingNPCs - 1 && otherTrigger.parentNPC.currentTalkingNPCs < otherTrigger.parentNPC.maxTalkingNPCs - 1
-                && parentNPC.movingToEndPoint != otherTrigger.parentNPC.movingToEndPoint && !parentNPC.hasBeenPickpocketed)
+                && parentNPC.movingToEndPoint != otherTrigger.parentNPC.movingToEndPoint && !parentNPC.hasBeenPickpocketed && !otherTrigger.parentNPC.hasBeenPickpocketed)
             {
                 // Introduce a random chance for the conversation to start
                 float randomChance = Random.Range(0.0f, 1.0f);
@@ -72,6 +72,7 @@ public class PedestrianTrigger : MonoBehaviour
             parentNPC.triggerEntered = false;
             parentNPC.playerStats.isPickpocketing = false;
             parentNPC.highlightPickpocket.color = parentNPC.grayedOutColor;
+            AudioManager.instance.StopMinigameMusic();
         }
     }
 }

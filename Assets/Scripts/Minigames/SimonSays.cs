@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Diagnostics;
+using TMPro;
 
 public class SimonSays : MonoBehaviour
 {
@@ -28,12 +29,21 @@ public class SimonSays : MonoBehaviour
     private float highlightDuration = 1.0f;
     private float elapsedTime = 0.0f;
     private float gameTime;
+    public int level;
+    [SerializeField] public PlayerUI playerUI;
+    [SerializeField] public GameObject playerInfo;
+    public TMP_Text playerInfoText;
 
 
 
     void Start()
     {
+        playerUI = GameObject.FindGameObjectWithTag("UI")?.GetComponent<PlayerUI>();
+        playerInfo = playerUI.transform.Find("InfoPlayer")?.gameObject;
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        level = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>().levelNumber;
+        playerInfoText = playerInfo.GetComponent<TMP_Text>();
+        playerInfoText.text = "Dammit, the pedestrians got away! You were too slow!";
         StartGame();
     }
 
@@ -43,7 +53,8 @@ public class SimonSays : MonoBehaviour
         if (!currentPedestrian.isTalking)
         {
             playerInput.Clear();
-            UnityEngine.Debug.Log("Too slow!");
+            playerInfoText.text = "Dammit, the pedestrians got away! You were too slow!";
+            playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
             DestroyMiniGame();
         }
 
@@ -208,6 +219,9 @@ public class SimonSays : MonoBehaviour
             // Wrong input --> stop the game
             playerInput.Clear();
             DestroyMiniGame();
+            AudioManager.instance.PlaySFX(level == 1 ? "Lv1MinigameLoss" : "Lv2MinigameLoss");
+            playerInfoText.text = "Hah, nice try... You're not pickpocketing me!";
+            playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
         }
         else if (playerInput.Count == sequence.Count)
         {
@@ -216,9 +230,17 @@ public class SimonSays : MonoBehaviour
             playerStats.AddValue(currentPedestrian.pickpocketableValue);
             currentPedestrian.hasBeenPickpocketed = true;
             currentPedestrian.SetMaxCycles();
+
+            // Add Values to gamestats also
+            GameStats.Instance.pickpocketedValue = currentPedestrian.pickpocketableValue;
+            GameStats.Instance.pedestriansPickpocketed += 1;
         
             // Call GameManager method to calculate and apply the time bonus
             GameManager.Instance.CalculateTimeBonus(gameTime);
+
+            AudioManager.instance.PlaySFX(level == 1 ? "Lv1MinigameWin" : "Lv2MinigameWin");
+            // Play laugh SFX
+            AudioManager.instance.PlaySFX("pickpocket_success");
 
             DestroyMiniGame();
         }

@@ -8,22 +8,42 @@ public class AudioManager : MonoBehaviour
     public AudioSource bgMusicSource, minigameMusicSource, sfxSource;
 
     public static AudioManager instance;
+    private string currentScene;
+
+    [Header("Volume settings")]
+    [SerializeField] public float bgMusicVolume = 0.1f;
+    [SerializeField] public float minigameMusicVolume = 0.1f;
+    [SerializeField] public float sfxVolume = 1.0f; 
 
     private void Awake()
     {
-        if ( instance == null)
+        if (instance == null)
         {
             instance = this;
+            instance.SetBgMusicVolume(bgMusicVolume);
+            instance.SetMinigameMusicVolume(minigameMusicVolume);
+            instance.SetSFXVolume(sfxVolume);
             DontDestroyOnLoad(gameObject);
-        } else
+        }
+        else
         {
             Destroy(gameObject);
-        } 
+        }
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        string currentScene = SceneManager.GetActiveScene().name;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        currentScene = scene.name;
 
         switch (currentScene)
         {
@@ -51,22 +71,20 @@ public class AudioManager : MonoBehaviour
     public void PlayMusic(string musicName)
     {
         if (minigameMusicSource.isPlaying)
-            minigameMusicSource.Pause();
+            minigameMusicSource.Stop();
 
-        if (bgMusicSource.clip != null)
-            bgMusicSource.UnPause();
-        else
+        if (bgMusicSource.isPlaying)
+            bgMusicSource.Stop();
+
+        Sound s = Array.Find(bgMusicList, x => x.name == musicName);
+        if (s == null)
         {
-            Sound s = Array.Find(bgMusicList, x => x.name == musicName);
-            if (s == null)
-            {
-                Debug.Log("Sound not found...");
-                return;
-            }
-
-            bgMusicSource.clip = s.clip;
-            bgMusicSource.Play();
+            Debug.Log("Sound not found...");
+            return;
         }
+
+        bgMusicSource.clip = s.clip;
+        bgMusicSource.Play();
     }
 
     public void PlayMinigameMusic(string musicName)
@@ -74,21 +92,30 @@ public class AudioManager : MonoBehaviour
         if (bgMusicSource.isPlaying)
             bgMusicSource.Stop();
 
-        if (minigameMusicSource.clip != null)
-            minigameMusicSource.UnPause();
-        else
-        {
-            Sound s = Array.Find(minigameMusicList, x => x.name == musicName);
-            if (s == null)
-            {
-                Debug.Log("Sound not found...");
-                return;
-            }
+        if (minigameMusicSource.isPlaying)
+            minigameMusicSource.Stop();
 
-            minigameMusicSource.clip = s.clip;
-            minigameMusicSource.Play();
+        Sound s = Array.Find(minigameMusicList, x => x.name == musicName);
+        if (s == null)
+        {
+            Debug.Log("Sound not found...");
+            return;
+        }
+
+        minigameMusicSource.PlayOneShot(s.clip);;
+    }
+
+
+    public void StopMinigameMusic()
+    {
+        
+        if (minigameMusicSource.isPlaying)
+        {
+            minigameMusicSource.Stop();
+            PlayMusic(currentScene == "Level1" ? "Lv1MainMusic" : "Lv2MainMusic");
         }
     }
+
 
     public void PlaySFX(string sfxName)
     {
@@ -100,5 +127,31 @@ public class AudioManager : MonoBehaviour
         }
 
         sfxSource.PlayOneShot(s.clip);
+    }
+
+
+    // Setting methods
+    public void SetBgMusicVolume(float volume)
+    {
+        if (bgMusicSource != null)
+        {
+            bgMusicSource.volume = Mathf.Clamp01(volume);
+        }
+    }
+
+    public void SetMinigameMusicVolume(float volume)
+    {
+        if (minigameMusicSource != null)
+        {
+            minigameMusicSource.volume = Mathf.Clamp01(volume);
+        }
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        if (sfxSource != null)
+        {
+            sfxSource.volume = Mathf.Clamp01(volume);
+        }
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8978605983670915007}
   - component: {fileID: 3868591785515539013}
   - component: {fileID: 3487721576130583873}
-  m_Layer: 12
+  m_Layer: 17
   m_Name: PedestrianTrigger
   m_TagString: PedestrianTrigger
   m_Icon: {fileID: 0}
@@ -104,10 +104,11 @@ GameObject:
   - component: {fileID: 2931164624485853530}
   - component: {fileID: 6948868329104795668}
   - component: {fileID: 3919096530250117838}
-  m_Layer: 9
+  - component: {fileID: 1604205412041987459}
+  m_Layer: 14
   m_Name: Pedestrian
   m_TagString: PedestrianNPC
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -144,7 +145,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 4294967295
+  m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
@@ -191,9 +192,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff499de30538844e81bd1b89c57d5a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPoint: {x: -17.7, y: 1.2}
-  endPoint: {x: 17.7, y: 1.2}
-  movingToEndPoint: 1
+  startPoint: {x: -20, y: 1.2}
+  endPoint: {x: 20, y: 1.2}
+  movingToEndPoint: 0
   spriteRenderer: {fileID: 0}
   completedCycles: 0
   maxCycles: 0
@@ -202,7 +203,7 @@ MonoBehaviour:
   sprites:
   - {fileID: 21300000, guid: 05a32046aa7b4a245901ab5ed796734f, type: 3}
   - {fileID: 21300000, guid: bf06d9bfce12be148bedf65e3b8deffd, type: 3}
-  pedestrianTrigger: {fileID: 0}
+  pedestrianTrigger: {fileID: 1820367294714103809}
   talkDuration: 30
   isTalking: 0
   pickpocketableValue: 0
@@ -224,6 +225,8 @@ MonoBehaviour:
   talkingIcon: {fileID: 1018109718106422165, guid: 18dc27b956560ce4197c78671d2de8f2, type: 3}
   TalkingIcons: {fileID: 0}
   clone: {fileID: 0}
+  animator: {fileID: 1604205412041987459}
+  playerAnimator: {fileID: 0}
 --- !u!61 &6948868329104795668
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -296,3 +299,24 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!95 &1604205412041987459
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5204744939472173731}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a58a3cb884e53a14f92c0a0ba6ef538f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -72,9 +72,20 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: c168a81016c06c14784dce9d5d0e79f5, type: 3}
   - name: Lv2MinigameLoss
     clip: {fileID: 8300000, guid: e48dee64692a899428a3befe80d94b01, type: 3}
+  - name: pickpocket_success
+    clip: {fileID: 8300000, guid: 8129f2607ab17d84f8741f87a9a9e0de, type: 3}
+  - name: police_freeze
+    clip: {fileID: 8300000, guid: 07d66438f3fa1b24ca5cd7c558423094, type: 3}
+  - name: hookshot
+    clip: {fileID: 8300000, guid: 135e61384d208f9448d88288a1c8166e, type: 3}
+  - name: letter_open
+    clip: {fileID: 8300000, guid: be999dca1b0c8d345b61f93f4c1c3b52, type: 3}
   bgMusicSource: {fileID: 6838807793230020373}
   minigameMusicSource: {fileID: 4644856443510775550}
   sfxSource: {fileID: 8685389270809717056}
+  bgMusicVolume: 0.1
+  minigameMusicVolume: 0.1
+  sfxVolume: 1
 --- !u!1 &1758982257556845520
 GameObject:
   m_ObjectHideFlags: 0
