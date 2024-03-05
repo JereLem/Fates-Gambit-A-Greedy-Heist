@@ -961,6 +961,8 @@ MonoBehaviour:
   knobs:
   - {fileID: 6016018941514961813}
   - {fileID: 8962410455413497773}
+  pickpocketableValue_Min: 20
+  pickpocketableValue_Max: 25
 --- !u!1 &5986522046157416307
 GameObject:
   m_ObjectHideFlags: 0

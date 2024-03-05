@@ -71,9 +71,6 @@ public class GameManager : MonoBehaviour
                     StartMiniGame(arrowGamePrefab);
                     break;
                 case 2:
-                    StartMiniGame(simonSaysPrefab);
-                    break;
-                case 3:
                     StartMiniGame(dotConnectingPrefab);
                     break;
             }
@@ -93,16 +90,32 @@ public class GameManager : MonoBehaviour
     // Calculate time bonus
     public void CalculateTimeBonus(float timeTaken)
     {
-        // Calculate bonus based on the time taken and round to the nearest integer
-        int bonus = Mathf.RoundToInt(Mathf.Max(0, timeBonusMultiplier - timeTaken));
+        int bonus = 0;
+        string bonusText = "";
 
-        if (bonus > 0){
+        // Check if the SafeBox game is active
+        if (safeBoxPrefab.activeSelf)
+        {
+            // Specific bonus calculation for the SafeBox game
+            bonus = Mathf.RoundToInt(timeBonusMultiplier - timeTaken);
+            bonusText = $"You cracked the safe fast! You found some extra cash: {bonus}$";
+        }
+        else
+        {
+            // Calculate bonus based on the time taken and round to the nearest integer
+            bonus = Mathf.RoundToInt(Mathf.Max(0, timeBonusMultiplier - timeTaken));
+            bonusText = $"You are fast! You found some extra change {bonus}$ from those pockets";
+        }
+
+        if (bonus > 0)
+        {
             playerStats.AddValue(bonus);
             GameStats.Instance.pickpocketedValue += bonus;
-            playerInfoText.text = $"You are fast! You found some extra change {bonus}$ from those pockets";
+            playerInfoText.text = bonusText;
             playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
         }
     }
+
 
     public static bool IsMiniGameActive()
     {
