@@ -128,7 +128,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -0.06175995, y: 0, z: 0, w: 0}
+  m_margin: {x: -0.06175995, y: 0, z: -218.61963, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -826,7 +826,6 @@ MonoBehaviour:
   playerStats: {fileID: 0}
   tickSystem: {fileID: 0}
   playerInfo: {fileID: 38752870329101621}
-  escMenu: {fileID: 0}
 --- !u!1 &7817516191632965559
 GameObject:
   m_ObjectHideFlags: 0

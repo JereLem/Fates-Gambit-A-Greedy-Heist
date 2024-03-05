@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using TMPro;
 
 public class RandomLights : MonoBehaviour
@@ -31,6 +32,9 @@ public class RandomLights : MonoBehaviour
     [SerializeField] public GameObject playerInfo;
     public TMP_Text playerInfoText;
 
+    // Ligth2D
+    private UnityEngine.Rendering.Universal.Light2D light2DComponent;
+
     
     // Start is called before the first frame update
     void Start()
@@ -41,6 +45,7 @@ public class RandomLights : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         playerStats = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerStats>();
         lightObject.GetComponent<SpriteRenderer>().sprite = lightOffSprite;
+        light2DComponent = GetComponent<UnityEngine.Rendering.Universal.Light2D>();
         playerInfoText = playerInfo.GetComponent<TMP_Text>();
         StartCoroutine(ToggleLights());
     }
@@ -65,6 +70,9 @@ public class RandomLights : MonoBehaviour
 
             // Set the sprite based on the lights state
             lightObject.GetComponent<SpriteRenderer>().sprite = lightsOn ? lightOnSprite : lightOffSprite;
+
+            // Set 2D light
+            light2DComponent.intensity = lightsOn ? 0.5f : 0f;
         }
     }
 
