@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     private bool OnGrappling = false;
     private Vector3 spot;
     [SerializeField] private LayerMask GrapplingObj;
-    [SerializeField] public float hookMoveSpeed = 1f;
+    [SerializeField] public float hookMoveSpeed = 10f;
 
     // Variables to track whether the player is using the hookshot
     private bool isUsingHookshot = false;
@@ -338,11 +338,11 @@ public class PlayerMovement : MonoBehaviour
                 player.position = targetPosition;
             }
 
-            Debug.Log("Moving smoothly...");
+            //Debug.Log("Distance: " + distance + " duration: " + duration + " left time: " + (Time.time - startTime));
             yield return null;
         }
-
-        Debug.Log("QuickMove completed");
+        //enableHookshot = false;
+        //Debug.Log("QuickMove completed");
     }
 
     private void ActivateAllBalconyGameObjects(Transform parentTransform)

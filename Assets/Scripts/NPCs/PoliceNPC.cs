@@ -20,12 +20,13 @@ public class PoliceNPC : NPCMovement
     [SerializeField] public float catchDelay = 2.0f;
     [SerializeField] private const float initialCatchDelay = 2.0f;
     [SerializeField] private const float minCatchDelayMultiplier = 0.2f;
-
+    [SerializeField] public float disableTime = 5.0f;
 
     [Header("Police Officer Flags")]
     [SerializeField] public bool isCatching = false;
-    [SerializeField] public bool isChasing = false;
+    [SerializeField] private bool isChasing = false;
     [SerializeField] public bool isAlertActive;
+    [SerializeField] public bool isLightOff = false;
     private bool isMovingRight;
 
 
@@ -86,8 +87,10 @@ public class PoliceNPC : NPCMovement
         // Check if the player is within the detect distance and player pickpocketing or police are on alert
         if (distanceToPlayer <= detectDistance && !isChasing && (playerStats.isPickpocketing || isAlertActive))
         {
-            StartCoroutine(ChasePlayer());
-            AudioManager.instance.PlaySFX("police_freeze");
+            if(isLightOff){
+                StartCoroutine(ChasePlayer());
+                AudioManager.instance.PlaySFX("police_freeze");
+            }
         }
 
         if (isChasing)
@@ -204,5 +207,45 @@ public class PoliceNPC : NPCMovement
         isChasing = false;
     }
 
+    // If the police officer collides with the player, try to catch the player
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player") && (playerStats.isPickpocketing || isAlertActive))
+        {
+            Debug.Log("Trying to catch the player!");
+            catchCoroutine = StartCoroutine(TryToCatchPlayer());
+        }
+    }
+
+
+    // When the player exits the police collide, player basically escapes
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isCatching = false;
+            // Check if the coroutine is running before trying to stop it
+            if (catchCoroutine != null)
+            {
+                Debug.Log("Player escaped!");
+                StopCoroutine(catchCoroutine); // Stop ongoing catch coroutine
+                playerStats.isPickpocketing = false;
+            }
+        }
+    }
+
+
+    // If dot connecting mission success, turn off the light and police cannot chase the player for a while 
+    public void DisableChaseForSeconds()
+    {
+        isLightOff = true;
+        StartCoroutine(EnableChaseAfterDelay(disableTime));
+    }
+
+    private IEnumerator EnableChaseAfterDelay(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isLightOff = false;
+    }
 }
 

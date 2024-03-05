@@ -892,11 +892,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1523760611647216625, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0000025148954
+      value: 0.000000466794
       objectReference: {fileID: 0}
     - target: {fileID: 1523760611647216625, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: m_LocalPosition.y
       value: 2.456585
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890938366385006492, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
+      propertyPath: hookMoveSpeed
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7134525096889070162, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1012,6 +1016,10 @@ PrefabInstance:
       propertyPath: arrowGamePrefab
       value: 
       objectReference: {fileID: 7880140541430951268, guid: 410f4452bbc24804f8beb151517919e8, type: 3}
+    - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
+      propertyPath: dotConnectingPrefab
+      value: 
+      objectReference: {fileID: 2724076434663554531, guid: 0be060a2e35848f4c80d6cd3e01ddcdf, type: 3}
     - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
       propertyPath: timeBonusMultiplier
       value: 10

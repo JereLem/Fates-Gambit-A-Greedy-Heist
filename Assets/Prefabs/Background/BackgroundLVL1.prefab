@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 581219619230930399}
+  - component: {fileID: 1430948965313862782}
   m_Layer: 0
   m_Name: BackgroundLVL1
   m_TagString: Untagged

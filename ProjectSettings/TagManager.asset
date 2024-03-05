@@ -20,6 +20,7 @@ TagManager:
   - PoliceTrigger
   - InfoPlayer
   - UI
+  - SafeBox
   layers:
   - Default
   - TransparentFX
@@ -32,7 +33,7 @@ TagManager:
   - Balcony
   - Dot
   - Boundary
-  - 
+  - SafeBox
   - 
   - 
   - Pedestrian

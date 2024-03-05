@@ -26,6 +26,8 @@ public class PlayerStats : MonoBehaviour
     public bool isPickpocketing;
     private bool isPickpocketingInProgress = false;
     public bool hasBeenCaught = false;
+    public bool isNearBalcony = false;
+    public bool enableSafeBox = false;
 
     [Header("UI")]
     private Color originalColor;

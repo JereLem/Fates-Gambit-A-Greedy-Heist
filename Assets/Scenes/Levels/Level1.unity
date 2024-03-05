@@ -341,26 +341,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
-      propertyPath: playerUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
-      propertyPath: playerInfo
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
-      propertyPath: audioManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
-      propertyPath: arrowGamePrefab
-      value: 
-      objectReference: {fileID: 7880140541430951268, guid: 410f4452bbc24804f8beb151517919e8, type: 3}
-    - target: {fileID: 2989631521347466718, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
-      propertyPath: timeBonusMultiplier
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 7301586917381682386, guid: 14c5c0bfc1edd1b47b83e9b6a91708a4, type: 3}
       propertyPath: m_Name
       value: MiniGameManager
@@ -821,7 +801,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1523760611647216625, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0000025148954
+      value: 0.0000040448913
       objectReference: {fileID: 0}
     - target: {fileID: 1523760611647216625, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: m_LocalPosition.y
@@ -831,14 +811,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2890938366385006492, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
+      propertyPath: hookMoveSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3987393075373304062, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: levelParameters
       value: 
       objectReference: {fileID: 5862865964444216160}
-    - target: {fileID: 5012463649420173280, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7134525096889070162, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -1025,10 +1005,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 3883405397954975170, guid: fc50772e3b0875b438feda28c88ed578, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: fd1270716454dd94bbddfecaf7ba1bec, type: 2}
     - target: {fileID: 4692457610961883307, guid: fc50772e3b0875b438feda28c88ed578, type: 3}
       propertyPath: m_Name
       value: Boundaries
