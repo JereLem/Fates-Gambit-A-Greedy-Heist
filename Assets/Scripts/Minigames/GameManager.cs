@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
     // Function to start a random minigame
     public void StartRandomMinigame()
     {
-        int randomMinigame = UnityEngine.Random.Range(0, 3);
+        int randomMinigame = UnityEngine.Random.Range(0, 2);
         playerMovement.enableHookshot = false;
 
         // Play the SafeBox game if you fulfill the condition of the game.
