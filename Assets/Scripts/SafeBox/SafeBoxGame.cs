@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Cinemachine.DocumentationSortingAttribute;
 
 public class SafeBoxGame : MonoBehaviour
 {
     public HUD hud;
     public bool isClear;
     public CircleSlider[] knobs;
+    public int level;
     
 
     private PlayerStats playerStats;
+    private PlayerMovement playerMovement;
     private int pickpocketableValue;
     [SerializeField] int pickpocketableValue_Min;
     [SerializeField] int pickpocketableValue_Max;
@@ -19,6 +22,12 @@ public class SafeBoxGame : MonoBehaviour
         hud = GetComponentInChildren<HUD>();
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
         pickpocketableValue = Random.Range(pickpocketableValue_Min, pickpocketableValue_Max);
+        playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+    }
+    private void Start()
+    {
+        level = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>().levelNumber;
+        playerMovement.enableHookshot = false;
     }
 
     private void Update()
@@ -37,6 +46,11 @@ public class SafeBoxGame : MonoBehaviour
                 GameStats.Instance.pedestriansPickpocketed += 1;
 
                 GameManager.Instance.CalculateTimeBonus(gameTime);
+
+                AudioManager.instance.PlaySFX(level == 1 ? "Lv1MinigameWin" : "Lv2MinigameWin");
+
+                // Play laugh SFX
+                AudioManager.instance.PlaySFX("pickpocket_success");
 
                 // Inform GameManager that the mini-game is no longer active
                 GameManager.SetMiniGameActive(false);
