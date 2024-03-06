@@ -50,26 +50,29 @@ public class SimonSays : MonoBehaviour
     void Update()
     {
         // Check if pedestrians stopped talking
-        if (!currentPedestrian.isTalking)
+        if (currentPedestrian == null || !currentPedestrian.isTalking)
         {
             playerInput.Clear();
             playerInfoText.text = "Dammit, the pedestrians got away! You were too slow!";
             playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
             DestroyMiniGame();
+            playerStats.isPickpocketing = false;
         }
 
         // Check if the player has exited the pedestrian collider
-        if (currentPedestrian != null && !currentPedestrian.triggerEntered)
+        if (currentPedestrian == null || !currentPedestrian.triggerEntered)
         {
             playerInput.Clear();
             UnityEngine.Debug.Log("Player exited the pedestrian collider!");
             DestroyMiniGame();
+            playerStats.isPickpocketing = false;
         }
 
         // If player gets caught stop game
         if(playerStats.hasBeenCaught)
         {
             DestroyMiniGame();
+            playerStats.isPickpocketing = false;
         }
 
         gameTime += Time.deltaTime;
@@ -232,7 +235,7 @@ public class SimonSays : MonoBehaviour
             currentPedestrian.SetMaxCycles();
 
             // Add Values to gamestats also
-            GameStats.Instance.pickpocketedValue = currentPedestrian.pickpocketableValue;
+            GameStats.Instance.pickpocketedValue += currentPedestrian.pickpocketableValue;
             GameStats.Instance.pedestriansPickpocketed += 1;
         
             // Call GameManager method to calculate and apply the time bonus

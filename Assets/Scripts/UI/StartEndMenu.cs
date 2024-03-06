@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class StartEndMenu : MonoBehaviour
 {
-
     // Start new game
     public void StartGame()
     {
@@ -14,6 +13,7 @@ public class StartEndMenu : MonoBehaviour
         GameStats.Instance.SetNextLevel(1);
         Time.timeScale = 1f;
     }
+    
 
     // Exit game
     public void Exit()

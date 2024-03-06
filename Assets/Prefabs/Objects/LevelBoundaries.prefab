@@ -41,7 +41,7 @@ EdgeCollider2D:
   m_GameObject: {fileID: 5756541028839937217}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fd1270716454dd94bbddfecaf7ba1bec, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -67,10 +67,10 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -14.715363, y: -4.43129}
-  - {x: -14.712563, y: 9.35442}
-  - {x: 23.825575, y: 9.187467}
-  - {x: 23.730156, y: -4.821741}
+  - {x: -14.7, y: -4.5}
+  - {x: -14.7, y: 8}
+  - {x: 23.7, y: 8}
+  - {x: 23.7, y: -4.5}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0

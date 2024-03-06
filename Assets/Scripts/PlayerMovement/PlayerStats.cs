@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using EventSystem;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -75,7 +76,7 @@ public class PlayerStats : MonoBehaviour
         {
             if (levelParameters.levelNumber < finalLevel)
             {
-                GameEvents._current.OnLevelChanged(levelParameters.levelNumber + 1);
+                GameEvents._current.OnLevelChanged(SceneManager.GetActiveScene().buildIndex + 1);
             }
             else
             {

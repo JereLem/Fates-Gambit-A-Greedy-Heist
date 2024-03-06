@@ -279,7 +279,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: fd1270716454dd94bbddfecaf7ba1bec, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -367,6 +367,7 @@ MonoBehaviour:
   animator: {fileID: 8241109834191556797}
   highlightHook: {fileID: 0}
   balconies: {fileID: 0}
+  enableMovementAll: 0
 --- !u!114 &3987393075373304062
 MonoBehaviour:
   m_ObjectHideFlags: 0
