@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,13 +13,20 @@ public class GameManager : MonoBehaviour
     [Header("Minigames")]
     [SerializeField] private GameObject simonSaysPrefab;
     [SerializeField] private GameObject arrowGamePrefab;
+    [SerializeField] private GameObject dotConnectingPrefab;
+    [SerializeField] private GameObject safeBoxPrefab;
 
     [Header("Bonus Multiplier")]
     [SerializeField] private float timeBonusMultiplier;
+    [SerializeField] public PlayerUI playerUI;
+    [SerializeField] public GameObject playerInfo;
 
     private PlayerStats playerStats;
+    private PlayerMovement playerMovement;
     public static bool isMiniGameActive = false;
+    //public static bool 
     public int level;
+    private TMP_Text playerInfoText;
 
     private void Awake()
     {
@@ -29,18 +38,31 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        playerUI = GameObject.Find("UI")?.GetComponent<PlayerUI>();
+        playerInfo = playerUI.transform.Find("InfoPlayer")?.gameObject;
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         level = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>().levelNumber;
+        playerInfoText = playerInfo.GetComponent<TMP_Text>();
 
-        // All minigames 30 seconds
-        timeBonusMultiplier = 30f;
+        // If solved faster than 10s
+        timeBonusMultiplier = 10f;
     }
 
     // Function to start a random minigame
     public void StartRandomMinigame()
     {
-        int randomMinigame = UnityEngine.Random.Range(0, 3);
-        if (!isMiniGameActive)
+        int randomMinigame = UnityEngine.Random.Range(0, 2);
+        playerMovement.enableHookshot = false;
+
+        // Play the SafeBox game if you fulfill the condition of the game.
+        if(playerStats.isNearBalcony && playerStats.enableSafeBox && !isMiniGameActive)
+        {
+            //AudioManager.instance.PlayMusic; 
+            StartMiniGame(safeBoxPrefab);
+        }
+        //else if other minigame occurs. 
+        else if (!isMiniGameActive)
         {
             AudioManager.instance.PlayMinigameMusic(level == 1 ? "Lv1Minigame" : "Lv2Minigame");
             switch (randomMinigame)
@@ -50,9 +72,6 @@ public class GameManager : MonoBehaviour
                     break;
                 case 1:
                     StartMiniGame(arrowGamePrefab);
-                    break;
-                case 2:
-                    StartMiniGame(simonSaysPrefab);
                     break;
             }
         }
@@ -71,10 +90,23 @@ public class GameManager : MonoBehaviour
     // Calculate time bonus
     public void CalculateTimeBonus(float timeTaken)
     {
+        int bonus = 0;
+        string bonusText = "";
+
+
         // Calculate bonus based on the time taken and round to the nearest integer
-        int bonus = Mathf.RoundToInt(Mathf.Max(0, timeBonusMultiplier - timeTaken));
-        playerStats.AddValue(bonus);
+        bonus = Mathf.RoundToInt(Mathf.Max(0, timeBonusMultiplier - timeTaken));
+        bonusText = $"You are fast! You found some extra change {bonus}$";
+
+        if (bonus > 0)
+        {
+            playerStats.AddValue(bonus);
+            GameStats.Instance.pickpocketedValue += bonus;
+            playerInfoText.text = bonusText;
+            playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
+        }
     }
+
 
     public static bool IsMiniGameActive()
     {
@@ -85,4 +117,17 @@ public class GameManager : MonoBehaviour
     {
         isMiniGameActive = isActive;
     }
+
+    public void ExecuteDotGameSuccessEffects()
+    {
+        PoliceNPC[] policeNPCs = GameObject.FindObjectsOfType<PoliceNPC>();
+        foreach (PoliceNPC policeNPC in policeNPCs)
+        {
+            policeNPC.SendMessage("DisableChaseForSeconds");
+        }
+
+        GameObject background = GameObject.Find("Background");
+        background.SendMessage("ChangeBackgroundColor");
+    }
 }
+

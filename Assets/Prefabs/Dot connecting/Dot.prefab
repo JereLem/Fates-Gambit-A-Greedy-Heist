@@ -110,19 +110,7 @@ MonoBehaviour:
   - eventID: 4
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 6866691404168961782}
-          m_TargetAssemblyTypeName: Dot, Assembly-CSharp
-          m_MethodName: SetConnectedState
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
 --- !u!114 &3216033966429755156
 MonoBehaviour:
   m_ObjectHideFlags: 0

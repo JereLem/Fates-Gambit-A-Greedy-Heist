@@ -81,7 +81,16 @@ public class PedestrianNPC : NPCMovement
         
         // 90% chance the pedestrian is default type 10% rich 
         pedestrianTypeChance = Random.Range(1, 11);
-        pickpocketableValue = (pedestrianTypeChance <= 9) ? Random.Range(10, 15) : Random.Range(20, 25);
+
+        if (pedestrianTypeChance <= 1)
+        {
+            animator.SetBool("isRich",true);
+            pickpocketableValue = Random.Range(20, 25);
+        }
+        else
+        {
+            pickpocketableValue = Random.Range(10, 15);
+        }
 
         // Randomize layer of sprites, making sure it's different from the player's level
         SetRandomSortingOrder();
@@ -97,12 +106,12 @@ public class PedestrianNPC : NPCMovement
     void SetRandomSortingOrder()
     {
         // Set a random sorting order
-        int randomSortingOrder = Random.Range(2, 5);
+        int randomSortingOrder = Random.Range(2, 8);
 
         // Check if it's the same as the player's level, regenerate if needed
         while (randomSortingOrder == player.GetComponent<SpriteRenderer>().sortingOrder)
         {
-            randomSortingOrder = Random.Range(2, 5);
+            randomSortingOrder = Random.Range(2, 8);
         }
 
         // Set the sorting order for the pedestrian sprite

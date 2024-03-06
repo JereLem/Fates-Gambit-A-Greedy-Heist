@@ -13,15 +13,13 @@ public class PlayerUI : MonoBehaviour
 
     [SerializeField] public GameObject playerInfo;
     private TMP_Text playerInfoText;
-    private Coroutine displayCoroutine;
-    private bool hasDisplayedMessage = false;
 
     void Start()
     {
         // Get data from EventSystem, PlayerStats and TickSystem
-        levelParameters = GameObject.FindGameObjectWithTag("EventSystem")?.GetComponent<LevelParameters>();
-        tickSystem = GameObject.FindGameObjectWithTag("EventSystem")?.GetComponent<TickSystem>();
-        playerStats = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerStats>();
+        levelParameters = FindObjectOfType<LevelParameters>();
+        tickSystem = FindObjectOfType<TickSystem>();
+        playerStats = FindObjectOfType<PlayerStats>();
         playerInfoText = playerInfo.GetComponent<TMP_Text>();
         remainingTicks = levelParameters.timerDuration;
 
@@ -31,7 +29,7 @@ public class PlayerUI : MonoBehaviour
     void Update()
     {
         // Update the remaining ticks
-        remainingTicks = Mathf.Max(levelParameters.timerDuration - tickSystem.GetCurrentTick(), 0);
+        remainingTicks = levelParameters.timerDuration - tickSystem.GetCurrentTick();
         UpdateUI();
     }
 
@@ -48,42 +46,34 @@ public class PlayerUI : MonoBehaviour
         // Set every text to the UI
         number.text = levelParameters.levelNumber.ToString();
         name.text = levelParameters.levelName;
-        targetValue.text = playerStats.pickpocketedValue.ToString() + "/" + levelParameters.targetValue.ToString();
+        targetValue.text = playerStats.pickpocketedValue.ToString() + "/" + levelParameters.targetValue.ToString() + "$";
 
 
         // Time calculations
-        int ticksPerMinute = 3600;
-        int remainingMinutes = remainingTicks / ticksPerMinute;
-        int remainingSeconds = (remainingTicks % ticksPerMinute) / 100;
-        int remainingMilliseconds = (remainingTicks % ticksPerMinute) % 100;
+        int ticksPerSecond = 60; // Assuming tick speed is 60 ticks per second
+        int totalMilliseconds = remainingTicks * (1000 / ticksPerSecond); // Convert ticks to milliseconds
 
-        // Format the as mm:ss:ms
-        string formattedTicks = string.Format("{0:D2}:{1:D2}:{2:D2}", remainingMinutes, remainingSeconds, remainingMilliseconds);
+        int remainingSeconds = totalMilliseconds / 1000;
+        int remainingMinutes = remainingSeconds / 60;
+
+        remainingSeconds %= 60;
+        int remainingMilliseconds = totalMilliseconds % 1000;
+
+        // Format as mm:ss:fff (minutes:seconds:milliseconds)
+        string formattedTicks = string.Format("{0:00}:{1:00}:{2:000}", remainingMinutes, remainingSeconds, remainingMilliseconds);
         timeLimit.text = formattedTicks;
 
-        // Check if the player has been caught
-        if (playerStats.timesCaught > 0 && !hasDisplayedMessage)
-        {
-            // Display playerInfo text for 2 seconds
-            if (displayCoroutine == null)
-            {
-                playerInfoText.text = "You have been caught! Next time you're going to Jail!";
-                displayCoroutine = StartCoroutine(DisplayPlayerInfoText());
-                hasDisplayedMessage = true;
-            }
-        }
     }
 
-    IEnumerator DisplayPlayerInfoText()
+    public IEnumerator DisplayPlayerInfoText()
     {
         playerInfo.gameObject.SetActive(true);
 
-        // Display for 2 seconds
-        yield return new WaitForSeconds(2f);
+        // Display for 3 seconds
+        yield return new WaitForSeconds(3f);
 
         // Deactivate the playerInfo text
         playerInfo.gameObject.SetActive(false);
-        displayCoroutine = null;
     }
 }
 

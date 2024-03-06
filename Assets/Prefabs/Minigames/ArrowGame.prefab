@@ -755,3 +755,7 @@ MonoBehaviour:
   isGameRunning: 1
   userInput: 0
   roundIndicator: {fileID: 8992445710608251284}
+  level: 0
+  playerUI: {fileID: 0}
+  playerInfo: {fileID: 5217030904168263179, guid: ce77c20191e4471449cdfc6aabb6dab7, type: 3}
+  playerInfoText: {fileID: 0}

@@ -46,4 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   simonSaysPrefab: {fileID: 1239054283069433933, guid: d668f8ca6206907408b1a5b3ec6ced6a, type: 3}
   arrowGamePrefab: {fileID: 7880140541430951268, guid: 410f4452bbc24804f8beb151517919e8, type: 3}
-  timeBonusMultiplier: 0
+  dotConnectingPrefab: {fileID: 2724076434663554531, guid: 0be060a2e35848f4c80d6cd3e01ddcdf, type: 3}
+  safeBoxPrefab: {fileID: 5839151671038576635, guid: 1532e004733f2d844951c696fd95abbb, type: 3}
+  timeBonusMultiplier: 10
+  playerUI: {fileID: 0}
+  playerInfo: {fileID: 0}
+  level: 0

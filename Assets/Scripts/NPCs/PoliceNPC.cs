@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PoliceNPC : NPCMovement
 {
@@ -15,16 +16,17 @@ public class PoliceNPC : NPCMovement
 
     [Header("Police Officer Times & Delays")]
     [SerializeField] public float timeChasing = 5.0f;
-    [SerializeField] public float timeOnAlert = 5.0f;
+    [SerializeField] public float timeOnAlert = 8.0f;
     [SerializeField] public float catchDelay = 2.0f;
     [SerializeField] private const float initialCatchDelay = 2.0f;
     [SerializeField] private const float minCatchDelayMultiplier = 0.2f;
-
+    [SerializeField] public float disableTime = 5.0f;
 
     [Header("Police Officer Flags")]
     [SerializeField] public bool isCatching = false;
-    [SerializeField] public bool isChasing = false;
+    [SerializeField] private bool isChasing = false;
     [SerializeField] public bool isAlertActive;
+    [SerializeField] public bool isLightOff = false;
     private bool isMovingRight;
 
 
@@ -41,6 +43,11 @@ public class PoliceNPC : NPCMovement
     private SpriteRenderer circleSprite;
     private SpriteRenderer officerSp;
     float distanceToPlayer;
+
+    //UI
+    [SerializeField] public PlayerUI playerUI;
+    [SerializeField] public GameObject playerInfo;
+    public TMP_Text playerInfoText;
 
 
     new void Start()
@@ -62,6 +69,11 @@ public class PoliceNPC : NPCMovement
         
         //Experienced police officer can catch the player faster
         catchDelay = initialCatchDelay - (minCatchDelayMultiplier * policeRank);
+
+        //UI
+        playerUI = GameObject.FindGameObjectWithTag("UI")?.GetComponent<PlayerUI>();
+        playerInfo = playerUI.transform.Find("InfoPlayer")?.gameObject;
+        playerInfoText = playerInfo.GetComponent<TMP_Text>();
         base.Start();
 
     }
@@ -69,7 +81,7 @@ public class PoliceNPC : NPCMovement
     void Update()
     {
         FlipSprite();
-        circleSprite.transform.localScale = new Vector3(detectDistance, 0.3f, 1.0f);
+        circleSprite.transform.localScale = new Vector3(detectDistance * 4, 0.3f, 1.0f);
         distanceToPlayer  = Vector3.Distance(transform.position, player.position);
 
         // Check if the player is within the detect distance and player pickpocketing or police are on alert
@@ -145,6 +157,8 @@ public class PoliceNPC : NPCMovement
 
             // After the delay, perform the catching actions
             playerStats.timesCaught++;
+            playerInfoText.text = "You have been caught! Next time you're going to jail Adrian!";
+            playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
             playerStats.hasBeenCaught = true;
 
             isCatching = false;
@@ -191,5 +205,18 @@ public class PoliceNPC : NPCMovement
         isChasing = false;
     }
 
+
+    // If dot connecting mission success, turn off the light and police cannot chase the player for a while 
+    public void DisableChaseForSeconds()
+    {
+        isLightOff = true;
+        StartCoroutine(EnableChaseAfterDelay(disableTime));
+    }
+
+    private IEnumerator EnableChaseAfterDelay(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isLightOff = false;
+    }
 }
 

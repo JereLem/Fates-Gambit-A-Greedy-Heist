@@ -11,7 +11,9 @@ public class StartEndMenu : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         GameStats.Instance.SetNextLevel(1);
+        Time.timeScale = 1f;
     }
+    
 
     // Exit game
     public void Exit()
@@ -24,4 +26,5 @@ public class StartEndMenu : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
 }

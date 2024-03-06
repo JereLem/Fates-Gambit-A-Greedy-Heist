@@ -501,6 +501,10 @@ MonoBehaviour:
   greenButton: {fileID: 6792302282899232551}
   blueButton: {fileID: 6261639017340871146}
   yellowButton: {fileID: 4290429745281676183}
+  level: 0
+  playerUI: {fileID: 0}
+  playerInfo: {fileID: 5217030904168263179, guid: ce77c20191e4471449cdfc6aabb6dab7, type: 3}
+  playerInfoText: {fileID: 0}
 --- !u!1 &1603362912627035522
 GameObject:
   m_ObjectHideFlags: 0

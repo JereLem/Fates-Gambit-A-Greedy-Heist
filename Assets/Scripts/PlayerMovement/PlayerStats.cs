@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using EventSystem;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class PlayerStats : MonoBehaviour
     public bool isPickpocketing;
     private bool isPickpocketingInProgress = false;
     public bool hasBeenCaught = false;
+    public bool isNearBalcony = false;
+    public bool enableSafeBox = false;
 
     [Header("UI")]
     private Color originalColor;
@@ -56,8 +59,6 @@ public class PlayerStats : MonoBehaviour
     public void SetValue(int amount)
     {
         pickpocketedValue = amount;
-        GameStats.Instance.pickpocketedValue = pickpocketedValue;
-        GameStats.Instance.pedestriansPickpocketed += 1;
     }
 
     void Update()
@@ -74,7 +75,7 @@ public class PlayerStats : MonoBehaviour
         {
             if (levelParameters.levelNumber < finalLevel)
             {
-                GameEvents._current.OnLevelChanged(levelParameters.levelNumber + 1);
+                GameEvents._current.OnLevelChanged(SceneManager.GetActiveScene().buildIndex + 1);
             }
             else
             {

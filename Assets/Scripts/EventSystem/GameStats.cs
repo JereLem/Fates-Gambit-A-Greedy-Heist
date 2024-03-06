@@ -39,9 +39,8 @@ public class GameStats : MonoBehaviour
     private void LoadSceneComplete(AsyncOperation operation)
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        if (currentSceneIndex == currentLevel)
+        if (currentSceneIndex == 2 || currentSceneIndex == 4)
         {
-            UnityEngine.Debug.Log(currentLevel);
             tickSystem = GameObject.FindGameObjectWithTag("EventSystem")?.GetComponent<TickSystem>();
             if (tickSystem == null)
             {
@@ -68,9 +67,8 @@ public class GameStats : MonoBehaviour
             cumulativeGameDuration = 0f; // Reset cumulative time when returning to scene 0
             currentLevel = 0;
         }
-        else if (currentSceneIndex == currentLevel)
+        else if (currentSceneIndex == 2 || currentSceneIndex == 4)
         {
-            UnityEngine.Debug.Log(currentLevel);
             tickSystem = GameObject.FindGameObjectWithTag("EventSystem")?.GetComponent<TickSystem>();
             if (tickSystem == null)
             {

@@ -11,14 +11,18 @@ public class DotManager : MonoBehaviour
     public List<RectTransform> childRectTransforms = new List<RectTransform>();
 
     public List<Dot> dots = new List<Dot>();
+    public List<Dot> dotsOrdered = new List<Dot>();
+    public LineRenderer lineRenderer;
 
     public int rows = 6;
     public int columns = 6;
 
     private int[,] adjacentIndices;
+    public bool isFirstClick = true;
 
-    void OnEnable()
+    void Awake()
     {
+        lineRenderer = GetComponentInChildren<LineRenderer>();
         CollectChildRectTransforms();
 
         Dot[] childDots = GetComponentsInChildren<Dot>();
@@ -54,8 +58,6 @@ public class DotManager : MonoBehaviour
 
     void CollectChildRectTransforms()
     {
-        childRectTransforms.Clear(); 
-
         foreach (Transform child in transform)
         {
             RectTransform rectTransform = child.GetComponent<RectTransform>();
@@ -71,7 +73,6 @@ public class DotManager : MonoBehaviour
     void Start()
     {
         ComputeAdjacentIndices();
-        //PrintAdjacentPoints();
     }
 
     private void Update()
@@ -92,7 +93,9 @@ public class DotManager : MonoBehaviour
 
         if (connectedTargetCount == 2)
         {
-            Debug.Log("Success mission!!");
+            //Debug.Log("Success mission!!");
+            GameManager.Instance.ExecuteDotGameSuccessEffects();
+            DestroyMiniGame();
         }
     }
 
@@ -154,6 +157,78 @@ public class DotManager : MonoBehaviour
         }
 
         return adjacentIndexList;
+    }
+
+    public bool IsAdjacent(int prevIndex, int currIndex)
+    {
+        int upIndex = adjacentIndices[currIndex, 0];
+        int downIndex = adjacentIndices[currIndex, 1];
+        int leftIndex = adjacentIndices[currIndex, 2];
+        int rightIndex = adjacentIndices[currIndex, 3];
+
+        return prevIndex == upIndex || prevIndex == downIndex || prevIndex == leftIndex || prevIndex == rightIndex;
+    }
+
+    public bool SetPoint(Dot dot)
+    {
+        dotsOrdered.Add(dot);
+
+        if (dotsOrdered.Count == 1)
+        {
+            return true;
+        }
+        else
+        {
+            int curIndex = CalculateIndex(dot);
+            int prevIndex = CalculateIndex(dotsOrdered[dotsOrdered.Count - 2]);
+            
+            bool isAdjeacnet = IsAdjacent(prevIndex, curIndex);
+            if (isAdjeacnet)
+            {
+                return true;
+            }
+            else
+            {
+                dotsOrdered.RemoveAt(dotsOrdered.Count - 1);
+                return false;
+            }
+        }
+    }
+
+    public bool RemovePoint(Dot dot)
+    {
+        int curIndex = CalculateIndex(dot);
+        int prevIndex = CalculateIndex(dotsOrdered[dotsOrdered.Count - 1]);
+
+        if (curIndex == prevIndex)
+        {
+            dotsOrdered.RemoveAt(dotsOrdered.Count - 1);
+            //Debug.Log("Remove successful!");
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public int CalculateIndex(Dot target)
+    {
+        for (int i = 0; i < dots.Count; i++)
+        {
+            if (dots[i] == target)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    void DestroyMiniGame()
+    {
+        // Inform GameManager that the mini-game is no longer active
+        GameManager.SetMiniGameActive(false);
+
+        // Destroy the mini-game object
+        Destroy(transform.parent.parent.gameObject);
     }
 }
 

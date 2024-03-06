@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Diagnostics;
+using TMPro;
 
 public class SimonSays : MonoBehaviour
 {
@@ -29,38 +30,49 @@ public class SimonSays : MonoBehaviour
     private float elapsedTime = 0.0f;
     private float gameTime;
     public int level;
+    [SerializeField] public PlayerUI playerUI;
+    [SerializeField] public GameObject playerInfo;
+    public TMP_Text playerInfoText;
 
 
 
     void Start()
     {
+        playerUI = GameObject.FindGameObjectWithTag("UI")?.GetComponent<PlayerUI>();
+        playerInfo = playerUI.transform.Find("InfoPlayer")?.gameObject;
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
         level = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>().levelNumber;
+        playerInfoText = playerInfo.GetComponent<TMP_Text>();
+        playerInfoText.text = "Dammit, the pedestrians got away! You were too slow!";
         StartGame();
     }
 
     void Update()
     {
         // Check if pedestrians stopped talking
-        if (!currentPedestrian.isTalking)
+        if (currentPedestrian == null || !currentPedestrian.isTalking)
         {
             playerInput.Clear();
-            UnityEngine.Debug.Log("Too slow!");
+            playerInfoText.text = "Dammit, the pedestrians got away! You were too slow!";
+            playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
             DestroyMiniGame();
+            playerStats.isPickpocketing = false;
         }
 
         // Check if the player has exited the pedestrian collider
-        if (currentPedestrian != null && !currentPedestrian.triggerEntered)
+        if (currentPedestrian == null || !currentPedestrian.triggerEntered)
         {
             playerInput.Clear();
             UnityEngine.Debug.Log("Player exited the pedestrian collider!");
             DestroyMiniGame();
+            playerStats.isPickpocketing = false;
         }
 
         // If player gets caught stop game
         if(playerStats.hasBeenCaught)
         {
             DestroyMiniGame();
+            playerStats.isPickpocketing = false;
         }
 
         gameTime += Time.deltaTime;
@@ -211,6 +223,8 @@ public class SimonSays : MonoBehaviour
             playerInput.Clear();
             DestroyMiniGame();
             AudioManager.instance.PlaySFX(level == 1 ? "Lv1MinigameLoss" : "Lv2MinigameLoss");
+            playerInfoText.text = "Hah, nice try... You're not pickpocketing me!";
+            playerUI.StartCoroutine(playerUI.DisplayPlayerInfoText());
         }
         else if (playerInput.Count == sequence.Count)
         {
@@ -219,6 +233,10 @@ public class SimonSays : MonoBehaviour
             playerStats.AddValue(currentPedestrian.pickpocketableValue);
             currentPedestrian.hasBeenPickpocketed = true;
             currentPedestrian.SetMaxCycles();
+
+            // Add Values to gamestats also
+            GameStats.Instance.pickpocketedValue += currentPedestrian.pickpocketableValue;
+            GameStats.Instance.pedestriansPickpocketed += 1;
         
             // Call GameManager method to calculate and apply the time bonus
             GameManager.Instance.CalculateTimeBonus(gameTime);
