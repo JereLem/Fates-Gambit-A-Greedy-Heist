@@ -106,12 +106,12 @@ public class PedestrianNPC : NPCMovement
     void SetRandomSortingOrder()
     {
         // Set a random sorting order
-        int randomSortingOrder = Random.Range(2, 8);
+        int randomSortingOrder = Random.Range(2, 5);
 
         // Check if it's the same as the player's level, regenerate if needed
         while (randomSortingOrder == player.GetComponent<SpriteRenderer>().sortingOrder)
         {
-            randomSortingOrder = Random.Range(2, 8);
+            randomSortingOrder = Random.Range(2, 5);
         }
 
         // Set the sorting order for the pedestrian sprite

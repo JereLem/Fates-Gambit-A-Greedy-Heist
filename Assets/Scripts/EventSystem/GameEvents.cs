@@ -28,6 +28,7 @@ public class GameEvents : MonoBehaviour
     public event Action<bool> PickPocketing;
     public void OnPickPocketing(bool isPickpocketing)
     {
+        PickPocketing?.Invoke(isPickpocketing);
         // 10% chance that all police officers are alerted when pickpocketing happens
         if (isPickpocketing && UnityEngine.Random.Range(0f, 1f) <= 0.1f)
 
@@ -35,7 +36,6 @@ public class GameEvents : MonoBehaviour
             AlertAllPoliceOfficers();
         }
         gameManager.StartRandomMinigame();
-        PickPocketing?.Invoke(isPickpocketing);
         
     }
 

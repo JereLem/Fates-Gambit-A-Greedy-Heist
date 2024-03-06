@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Cinemachine.DocumentationSortingAttribute;
 
 public class SafeBoxGame : MonoBehaviour
 {
@@ -45,6 +46,11 @@ public class SafeBoxGame : MonoBehaviour
                 GameStats.Instance.pedestriansPickpocketed += 1;
 
                 GameManager.Instance.CalculateTimeBonus(gameTime);
+
+                AudioManager.instance.PlaySFX(level == 1 ? "Lv1MinigameWin" : "Lv2MinigameWin");
+
+                // Play laugh SFX
+                AudioManager.instance.PlaySFX("pickpocket_success");
 
                 // Inform GameManager that the mini-game is no longer active
                 GameManager.SetMiniGameActive(false);

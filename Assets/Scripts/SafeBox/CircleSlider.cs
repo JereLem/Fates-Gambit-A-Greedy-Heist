@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CircleSlider : MonoBehaviour
 {
     [SerializeField] Transform handle;
-    [SerializeField] Image fill;
+    [SerializeField] Image knob;
     [SerializeField] Text valTxt;
 
     [Header("Components for Game Success")]
@@ -19,7 +19,6 @@ public class CircleSlider : MonoBehaviour
     private void Awake()
     {
         targetAngle = Random.Range(0f, 360f);
-        fill.fillAmount = 0;
     }
 
 
@@ -31,10 +30,17 @@ public class CircleSlider : MonoBehaviour
         angle = (angle < 0) ? 360 + angle : angle;
 
         // Set angle to clockwise direction
-        angle = 360 - angle;
+        angle = (angle < 0) ? 360 + angle : angle;
 
-        fill.fillAmount = angle / 360f;
-        valTxt.text = Mathf.RoundToInt(fill.fillAmount * 100).ToString();
+        knob.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        // Check if spining sound is already playing
+        //if (!AudioManager.instance.IsSFXPlaying("knob_spin"))
+        //{
+        //    Debug.Log("knob_spin");
+        //    // Play spinning sound only when the mission is not completed and no spinning sound is playing
+        //    AudioManager.instance.PlaySFX("knob_spin");
+        //}
 
         if (Mathf.Abs(angle - targetAngle) < toleranceAngle)
         {

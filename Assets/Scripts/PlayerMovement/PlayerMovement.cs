@@ -291,7 +291,6 @@ public class PlayerMovement : MonoBehaviour
                 lr.positionCount = 2;
                 lr.SetPosition(0, this.transform.position);
                 lr.SetPosition(1, hit.point);
-                animator.SetTrigger("hookshot");
             }
         }
     }

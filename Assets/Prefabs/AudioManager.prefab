@@ -80,12 +80,17 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 135e61384d208f9448d88288a1c8166e, type: 3}
   - name: letter_open
     clip: {fileID: 8300000, guid: be999dca1b0c8d345b61f93f4c1c3b52, type: 3}
+  - name: knob_spin
+    clip: {fileID: 8300000, guid: 207103d9051fb064091217ee081de0d1, type: 3}
+  - name: knob_unlock
+    clip: {fileID: 8300000, guid: f291a13e96ed2444490e7c34c740aa67, type: 3}
   bgMusicSource: {fileID: 6838807793230020373}
   minigameMusicSource: {fileID: 4644856443510775550}
   sfxSource: {fileID: 8685389270809717056}
   bgMusicVolume: 0.1
   minigameMusicVolume: 0.1
   sfxVolume: 1
+  currentSFXName: 
 --- !u!1 &1758982257556845520
 GameObject:
   m_ObjectHideFlags: 0
