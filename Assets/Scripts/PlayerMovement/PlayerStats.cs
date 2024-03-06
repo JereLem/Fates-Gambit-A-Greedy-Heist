@@ -28,7 +28,6 @@ public class PlayerStats : MonoBehaviour
     public bool hasBeenCaught = false;
     public bool isNearBalcony = false;
     public bool enableSafeBox = false;
-    public bool isNearCircuit = false;
 
     [Header("UI")]
     private Color originalColor;

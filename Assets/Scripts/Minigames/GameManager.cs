@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject playerInfo;
 
     private PlayerStats playerStats;
+    private PlayerMovement playerMovement;
     public static bool isMiniGameActive = false;
     //public static bool 
     public int level;
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
         playerUI = GameObject.Find("UI")?.GetComponent<PlayerUI>();
         playerInfo = playerUI.transform.Find("InfoPlayer")?.gameObject;
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         level = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>().levelNumber;
         playerInfoText = playerInfo.GetComponent<TMP_Text>();
 
@@ -50,23 +52,20 @@ public class GameManager : MonoBehaviour
     // Function to start a random minigame
     public void StartRandomMinigame()
     {
-        int randomMinigame = UnityEngine.Random.Range(0, 3);
+        int randomMinigame = UnityEngine.Random.Range(0, 2);
+        playerMovement.enableHookshot = false;
 
-        // All the Minigame should be Started if the other minigames are not played now. 
-        if(!isMiniGameActive)
+        // Play the SafeBox game if you fulfill the condition of the game.
+        if(playerStats.isNearBalcony && playerStats.enableSafeBox && !isMiniGameActive)
+        {
+            //AudioManager.instance.PlayMusic; 
+            StartMiniGame(safeBoxPrefab);
+        }
+        //else if other minigame occurs. 
+        else if (!isMiniGameActive)
         {
             AudioManager.instance.PlayMinigameMusic(level == 1 ? "Lv1Minigame" : "Lv2Minigame");
-
-            // Play the SafeBox game if you fulfill the condition of the game.
-            if (playerStats.isNearBalcony && playerStats.enableSafeBox)
-                StartMiniGame(safeBoxPrefab);
-
-            //else if player near the circuit, play the circuit game
-            else if (playerStats.isNearCircuit)
-                StartMiniGame(dotConnectingPrefab);
-            
-            // else play the other minigames
-            else
+            switch (randomMinigame)
             {
                 switch (randomMinigame)
                 {
@@ -100,19 +99,10 @@ public class GameManager : MonoBehaviour
         int bonus = 0;
         string bonusText = "";
 
-        // Check if the SafeBox game is active
-        if (safeBoxPrefab.activeSelf)
-        {
-            // Specific bonus calculation for the SafeBox game
-            bonus = Mathf.RoundToInt(timeBonusMultiplier - timeTaken);
-            bonusText = $"You cracked the safe fast! You found some extra cash: {bonus}$";
-        }
-        else
-        {
-            // Calculate bonus based on the time taken and round to the nearest integer
-            bonus = Mathf.RoundToInt(Mathf.Max(0, timeBonusMultiplier - timeTaken));
-            bonusText = $"You are fast! You found some extra change {bonus}$ from those pockets";
-        }
+
+        // Calculate bonus based on the time taken and round to the nearest integer
+        bonus = Mathf.RoundToInt(Mathf.Max(0, timeBonusMultiplier - timeTaken));
+        bonusText = $"You are fast! You found some extra change {bonus}$";
 
         if (bonus > 0)
         {

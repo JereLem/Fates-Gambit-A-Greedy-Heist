@@ -16,7 +16,7 @@ public class PoliceNPC : NPCMovement
 
     [Header("Police Officer Times & Delays")]
     [SerializeField] public float timeChasing = 5.0f;
-    [SerializeField] public float timeOnAlert = 5.0f;
+    [SerializeField] public float timeOnAlert = 8.0f;
     [SerializeField] public float catchDelay = 2.0f;
     [SerializeField] private const float initialCatchDelay = 2.0f;
     [SerializeField] private const float minCatchDelayMultiplier = 0.2f;
@@ -87,10 +87,8 @@ public class PoliceNPC : NPCMovement
         // Check if the player is within the detect distance and player pickpocketing or police are on alert
         if (distanceToPlayer <= detectDistance && !isChasing && (playerStats.isPickpocketing || isAlertActive))
         {
-            if(isLightOff){
-                StartCoroutine(ChasePlayer());
-                AudioManager.instance.PlaySFX("police_freeze");
-            }
+            StartCoroutine(ChasePlayer());
+            AudioManager.instance.PlaySFX("police_freeze");
         }
 
         if (isChasing)
@@ -205,33 +203,6 @@ public class PoliceNPC : NPCMovement
 
         // Reset the flag when the coroutine completes
         isChasing = false;
-    }
-
-    // If the police officer collides with the player, try to catch the player
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player") && (playerStats.isPickpocketing || isAlertActive))
-        {
-            Debug.Log("Trying to catch the player!");
-            catchCoroutine = StartCoroutine(TryToCatchPlayer());
-        }
-    }
-
-
-    // When the player exits the police collide, player basically escapes
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            isCatching = false;
-            // Check if the coroutine is running before trying to stop it
-            if (catchCoroutine != null)
-            {
-                Debug.Log("Player escaped!");
-                StopCoroutine(catchCoroutine); // Stop ongoing catch coroutine
-                playerStats.isPickpocketing = false;
-            }
-        }
     }
 
 
