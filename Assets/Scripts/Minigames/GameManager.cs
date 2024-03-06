@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
     // Function to start a random minigame
     public void StartRandomMinigame()
     {
-        int randomMinigame = UnityEngine.Random.Range(0, 4);
+        int randomMinigame = UnityEngine.Random.Range(0, 3);
 
         // Play the SafeBox game if you fulfill the condition of the game.
         if(playerStats.isNearBalcony && playerStats.enableSafeBox && !isMiniGameActive)
@@ -69,9 +69,6 @@ public class GameManager : MonoBehaviour
                     break;
                 case 1:
                     StartMiniGame(arrowGamePrefab);
-                    break;
-                case 2:
-                    StartMiniGame(dotConnectingPrefab);
                     break;
             }
         }
@@ -93,19 +90,10 @@ public class GameManager : MonoBehaviour
         int bonus = 0;
         string bonusText = "";
 
-        // Check if the SafeBox game is active
-        if (safeBoxPrefab.activeSelf)
-        {
-            // Specific bonus calculation for the SafeBox game
-            bonus = Mathf.RoundToInt(timeBonusMultiplier - timeTaken);
-            bonusText = $"You cracked the safe fast! You found some extra cash: {bonus}$";
-        }
-        else
-        {
-            // Calculate bonus based on the time taken and round to the nearest integer
-            bonus = Mathf.RoundToInt(Mathf.Max(0, timeBonusMultiplier - timeTaken));
-            bonusText = $"You are fast! You found some extra change {bonus}$ from those pockets";
-        }
+
+        // Calculate bonus based on the time taken and round to the nearest integer
+        bonus = Mathf.RoundToInt(Mathf.Max(0, timeBonusMultiplier - timeTaken));
+        bonusText = $"You are fast! You found some extra change {bonus}$";
 
         if (bonus > 0)
         {

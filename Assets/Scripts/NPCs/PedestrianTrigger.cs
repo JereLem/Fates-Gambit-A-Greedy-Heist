@@ -74,6 +74,9 @@ public class PedestrianTrigger : MonoBehaviour
             parentNPC.triggerEntered = false;
             playerStats.isPickpocketing = false;
             parentNPC.highlightPickpocket.color = parentNPC.grayedOutColor;
+            
+            // Inform GameManager that the mini-game is no longer active
+            GameManager.SetMiniGameActive(false);
             AudioManager.instance.StopMinigameMusic();
         }
     }
