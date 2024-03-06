@@ -220,8 +220,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 2.619, y: -2.0428, z: 0}
-    m_Extent: {x: 3.9643998, y: 3.4106002, z: 0}
+    m_Center: {x: 2.61975, y: -2.04265, z: 0}
+    m_Extent: {x: 3.9639502, y: 3.41095, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -711,7 +711,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelNumber: 2
   levelName: Eldoria City
-  timerDuration: 11250
+  timerDuration: 15050
   targetValue: 300
 --- !u!1 &1509429996
 GameObject:
@@ -924,7 +924,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1523760611647216625, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0000015011706
+      value: 0.0000039714487
       objectReference: {fileID: 0}
     - target: {fileID: 1523760611647216625, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: m_LocalPosition.y
