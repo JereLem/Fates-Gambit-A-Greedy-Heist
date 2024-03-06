@@ -804,26 +804,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
-    - target: {fileID: 1070467829579932963, guid: d04b796412e1fcb4aaa3983abd3db798, type: 3}
-      propertyPath: sfxList.Array.size
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1070467829579932963, guid: d04b796412e1fcb4aaa3983abd3db798, type: 3}
-      propertyPath: sfxList.Array.data[8].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: bf7b65e2b6c882849ad1705cf8cfe623, type: 3}
-    - target: {fileID: 1070467829579932963, guid: d04b796412e1fcb4aaa3983abd3db798, type: 3}
-      propertyPath: sfxList.Array.data[8].name
-      value: knob_spin
-      objectReference: {fileID: 0}
-    - target: {fileID: 1070467829579932963, guid: d04b796412e1fcb4aaa3983abd3db798, type: 3}
-      propertyPath: sfxList.Array.data[9].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: f291a13e96ed2444490e7c34c740aa67, type: 3}
-    - target: {fileID: 1070467829579932963, guid: d04b796412e1fcb4aaa3983abd3db798, type: 3}
-      propertyPath: sfxList.Array.data[9].name
-      value: knob_unlock
-      objectReference: {fileID: 0}
     - target: {fileID: 7998225764180083065, guid: d04b796412e1fcb4aaa3983abd3db798, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

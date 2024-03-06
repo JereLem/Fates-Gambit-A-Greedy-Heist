@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static Cinemachine.DocumentationSortingAttribute;
 
 public class HUD : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class HUD : MonoBehaviour
     public float totalTime = 10f;
     public float leftTime = 10f;
     public float normalizedTime;
+    public int level;
     int min;
     int sec;
 
@@ -18,6 +20,11 @@ public class HUD : MonoBehaviour
     {
         mySlider = GetComponent<Slider>();
         myText = GetComponentInChildren<Text>();
+    }
+
+    private void Start()
+    {
+        level = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>().levelNumber;
     }
 
     private void LateUpdate()
@@ -29,9 +36,10 @@ public class HUD : MonoBehaviour
         myText.text = string.Format("{0:D2} : {1:D2}", min, sec);
         mySlider.value = normalizedTime;
 
-        if (leftTime <= 0)
+        if (leftTime <= 0)  // TimeOver. Destroy minigame and play lose sound
         {
             DestroyMiniGame();
+            AudioManager.instance.PlaySFX(level == 1 ? "Lv1MinigameLoss" : "Lv2MinigameLoss");
         }
     }
     void DestroyMiniGame()

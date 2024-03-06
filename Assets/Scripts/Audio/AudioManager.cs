@@ -13,7 +13,9 @@ public class AudioManager : MonoBehaviour
     [Header("Volume settings")]
     [SerializeField] public float bgMusicVolume = 0.1f;
     [SerializeField] public float minigameMusicVolume = 0.1f;
-    [SerializeField] public float sfxVolume = 1.0f; 
+    [SerializeField] public float sfxVolume = 1.0f;
+    [SerializeField] private string currentSFXName; // Using for Safebox minigame
+
 
     private void Awake()
     {
@@ -129,6 +131,10 @@ public class AudioManager : MonoBehaviour
         sfxSource.PlayOneShot(s.clip);
     }
 
+    public bool IsSFXPlaying(string sfxName)
+    {
+        return currentSFXName == sfxName;
+    }
 
     // Setting methods
     public void SetBgMusicVolume(float volume)

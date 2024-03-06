@@ -50,32 +50,36 @@ public class GameManager : MonoBehaviour
     // Function to start a random minigame
     public void StartRandomMinigame()
     {
-        int randomMinigame = UnityEngine.Random.Range(0, 4);
+        int randomMinigame = UnityEngine.Random.Range(0, 3);
 
-        // Play the SafeBox game if you fulfill the condition of the game.
-        if(playerStats.isNearBalcony && playerStats.enableSafeBox && !isMiniGameActive)
-        {
-            //AudioManager.instance.PlayMusic; 
-            StartMiniGame(safeBoxPrefab);
-        }
-        //else if other minigame occurs. 
-        else if (!isMiniGameActive)
+        // All the Minigame should be Started if the other minigames are not played now. 
+        if(!isMiniGameActive)
         {
             AudioManager.instance.PlayMinigameMusic(level == 1 ? "Lv1Minigame" : "Lv2Minigame");
-            switch (randomMinigame)
+
+            // Play the SafeBox game if you fulfill the condition of the game.
+            if (playerStats.isNearBalcony && playerStats.enableSafeBox)
+                StartMiniGame(safeBoxPrefab);
+
+            //else if player near the circuit, play the circuit game
+            else if (playerStats.isNearCircuit)
+                StartMiniGame(dotConnectingPrefab);
+            
+            // else play the other minigames
+            else
             {
-                case 0:
-                    StartMiniGame(simonSaysPrefab);
-                    break;
-                case 1:
-                    StartMiniGame(arrowGamePrefab);
-                    break;
-                case 2:
-                    StartMiniGame(simonSaysPrefab);
-                    break;
-                case 3:
-                    StartMiniGame(dotConnectingPrefab);
-                    break;
+                switch (randomMinigame)
+                {
+                    case 0:
+                        StartMiniGame(simonSaysPrefab);
+                        break;
+                    case 1:
+                        StartMiniGame(arrowGamePrefab);
+                        break;
+                    case 2:
+                        StartMiniGame(simonSaysPrefab);
+                        break;
+                }
             }
         }
     }
