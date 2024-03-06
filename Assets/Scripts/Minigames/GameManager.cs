@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject playerInfo;
 
     private PlayerStats playerStats;
+    private PlayerMovement playerMovement;
     public static bool isMiniGameActive = false;
     //public static bool 
     public int level;
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
         playerUI = GameObject.Find("UI")?.GetComponent<PlayerUI>();
         playerInfo = playerUI.transform.Find("InfoPlayer")?.gameObject;
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         level = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>().levelNumber;
         playerInfoText = playerInfo.GetComponent<TMP_Text>();
 
@@ -51,6 +53,7 @@ public class GameManager : MonoBehaviour
     public void StartRandomMinigame()
     {
         int randomMinigame = UnityEngine.Random.Range(0, 3);
+        playerMovement.enableHookshot = false;
 
         // Play the SafeBox game if you fulfill the condition of the game.
         if(playerStats.isNearBalcony && playerStats.enableSafeBox && !isMiniGameActive)
