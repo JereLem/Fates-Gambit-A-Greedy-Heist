@@ -94,7 +94,6 @@ public class RandomLights : MonoBehaviour
     // If player contact with the lightOn window, TryToCatchPlayer occurs.
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Reach the balcony");
         playerStats.isNearBalcony = true;
 
         // If the window lightOn, SafeBox minigame disable, and you have to move from the places. 
@@ -130,7 +129,6 @@ public class RandomLights : MonoBehaviour
             {
                 GameManager.SetMiniGameActive(false);
                 Destroy(GameObject.FindGameObjectWithTag("SafeBox"));
-                Debug.Log("Out of game boundary");
                 playerStats.isPickpocketing = false;
                 playerStats.PickpocketingComplete();
             }

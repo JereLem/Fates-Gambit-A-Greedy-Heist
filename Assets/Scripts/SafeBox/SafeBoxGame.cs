@@ -12,6 +12,7 @@ public class SafeBoxGame : MonoBehaviour
     
 
     private PlayerStats playerStats;
+    private PlayerMovement playerMovement;
     private int pickpocketableValue;
     [SerializeField] int pickpocketableValue_Min;
     [SerializeField] int pickpocketableValue_Max;
@@ -21,11 +22,12 @@ public class SafeBoxGame : MonoBehaviour
         hud = GetComponentInChildren<HUD>();
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
         pickpocketableValue = Random.Range(pickpocketableValue_Min, pickpocketableValue_Max);
+        playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
     }
     private void Start()
     {
         level = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>().levelNumber;
-
+        playerMovement.enableHookshot = false;
     }
 
     private void Update()

@@ -8,6 +8,8 @@ public class HUD : MonoBehaviour
 {
     Text myText;
     Slider mySlider;
+    private PlayerStats playerStats;
+
 
     public float totalTime = 10f;
     public float leftTime = 10f;
@@ -25,6 +27,8 @@ public class HUD : MonoBehaviour
     private void Start()
     {
         level = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<LevelParameters>().levelNumber;
+        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+
     }
 
     private void LateUpdate()
@@ -38,8 +42,10 @@ public class HUD : MonoBehaviour
 
         if (leftTime <= 0)  // TimeOver. Destroy minigame and play lose sound
         {
-            DestroyMiniGame();
+            playerStats.isPickpocketing = false;
             AudioManager.instance.PlaySFX(level == 1 ? "Lv1MinigameLoss" : "Lv2MinigameLoss");
+
+            DestroyMiniGame();
         }
     }
     void DestroyMiniGame()

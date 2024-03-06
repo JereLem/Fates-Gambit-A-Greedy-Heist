@@ -1676,7 +1676,7 @@ GameObject:
   - component: {fileID: 6233455485565392296}
   m_Layer: 5
   m_Name: Dot Connecting 1
-  m_TagString: Untagged
+  m_TagString: Circuit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4600,6 +4600,7 @@ MonoBehaviour:
   totalTime: 10
   leftTime: 10
   normalizedTime: 0
+  level: 0
 --- !u!222 &9137389805301822613
 CanvasRenderer:
   m_ObjectHideFlags: 0
