@@ -747,6 +747,8 @@ MonoBehaviour:
   - {fileID: 9136989172873710132}
   - {fileID: 1448120382646788220}
   level: 0
+  pickpocketableValue_Min: 10
+  pickpocketableValue_Max: 20
 --- !u!1 &3899769424844094471
 GameObject:
   m_ObjectHideFlags: 0

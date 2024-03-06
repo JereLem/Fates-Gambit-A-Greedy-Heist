@@ -106,14 +106,14 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.F))
             {
-            // Toggle the enableHookshot variable when the 'F' key is pressed
-            enableHookshot = !enableHookshot;
+                // Toggle the enableHookshot variable when the 'F' key is pressed
+                enableHookshot = !enableHookshot;
 
-            // Reset the isUsingHookshot variable when disabling the hookshot
-            if (!enableHookshot)
-            {
-                isUsingHookshot = false;
-            }
+                // Reset the isUsingHookshot variable when disabling the hookshot
+                if (!enableHookshot)
+                {
+                    isUsingHookshot = false;
+                }
             }
 
             if (enableHookshot){
