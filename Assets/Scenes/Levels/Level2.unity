@@ -185,71 +185,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 581219619734399896}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &859577333
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 167701313119684268, guid: fb42a6b1123ba2443ba04dc5cd608321, type: 3}
-      propertyPath: playerStats
-      value: 
-      objectReference: {fileID: 1936828237}
-    - target: {fileID: 1480157728843606721, guid: fb42a6b1123ba2443ba04dc5cd608321, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -7.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 1480157728843606721, guid: fb42a6b1123ba2443ba04dc5cd608321, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1480157728843606721, guid: fb42a6b1123ba2443ba04dc5cd608321, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1480157728843606721, guid: fb42a6b1123ba2443ba04dc5cd608321, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1480157728843606721, guid: fb42a6b1123ba2443ba04dc5cd608321, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1480157728843606721, guid: fb42a6b1123ba2443ba04dc5cd608321, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1480157728843606721, guid: fb42a6b1123ba2443ba04dc5cd608321, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1480157728843606721, guid: fb42a6b1123ba2443ba04dc5cd608321, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1480157728843606721, guid: fb42a6b1123ba2443ba04dc5cd608321, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1480157728843606721, guid: fb42a6b1123ba2443ba04dc5cd608321, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8977293821105590412, guid: fb42a6b1123ba2443ba04dc5cd608321, type: 3}
-      propertyPath: m_Name
-      value: Box 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8977293821105590412, guid: fb42a6b1123ba2443ba04dc5cd608321, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: fb42a6b1123ba2443ba04dc5cd608321, type: 3}
 --- !u!1001 &880482190
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -719,7 +654,7 @@ MonoBehaviour:
   levelNumber: 2
   levelName: Eldoria City
   timerDuration: 11250
-  targetValue: 300
+  targetValue: 200
 --- !u!1 &1509429996
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,7 +866,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1523760611647216625, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0000039714487
+      value: 0.0000050414383
       objectReference: {fileID: 0}
     - target: {fileID: 1523760611647216625, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1181,17 +1116,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e74f7d858de7cdf42984d9da91fee3d6, type: 3}
---- !u!114 &1936828237 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3987393075373304062, guid: edd9f76f8879e9d418ffab0d58deaf40, type: 3}
-  m_PrefabInstance: {fileID: 1733187823}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29216f120f918a340a221621aa8816a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1956828364
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1565,4 +1489,3 @@ SceneRoots:
   - {fileID: 1009151463}
   - {fileID: 880482190}
   - {fileID: 4260130800084878865}
-  - {fileID: 859577333}

@@ -111,7 +111,7 @@ private IEnumerator RunGame()
             yield return null;
 
             // Check for user input during the round
-            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
             {
                 // Ensure that the user input is checked
                 if (HandleArrowInput())
@@ -255,12 +255,12 @@ private IEnumerator RunGame()
 
     private void CheckUserInput()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             userInput = 1;
             HandleArrowInput();
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.S))
         {
             userInput = -1;
             HandleArrowInput();

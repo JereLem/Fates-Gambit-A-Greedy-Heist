@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
     // Function to start a random minigame
     public void StartRandomMinigame()
     {
-        int randomMinigame = UnityEngine.Random.Range(0, 3);
+        int randomMinigame = UnityEngine.Random.Range(0, 2);
 
         // All the Minigame should be Started if the other minigames are not played now. 
         if(!isMiniGameActive)
@@ -75,9 +75,6 @@ public class GameManager : MonoBehaviour
                         break;
                     case 1:
                         StartMiniGame(arrowGamePrefab);
-                        break;
-                    case 2:
-                        StartMiniGame(simonSaysPrefab);
                         break;
                 }
             }
