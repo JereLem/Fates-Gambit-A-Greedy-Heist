@@ -5309,7 +5309,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Navigate the arrow keys according to the indicated key orientation. Prioritize
+  m_text: Navigate the W & S keys according to the indicated key orientation. Prioritize
     keys enclosed in boxes, and refrain from pressing any keys if keys are marked
     with 'x'. Speed is essential, so swift execution is crucial!
   m_isRightToLeft: 0

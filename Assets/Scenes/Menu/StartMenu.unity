@@ -4088,6 +4088,12 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 7043026976063060941, guid: e35728552f798b24aa4cc708d2f78c6b, type: 3}
+      propertyPath: m_text
+      value: Navigate the W, S keys according to the indicated key orientation. Prioritize
+        keys enclosed in boxes, and refrain from pressing any keys if keys are marked
+        with 'x'. Speed is essential, so swift execution is crucial!
+      objectReference: {fileID: 0}
     - target: {fileID: 7556770179364911631, guid: e35728552f798b24aa4cc708d2f78c6b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 3
