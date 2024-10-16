@@ -20,3 +20,9 @@ Eva Zorman - Artist & Animator
 Aref Mowloughi - Game Designer
 
 Sangjun You - Developer
+
+
+https://abacus.abo.fi/register.nsf/PublicView
+
+- Demo video
+https://www.youtube.com/watch?v=MNwsN73j6Ro
